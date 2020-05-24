@@ -1,11 +1,14 @@
 <template>
   <div>
-    Main tool view
+    Update own target villages
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Targets'
 }
 </script>
+
+<style scoped>
+</style>

@@ -1,11 +1,14 @@
 <template>
   <div>
-    Main tool view
+    Update ghost accounts
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Ghosts'
 }
 </script>
+
+<style scoped>
+</style>

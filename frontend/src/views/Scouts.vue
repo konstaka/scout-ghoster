@@ -1,11 +1,14 @@
 <template>
   <div>
-    Main tool view
+    Update scout accounts
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Scouts'
 }
 </script>
+
+<style scoped>
+</style>
