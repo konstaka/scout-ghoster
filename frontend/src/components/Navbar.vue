@@ -11,24 +11,24 @@
 </template>
 
 <script>
+import router from '@/router/index'
 export default {
   name: 'Navbar',
-  props: ['routes'],
-  mounted () {
-    console.log(this.routes)
-  }
+  data: () => ({
+    routes: router.options.routes
+  })
 }
 </script>
 
 <style scoped>
 #nav {
   padding: 20px;
-  background-color: black;
+  background-color: #1a252f;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #476481;
   margin: 20px;
   text-decoration: none;
 }

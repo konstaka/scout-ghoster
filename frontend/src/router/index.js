@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Attackers from '../views/Attackers.vue'
-import Ghosts from '../views/Ghosts.vue'
-import Messages from '../views/Messages.vue'
-import Scouts from '../views/Scouts.vue'
-import Targets from '../views/Targets.vue'
+import Home from '../views/Home'
+import Attackers from '../views/Attackers'
+import Ghosts from '../views/Ghosts'
+import Messages from '../views/Messages'
+import Scouts from '../views/Scouts'
+import Targets from '../views/Targets'
 
 Vue.use(VueRouter)
 
@@ -16,9 +16,19 @@ const routes = [
     component: Home
   },
   {
+    path: '/targets',
+    name: 'Targets',
+    component: Targets
+  },
+  {
     path: '/attackers',
     name: 'Attackers',
     component: Attackers
+  },
+  {
+    path: '/scouts',
+    name: 'Scouts',
+    component: Scouts
   },
   {
     path: '/ghosts',
@@ -29,16 +39,6 @@ const routes = [
     path: '/messages',
     name: 'Messages',
     component: Messages
-  },
-  {
-    path: '/scouts',
-    name: 'Scouts',
-    component: Scouts
-  },
-  {
-    path: '/targets',
-    name: 'Targets',
-    component: Targets
   }
 ]
 

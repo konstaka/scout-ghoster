@@ -1,20 +1,16 @@
 <template>
   <div id="app">
-    <Navbar :routes="routes" />
+    <Navbar />
     <router-view />
   </div>
 </template>
 <script>
 import Navbar from '@/components/Navbar'
-import router from '@/router/index'
 export default {
   name: 'App',
   components: {
     Navbar
-  },
-  data: () => ({
-    routes: router.options.routes
-  })
+  }
 }
 </script>
 <style>
