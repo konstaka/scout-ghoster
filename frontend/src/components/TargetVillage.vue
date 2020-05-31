@@ -17,5 +17,6 @@ export default {
 .target {
   border: 1px solid #d2d2d2;
   padding-left: 5px;
+  max-height: 22px;
 }
 </style>

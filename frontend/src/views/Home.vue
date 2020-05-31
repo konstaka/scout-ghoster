@@ -2,12 +2,17 @@
   <div class="home-wrapper">
     <div class="targets">
       <!-- Ops hitting time -->
-      <div class="hitting_time">
+      <div class="hitting_time left">
         Ops hits at:
         <VueTimepicker
           v-model="opsHittingTime"
           format="HH:mm:ss"
           class="timepicker"
+        />
+        <Datepicker
+          v-model="opsHittingDay"
+          monday-first
+          class="datepicker"
         />
       </div>
       <!-- Targets -->
@@ -31,6 +36,7 @@
 </template>
 
 <script>
+import Datepicker from 'vuejs-datepicker'
 import VueTimepicker from 'vue2-timepicker'
 import 'vue2-timepicker/dist/VueTimepicker.css'
 import { mapFields } from 'vuex-map-fields'
@@ -39,12 +45,14 @@ import AttackerCol from '@/components/AttackerCol'
 export default {
   name: 'Home',
   components: {
+    Datepicker,
     VueTimepicker,
     TargetVillage,
     AttackerCol
   },
   computed: {
     ...mapFields([
+      'opsHittingDay',
       'opsHittingTime'
     ])
   }
@@ -67,6 +75,7 @@ export default {
 
 .hitting_time {
   height: 100px;
+  padding-left: 5px;
 }
 
 .attacker_cols {

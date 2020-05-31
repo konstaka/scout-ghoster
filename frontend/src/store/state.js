@@ -1,21 +1,37 @@
 export default {
+  opsHittingDay: 'Fri May 15 2020 21:23:00 GMT+0200 (Central European Summer Time)',
   opsHittingTime: {
-    HH: '',
-    mm: '',
-    ss: ''
+    HH: '06',
+    mm: '30',
+    ss: '00'
   },
   attackers: [
     {
       player: '4fun',
       villageName: '01',
       x: -3,
-      y: -30
+      y: -30,
+      // Unit speed: NUM(>3)
+      unitSpeed: 3,
+      // Artefact speed factor: NUM(0.33 ... 2)
+      arteSpeed: 1,
+      // Tournament square: NUM(0 ... 20)
+      tournamentSquare: 0,
+      // Hero boots: ENUM(25, 50, 75)
+      heroBoots: 0,
+      // Map: ENUM(30, 40, 50)
+      map: 0
     },
     {
       player: 'Teletabis',
       villageName: '1. Tinkis-Vinkis',
       x: -3,
-      y: -34
+      y: -34,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
     }
   ],
   targets: [
@@ -58,6 +74,7 @@ export default {
   ],
   scouts: [],
   ghosts: [],
+  messages: [],
   serverConfig: {
     speed: 1,
     size: 200
