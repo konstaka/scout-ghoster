@@ -1,6 +1,6 @@
 <template>
   <div class="target">
-    {{ villageName }} ({{ x }}|{{ y }})
+    {{ target.villageName }} ({{ target.x }}|{{ target.y }})
   </div>
 </template>
 
@@ -8,10 +8,7 @@
 export default {
   name: 'TargetVillage',
   props: [
-    'player',
-    'villageName',
-    'x',
-    'y'
+    'target'
   ]
 }
 </script>

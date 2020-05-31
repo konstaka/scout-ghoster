@@ -12,24 +12,18 @@
       </div>
       <!-- Targets -->
       <TargetVillage
-        v-for="village of $store.state.targets"
-        :key="`${village.x}${village.y}`"
-        :player="village.player"
-        :village-name="village.villageName"
-        :x="village.x"
-        :y="village.y"
+        v-for="target of $store.state.targets"
+        :key="`target${target.x}${target.y}`"
+        :target="target"
         class="left"
       />
     </div>
     <!-- Attackers and times -->
     <div class="attacker_cols">
       <AttackerCol
-        v-for="village of $store.state.attackers"
-        :key="`${village.x}${village.y}`"
-        :player="village.player"
-        :village-name="village.villageName"
-        :x="village.x"
-        :y="village.y"
+        v-for="attacker of $store.state.attackers"
+        :key="`attacker${attacker.x}${attacker.y}`"
+        :attacker="attacker"
         class="attacker"
       />
     </div>
