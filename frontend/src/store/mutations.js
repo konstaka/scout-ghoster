@@ -15,5 +15,8 @@ export default {
           || msg.attacker.y !== attacker.y
       })
     }
+  },
+  setAttackers (state, attackers) {
+    state.attackers = attackers
   }
 }
