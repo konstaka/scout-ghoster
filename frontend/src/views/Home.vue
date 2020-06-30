@@ -29,7 +29,7 @@
         v-for="attacker of $store.state.attackers"
         :key="`attacker${attacker.x}${attacker.y}`"
         :attacker="attacker"
-        class="attacker"
+        class="attacker_col"
       />
     </div>
   </div>
@@ -79,11 +79,13 @@ export default {
 }
 
 .attacker_cols {
-  float: left;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 
-.attacker {
+.attacker_col {
   width: 200px;
-  float: left;
+  display: inline-block;
 }
 </style>

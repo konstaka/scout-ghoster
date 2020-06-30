@@ -32,6 +32,94 @@ export default {
       tournamentSquare: 0,
       heroBoots: 0,
       map: 0
+    },
+    {
+      player: 'Teletabis',
+      villageName: '1. Tinkis-Vinkis',
+      x: -3,
+      y: -35,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
+    },
+    {
+      player: 'Teletabis',
+      villageName: '1. Tinkis-Vinkis',
+      x: -3,
+      y: -36,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
+    },
+    {
+      player: 'Teletabis',
+      villageName: '1. Tinkis-Vinkis',
+      x: -3,
+      y: -37,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
+    },
+    {
+      player: 'Teletabis',
+      villageName: '1. Tinkis-Vinkis',
+      x: -3,
+      y: -38,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
+    },
+    {
+      player: 'Teletabis',
+      villageName: '1. Tinkis-Vinkis',
+      x: -3,
+      y: -39,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
+    },
+    {
+      player: 'Teletabis',
+      villageName: '1. Tinkis-Vinkis',
+      x: -4,
+      y: -34,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
+    },
+    {
+      player: 'Teletabis',
+      villageName: '1. Tinkis-Vinkis',
+      x: -5,
+      y: -34,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
+    },
+    {
+      player: 'Teletabis',
+      villageName: '1. Tinkis-Vinkis',
+      x: -6,
+      y: -34,
+      unitSpeed: 3,
+      arteSpeed: 1,
+      tournamentSquare: 0,
+      heroBoots: 0,
+      map: 0
     }
   ],
   targets: [
