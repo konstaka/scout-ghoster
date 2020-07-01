@@ -9,12 +9,9 @@ router.post('/', async (req, res) => {
       res.status(HttpStatus.BAD_REQUEST).end();
       return;
     }
-    const existed = await attackers.saveAttacker(req.body);
-    if (existed) {
-      res.status(HttpStatus.OK).end();
-    } else {
-      res.status(HttpStatus.CREATED).end();
-    }
+    const attacker = await attackers.saveAttacker(req.body);
+    res.location('/attackers/' + attacker._id);
+    res.status(HttpStatus.CREATED).end();
   } catch (e) {
     console.log(e);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
@@ -31,10 +28,14 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.delete('/:x/:y', async (req, res) => {
+router.delete('/:attackerId', async (req, res) => {
   try {
-    await attackers.deleteAttacker({ x: req.params.x, y: req.params.y });
-    res.status(HttpStatus.OK).end();
+    const deleted = await attackers.deleteAttacker(req.params.attackerId);
+    if (!deleted) {
+      res.status(HttpStatus.NOT_FOUND).end();
+      return;
+    }
+    res.status(HttpStatus.NO_CONTENT).end();
   } catch (e) {
     console.log(e);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();

@@ -14,6 +14,7 @@ mongoose.connect(process.env.DB_LINK, {
   keepAlive: true,
   keepAliveInitialDelay: 300000
 });
+mongoose.set('useFindAndModify', false);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Database error: '));
@@ -31,7 +32,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
+
+console.log('Running in ' + process.env.NODE_ENV + ' mode');
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors());
+}
 
 // Vue frontend
 app.use(express.static(path.join(__dirname, 'frontend/dist')));

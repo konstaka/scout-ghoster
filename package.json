@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "concurrently \"nodemon ./bin/www\" \" cd frontend && npm run serve\"",
+    "start": "cross-env NODE_ENV=production node ./bin/www",
+    "dev": "concurrently \"cross-env NODE_ENV=development nodemon ./bin/www\" \" cd frontend && npm run serve\"",
     "check": "cd frontend && npm run lint",
     "heroku-postbuild": "cd frontend && npm install --only=dev && npm run build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",

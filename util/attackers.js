@@ -1,19 +1,12 @@
 const Attacker = require('../models/Attacker');
 
 const saveAttacker = async (candidate) => {
-  const existing = await Attacker.findOne(
-    { x: candidate.x, y: candidate.y }
-  );
-  if (existing) {
-    await Attacker.updateOne(
-      { x: attacker.x, y: attacker.y },
-      attacker
-    );
-    return true;
+  let attacker = await Attacker.findByIdAndUpdate(candidate._id, candidate);
+  if (!attacker) {
+    attacker = new Attacker(candidate);
+    attacker = await attacker.save();
   }
-  const attacker = new Attacker(candidate);
-  await attacker.save();
-  return false;
+  return attacker;
 };
 
 const getAttackers = async () => {
@@ -21,10 +14,9 @@ const getAttackers = async () => {
   return attackers;
 };
 
-const deleteAttacker = async (attacker) => {
-  await Attacker.findOneAndDelete(
-    { x: attacker.x, y: attacker.y }
-  );
+const deleteAttacker = async (attackerId) => {
+  const res = await Attacker.findByIdAndDelete(attackerId);
+  return res;
 };
 
 module.exports = {

@@ -12,6 +12,6 @@ export default {
   },
 
   async delete (attacker) {
-    await api().delete(`/attackers/${attacker.x}/${attacker.y}`)
+    await api().delete(`/attackers/${attacker._id}`)
   }
 }

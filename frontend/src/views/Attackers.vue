@@ -1,25 +1,25 @@
 <template>
-  <div>
-    <div
+  <div class="attackers_container">
+    <AttackerRow
       v-for="attacker of $store.state.attackers"
       :key="`attacker${attacker.x}${attacker.y}`"
       :attacker="attacker"
-      class="attacker_row"
-    >
-      {{ attacker.villageName }}
-    </div>
+    />
   </div>
 </template>
 
 <script>
-// import AttackerService from '@/services/attacker'
+import AttackerRow from '@/components/AttackerRow'
 export default {
   name: 'Attackers',
-  mounted () {
-    this.$store.dispatch('getAttackers')
+  components: {
+    AttackerRow
   }
 }
 </script>
 
 <style scoped>
+.attackers_container {
+  margin-bottom: 300px;
+}
 </style>

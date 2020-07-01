@@ -30,10 +30,19 @@ export default {
         .toLocaleTimeString('en-GB', options)
     }
   },
+  mounted () {
+    for (const selection of this.$store.state.selections) {
+      if (selection.target._id === this.target._id
+        && selection.attacker._id === this.attacker._id) {
+        this.selected = true
+        break
+      }
+    }
+  },
   methods: {
     toggleSelected () {
       this.selected = !this.selected
-      this.$store.dispatch('updateMsgs', {
+      this.$store.dispatch('updateSelections', {
         target: this.target,
         attacker: this.attacker,
         selected: this.selected
