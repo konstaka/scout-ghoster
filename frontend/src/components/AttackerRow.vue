@@ -44,7 +44,10 @@
         :initialValue="attacker.map"
       />
     </div>
-    <div class="data_item delete_button" @click="deleteAttacker" >
+    <div
+      class="data_item delete_button"
+      @click="deleteAttacker"
+    >
       Delete
     </div>
   </div>
@@ -70,10 +73,22 @@ export default {
   }),
   methods: {
     async deleteAttacker () {
-      if (window.confirm(`Delete (${this.attacker.x}|${this.attacker.y})?`)) {
-        await AttackerService.delete(this.attacker)
-        this.$store.dispatch('getInfo')
-      }
+      window.VoerroModal.show({
+        title: 'Confirm:',
+        body: `Delete (${this.attacker.x}|${this.attacker.y})?`,
+        buttons: [
+          {
+            text: 'Cancel'
+          },
+          {
+            text: 'Delete',
+            handler: async () => {
+              await AttackerService.delete(this.attacker)
+              this.$store.dispatch('getInfo')
+            }
+          }
+        ]
+      })
     }
   }
 }
