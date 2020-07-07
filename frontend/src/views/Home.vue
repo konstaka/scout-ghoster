@@ -1,6 +1,6 @@
 <template>
-  <div class="home-wrapper">
-    <div class="targets">
+  <div class="home_wrapper">
+    <div class="sticky">
       <!-- Ops hitting time -->
       <div class="hitting_time left">
         Ops hits at:
@@ -15,16 +15,30 @@
           class="datepicker"
         />
       </div>
+      <!-- Attackers -->
+      <div name="scrollingAttackers" class="attacker_cols names syncscroll">
+        <div
+          v-for="attacker of $store.state.attackers"
+          :key="`attacker${attacker.x}${attacker.y}`"
+          class="attacker_col"
+        >
+          <div class="attacker">
+            {{ attacker.villageName }} ({{ attacker.x }}|{{ attacker.y }})
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="targets_wrapper">
       <!-- Targets -->
       <TargetVillage
         v-for="target of $store.state.targets"
-        :key="`target${target.x}${target.y}`"
+        :key="`target${target.xCoord}${target.yCoord}`"
         :target="target"
         class="left"
       />
     </div>
-    <!-- Attackers and times -->
-    <div class="attacker_cols">
+    <!-- Sending times -->
+    <div name="scrollingAttackers" class="attacker_cols syncscroll">
       <AttackerCol
         v-for="attacker of $store.state.attackers"
         :key="`attacker${attacker.x}${attacker.y}`"
@@ -42,6 +56,7 @@ import 'vue2-timepicker/dist/VueTimepicker.css'
 import { mapFields } from 'vuex-map-fields'
 import TargetVillage from '@/components/TargetVillage'
 import AttackerCol from '@/components/AttackerCol'
+import syncscroll from '@/util/syncscroll-0.0.3/syncscroll'
 export default {
   name: 'Home',
   components: {
@@ -55,27 +70,44 @@ export default {
       'opsHittingDay',
       'opsHittingTime'
     ])
+  },
+  mounted () {
+    if (syncscroll) {
+      console.log('Using syncscroll-0.0.3')
+    }
   }
 }
 </script>
 
 <style scoped>
-.home-wrapper {
+.home_wrapper {
   padding-top: 5px;
+}
+
+.sticky {
+  height: 100px;
+  position: sticky;
+  top: 0;
+  background: #dbe3eb;
+  -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2);
+}
+
+.targets_wrapper {
+  width: 250px;
+  float: left;
 }
 
 .left {
   text-align: left;
 }
 
-.targets {
-  width: 200px;
-  float: left;
-}
-
 .hitting_time {
+  width: 245px;
   height: 100px;
   padding-left: 5px;
+  float: left;
 }
 
 .attacker_cols {
@@ -83,6 +115,15 @@ export default {
   overflow-y: hidden;
   white-space: nowrap;
   text-align: left;
+}
+
+.names {
+  height: 100px;
+  overflow: hidden;
+}
+
+.attacker {
+  margin-top: 40px;
 }
 
 .attacker_col {

@@ -43,11 +43,15 @@ app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const targetsRouter = require('./routes/targets');
 const attackersRouter = require('./routes/attackers');
+const mapSqlRouter = require('./routes/mapSql');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/targets', targetsRouter);
 app.use('/attackers', attackersRouter);
+app.use('/mapSql', mapSqlRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

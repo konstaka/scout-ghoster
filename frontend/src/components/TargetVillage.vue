@@ -1,6 +1,6 @@
 <template>
   <div class="target">
-    {{ target.villageName }} ({{ target.x }}|{{ target.y }})
+    {{ target.villageName }} ({{ target.xCoord }}|{{ target.yCoord }})
   </div>
 </template>
 

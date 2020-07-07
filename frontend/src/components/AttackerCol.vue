@@ -1,11 +1,8 @@
 <template>
   <div>
-    <div class="attacker">
-      {{ attacker.villageName }} ({{ attacker.x }}|{{ attacker.y }})
-    </div>
     <TimeBox
       v-for="target of $store.state.targets"
-      :key="`time${target.x}${target.y}`"
+      :key="`time${attacker.x}${attacker.y}${target.xCoord}${target.yCoord}`"
       :attacker="attacker"
       :target="target"
     />
@@ -26,7 +23,4 @@ export default {
 </script>
 
 <style scoped>
-.attacker {
-  height: 100px;
-}
 </style>
