@@ -1,6 +1,6 @@
 <template>
   <select
-    v-model="value"
+    v-model.number="value"
     class="dropdown"
   >
     <option
@@ -22,6 +22,11 @@ export default {
   data: () => ({
     value: 0
   }),
+  watch: {
+    value (newV) {
+      this.$emit('input', newV)
+    }
+  },
   mounted () {
     this.value = this.initialValue
   }
@@ -30,7 +35,6 @@ export default {
 
 <style scoped>
 .dropdown {
-  margin-left: 2px;
   background: #ebf0f4;
   cursor: pointer;
 }

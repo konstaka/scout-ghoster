@@ -11,6 +11,7 @@
     </div>
     <div class="data_item unit_speed">
       <DropDown
+        v-model.number="mutableAttacker.unitSpeed"
         :options="unitSpeeds"
         :initialValue="attacker.unitSpeed"
       />
@@ -19,6 +20,7 @@
     <div class="data_item arte_speed">
       artefact
       <DropDown
+        v-model.number="mutableAttacker.arteSpeed"
         :options="arteSpeeds"
         :initialValue="attacker.arteSpeed"
       />
@@ -26,6 +28,7 @@
     <div class="data_item tournament_square">
       TS
       <DropDown
+        v-model.number="mutableAttacker.tournamentSquare"
         :options="tsLevels"
         :initialValue="attacker.tournamentSquare"
       />
@@ -33,6 +36,7 @@
     <div class="data_item hero_boots">
       hero boots
       <DropDown
+        v-model.number="mutableAttacker.heroBoots"
         :options="heroBoots"
         :initialValue="attacker.heroBoots"
       />
@@ -40,6 +44,7 @@
     <div class="data_item map">
       map
       <DropDown
+        v-model.number="mutableAttacker.map"
         :options="maps"
         :initialValue="attacker.map"
       />
@@ -61,17 +66,41 @@ export default {
   components: {
     DropDown
   },
-  props: [
-    'attacker'
-  ],
   data: () => ({
-    unitSpeeds: [3, 4, 5, 6, 7, 9, 10, 13, 14, 15, 16, 17, 19, 20, 22, 25],
-    arteSpeeds: [0.33, 0.5, 0.67, 1, 1.5, 2],
-    tsLevels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-    heroBoots: [0, 25, 50, 75],
-    maps: [0, 30, 40, 50]
+    mutableAttacker: {},
+    loaded: false
   }),
+  props: [
+    'attacker',
+    'unitSpeeds',
+    'arteSpeeds',
+    'tsLevels',
+    'heroBoots',
+    'maps'
+  ],
+  watch: {
+    mutableAttacker: {
+      deep: true,
+      handler () {
+        if (this.loaded) {
+          this.updateAttacker()
+        }
+      }
+    }
+  },
+  mounted () {
+    this.mutableAttacker = {
+      ...this.attacker
+    }
+    this.$nextTick(() => {
+      this.loaded = true
+    })
+  },
   methods: {
+    async updateAttacker () {
+      await AttackerService.update(this.attacker._id, this.mutableAttacker)
+      this.$store.dispatch('getInfo')
+    },
     async deleteAttacker () {
       window.VoerroModal.show({
         title: 'Confirm:',
@@ -96,7 +125,7 @@ export default {
 
 <style scoped>
 .attacker_row {
-  width: 80%;
+  width: 100%;
   margin: 18px auto;
 }
 

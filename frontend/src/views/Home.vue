@@ -82,6 +82,7 @@ export default {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  text-align: left;
 }
 
 .attacker_col {

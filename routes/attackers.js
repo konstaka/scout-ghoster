@@ -5,7 +5,7 @@ const attackers = require('../util/attackers');
 
 router.post('/', async (req, res) => {
   try {
-    if (!req.body || !req.body.x || !req.body.y) {
+    if (!req.body) {
       res.status(HttpStatus.BAD_REQUEST).end();
       return;
     }
@@ -22,6 +22,22 @@ router.get('/', async (req, res) => {
   try {
     const result = await attackers.getAttackers();
     res.status(HttpStatus.OK).json(result);
+  } catch (e) {
+    console.log(e);
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
+router.put('/:attackerId', async (req, res) => {
+  try {
+    if (!req.body) {
+      res.status(HttpStatus.BAD_REQUEST).end();
+      return;
+    }
+    const toUpdate = req.body;
+    toUpdate._id = req.params.attackerId;
+    const attacker = await attackers.saveAttacker(req.body);
+    res.status(HttpStatus.NO_CONTENT).end();
   } catch (e) {
     console.log(e);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();

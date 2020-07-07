@@ -11,6 +11,10 @@ export default {
     return res.data
   },
 
+  async update (id, attacker) {
+    await api().put(`/attackers/${id}`, attacker)
+  },
+
   async delete (attacker) {
     await api().delete(`/attackers/${attacker._id}`)
   }
