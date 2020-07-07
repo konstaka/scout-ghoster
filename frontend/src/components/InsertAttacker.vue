@@ -82,8 +82,8 @@ export default {
     'maps'
   ],
   data: () => ({
-    xCoord: 0,
-    yCoord: 0,
+    xCoord: null,
+    yCoord: null,
     unitSpeed: 3,
     arteSpeed: 1,
     tsLevel: 0,

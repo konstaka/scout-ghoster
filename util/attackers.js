@@ -1,8 +1,18 @@
 const Attacker = require('../models/Attacker');
+const Village = require('../models/Village');
 
 const saveAttacker = async (candidate) => {
   let attacker = await Attacker.findByIdAndUpdate(candidate._id, candidate);
   if (!attacker) {
+    // Retrieve player and village names
+    const matchingVillage = await Village.findOne({
+      xCoord: candidate.x,
+      yCoord: candidate.y
+    });
+    if (matchingVillage) {
+      candidate.player = matchingVillage.playerName;
+      candidate.villageName = matchingVillage.villageName;
+    }
     attacker = new Attacker(candidate);
     attacker = await attacker.save();
   }

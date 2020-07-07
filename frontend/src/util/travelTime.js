@@ -8,13 +8,13 @@ export const getTravelTime = (target, attacker) => {
   let distance = Math.sqrt(
     Math.pow(
       Math.min(
-        Math.abs(attacker.x - target.x),
-        store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.x - target.x)),
+        Math.abs(attacker.x - target.xCoord),
+        store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.x - target.xCoord)),
       2)
     + Math.pow(
       Math.min(
-        Math.abs(attacker.y - target.y),
-        store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.y - target.y)),
+        Math.abs(attacker.y - target.yCoord),
+        store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.y - target.yCoord)),
       2)
   )
   // Baseline speed

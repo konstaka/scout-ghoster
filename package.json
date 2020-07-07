@@ -20,7 +20,8 @@
     "http-status-codes": "^1.4.0",
     "mongoose": "^5.9.20",
     "morgan": "~1.9.1",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "sync-scroll": "^1.0.3"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",

@@ -6,15 +6,10 @@ const updatedAt = async () => {
   return randomVillage.updatedAt;
 }
 
-const getVillage = async (x, y) => {
-  const village = await Village.findOne({ xCoord: x, yCoord: y });
-  return village;
-}
-
 const update = async () => {
   try {
     if (!process.env.TRAVIAN_URL || !process.env.TRAVIAN_URL.includes('travian')) {
-      return null;
+      return;
     }
     const mapRes = await axios.get(`https://${process.env.TRAVIAN_URL}/map.sql`);
     const mapData = mapRes.data.split('\n');
@@ -73,6 +68,5 @@ const update = async () => {
 
 module.exports = {
   updatedAt,
-  getVillage,
   update
 }
