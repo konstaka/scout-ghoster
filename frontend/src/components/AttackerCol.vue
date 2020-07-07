@@ -1,11 +1,17 @@
 <template>
   <div>
-    <TimeBox
+    <div
       v-for="target of $store.state.targets"
-      :key="`time${attacker.x}${attacker.y}${target.xCoord}${target.yCoord}`"
+      :key="target[0].playerName"
+    >
+    <div class="player_padding" />
+    <TimeBox
+      v-for="village of target"
+      :key="`time${attacker.x}${attacker.y}${village.xCoord}${village.yCoord}`"
       :attacker="attacker"
-      :target="target"
+      :target="village"
     />
+    </div>
   </div>
 </template>
 
@@ -23,4 +29,7 @@ export default {
 </script>
 
 <style scoped>
+.player_padding {
+  height: 42px;
+}
 </style>

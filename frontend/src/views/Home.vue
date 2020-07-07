@@ -19,7 +19,7 @@
       <div name="scrollingAttackers" class="attacker_cols names syncscroll">
         <div
           v-for="attacker of $store.state.attackers"
-          :key="`attacker${attacker.x}${attacker.y}`"
+          :key="`attackerName${attacker.x}${attacker.y}`"
           class="attacker_col"
         >
           <div class="attacker">
@@ -30,12 +30,20 @@
     </div>
     <div class="targets_wrapper">
       <!-- Targets -->
-      <TargetVillage
+      <div
         v-for="target of $store.state.targets"
-        :key="`target${target.xCoord}${target.yCoord}`"
-        :target="target"
-        class="left"
-      />
+        :key="`target${target[0].playerName}`"
+        class="player left"
+      >
+        <div class="player_name">
+          {{ target[0].playerName }}
+        </div>
+        <TargetVillage
+          v-for="village of target"
+          :key="`target${village.xCoord}${village.yCoord}`"
+          :target="village"
+        />
+      </div>
     </div>
     <!-- Sending times -->
     <div name="scrollingAttackers" class="attacker_cols syncscroll">
@@ -99,6 +107,15 @@ export default {
   float: left;
 }
 
+.player {
+  margin-top: 20px;
+}
+
+.player_name {
+  margin-left: 10px;
+  font-style: italic;
+}
+
 .left {
   text-align: left;
 }
@@ -119,7 +136,6 @@ export default {
 
 .names {
   height: 100px;
-  overflow: hidden;
 }
 
 .attacker {
