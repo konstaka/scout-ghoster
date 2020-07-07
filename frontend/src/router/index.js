@@ -6,6 +6,7 @@ import Ghosts from '../views/Ghosts'
 import Messages from '../views/Messages'
 import Scouts from '../views/Scouts'
 import Targets from '../views/Targets'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,13 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (store.state.attackers.length === 0) {
+    store.dispatch('getInfo')
+  }
+  next()
 })
 
 export default router

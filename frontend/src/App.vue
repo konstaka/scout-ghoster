@@ -2,6 +2,7 @@
   <div id="app">
     <Navbar />
     <router-view />
+    <modal />
   </div>
 </template>
 <script>
@@ -23,5 +24,6 @@ export default {
 }
 body {
   margin: 0;
+  background: #dbe3eb;
 }
 </style>
