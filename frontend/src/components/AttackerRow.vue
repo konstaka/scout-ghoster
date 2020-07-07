@@ -146,6 +146,11 @@ export default {
   padding-right: 5px;
 }
 
+.coords {
+  width: 9%;
+  text-align: center;
+}
+
 .unit_speed {
   width: 8%;
 }

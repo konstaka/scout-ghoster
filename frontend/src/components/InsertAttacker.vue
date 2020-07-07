@@ -74,6 +74,13 @@ export default {
   components: {
     DropDown
   },
+  props: [
+    'unitSpeeds',
+    'arteSpeeds',
+    'tsLevels',
+    'heroBoots',
+    'maps'
+  ],
   data: () => ({
     xCoord: 0,
     yCoord: 0,
@@ -83,13 +90,6 @@ export default {
     hero: 0,
     map: 0
   }),
-  props: [
-    'unitSpeeds',
-    'arteSpeeds',
-    'tsLevels',
-    'heroBoots',
-    'maps'
-  ],
   methods: {
     async addAttacker () {
       await AttackerService.save({
@@ -122,18 +122,19 @@ export default {
 }
 
 .explain_text {
-  width: 14%;
+  width: 15%;
   text-align: left;
 }
 
 .inputs {
-  width: 15%;
+  width: 16%;
+  text-align: right;
   padding-right: 5px;
 }
 
 .coord_box {
   width: 42px;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 input {
