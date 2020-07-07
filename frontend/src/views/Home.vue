@@ -81,6 +81,7 @@ export default {
   },
   mounted () {
     if (syncscroll) {
+      syncscroll.reset()
       console.log('Using syncscroll-0.0.3')
     }
   }
