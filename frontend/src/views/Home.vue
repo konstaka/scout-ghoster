@@ -38,13 +38,14 @@
         :key="`target${target[0].playerName}`"
         class="player left"
       >
-        <div class="player_name">
+        <div class="player_name_listing">
           {{ target[0].playerName }}
         </div>
         <TargetVillage
           v-for="village of target"
           :key="`target${village.xCoord}${village.yCoord}`"
           :target="village"
+          :filtered="true"
         />
       </div>
     </div>
@@ -126,7 +127,7 @@ export default {
   margin-top: 20px;
 }
 
-.player_name {
+.player_name_listing {
   margin-left: 10px;
   font-style: italic;
 }

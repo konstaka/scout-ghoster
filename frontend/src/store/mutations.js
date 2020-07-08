@@ -18,6 +18,9 @@ export default {
   setTargets (state, targets) {
     state.targets = targets
   },
+  setFilter (state, filter) {
+    state.filter = filter
+  },
   setAttackers (state, attackers) {
     state.attackers = attackers
   }

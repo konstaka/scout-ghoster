@@ -12,6 +12,7 @@ export default {
   },
   async getInfo (context) {
     context.dispatch('getTargets')
+    context.dispatch('getFilter')
     context.dispatch('getAttackers')
   },
   async getTargets (context) {
@@ -28,6 +29,10 @@ export default {
         }))
       })
     context.commit('setTargets', players)
+  },
+  async getFilter (context) {
+    const res = await TargetService.getFilter()
+    context.commit('setFilter', res)
   },
   async getAttackers (context) {
     const res = await AttackerService.getAll()

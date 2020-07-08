@@ -7,6 +7,7 @@ export default {
   },
   attackers: [],
   targets: [],
+  filter: {},
   scouts: [],
   ghosts: [],
   selections: [],

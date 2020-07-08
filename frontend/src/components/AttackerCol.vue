@@ -10,6 +10,7 @@
       :key="`time${attacker.x}${attacker.y}${village.xCoord}${village.yCoord}`"
       :attacker="attacker"
       :target="village"
+      :filtered="true"
     />
     </div>
   </div>

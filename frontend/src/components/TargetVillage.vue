@@ -1,5 +1,5 @@
 <template>
-  <div class="target">
+  <div v-if="!filtered || isVisible" class="target">
     {{ target.villageName }} ({{ target.xCoord }}|{{ target.yCoord }})
   </div>
 </template>
@@ -8,8 +8,14 @@
 export default {
   name: 'TargetVillage',
   props: [
-    'target'
-  ]
+    'target',
+    'filtered'
+  ],
+  computed: {
+    isVisible () {
+      return this.$store.state.filter[this.target.coordId]
+    }
+  }
 }
 </script>
 

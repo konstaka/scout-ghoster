@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!filtered || isVisible"
     class="timebox"
     :class="{ pressed: selected }"
     @click="toggleSelected"
@@ -14,7 +15,8 @@ export default {
   name: 'TimeBox',
   props: [
     'target',
-    'attacker'
+    'attacker',
+    'filtered'
   ],
   data: () => ({
     selected: false
@@ -28,6 +30,9 @@ export default {
       }
       return getSendingTime(this.target, this.attacker)
         .toLocaleTimeString('en-GB', options)
+    },
+    isVisible () {
+      return this.$store.state.filter[this.target.coordId]
     }
   },
   mounted () {
