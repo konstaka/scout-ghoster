@@ -23,5 +23,11 @@ export default {
   },
   setAttackers (state, attackers) {
     state.attackers = attackers
+  },
+  setScouts (state, scouts) {
+    state.scouts = scouts
+  },
+  setGhosts (state, ghosts) {
+    state.ghosts = ghosts
   }
 }
