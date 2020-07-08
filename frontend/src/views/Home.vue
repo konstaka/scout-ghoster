@@ -25,6 +25,9 @@
           <div class="attacker">
             {{ attacker.villageName }} ({{ attacker.x }}|{{ attacker.y }})
           </div>
+          <AttackerUpdates
+            :attacker="attacker"
+          />
         </div>
       </div>
     </div>
@@ -64,6 +67,7 @@ import 'vue2-timepicker/dist/VueTimepicker.css'
 import { mapFields } from 'vuex-map-fields'
 import TargetVillage from '@/components/TargetVillage'
 import AttackerCol from '@/components/AttackerCol'
+import AttackerUpdates from '@/components/AttackerUpdates'
 import syncscroll from '@/util/syncscroll-0.0.3/syncscroll'
 export default {
   name: 'Home',
@@ -71,7 +75,8 @@ export default {
     Datepicker,
     VueTimepicker,
     TargetVillage,
-    AttackerCol
+    AttackerCol,
+    AttackerUpdates
   },
   computed: {
     ...mapFields([
@@ -82,15 +87,24 @@ export default {
   mounted () {
     if (syncscroll) {
       syncscroll.reset()
-      console.log('Using syncscroll-0.0.3')
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 .home_wrapper {
   padding-top: 5px;
+}
+
+.timepicker {
+  margin-top: 6px;
+}
+
+.timepicker input, .datepicker input {
+  background: #ebf0f4;
+  border: 1px solid #666 !important;
+  width: 160px;
 }
 
 .sticky {
@@ -140,11 +154,11 @@ export default {
 }
 
 .attacker {
-  margin-top: 40px;
+  margin: 8px 0;
 }
 
 .attacker_col {
-  width: 200px;
+  width: 245px;
   display: inline-block;
 }
 </style>
