@@ -66,6 +66,7 @@ import Datepicker from 'vuejs-datepicker'
 import VueTimepicker from 'vue2-timepicker'
 import 'vue2-timepicker/dist/VueTimepicker.css'
 import { mapFields } from 'vuex-map-fields'
+import OperationMetaService from '@/services/operationMeta'
 import TargetVillage from '@/components/TargetVillage'
 import AttackerCol from '@/components/AttackerCol'
 import AttackerUpdates from '@/components/AttackerUpdates'
@@ -83,7 +84,22 @@ export default {
     ...mapFields([
       'opsHittingDay',
       'opsHittingTime'
-    ])
+    ]),
+    hittingTime () {
+      return (new Date(this.opsHittingDay)).setHours(
+        this.opsHittingTime.HH,
+        this.opsHittingTime.mm,
+        this.opsHittingTime.ss
+      )
+    }
+  },
+  watch: {
+    async hittingTime (newV, oldV) {
+      if (oldV) {
+        await OperationMetaService.save(newV)
+        this.$store.dispatch('getInfo')
+      }
+    }
   },
   mounted () {
     if (syncscroll) {

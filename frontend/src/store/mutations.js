@@ -15,6 +15,25 @@ export default {
         || msg.attacker.y !== attacker.y
     })
   },
+  setConfig (state, settings) {
+    state.serverConfig.speed = settings.speed
+    state.serverConfig.size = settings.size
+  },
+  setOpsTime (state, hittingTime) {
+    const opsHittingDay = new Date(hittingTime)
+    state.opsHittingDay = opsHittingDay
+    const opsHittingTime = {
+      HH: opsHittingDay.getHours().toString(),
+      mm: opsHittingDay.getMinutes().toString(),
+      ss: opsHittingDay.getSeconds().toString()
+    }
+    for (const key of Object.keys(opsHittingTime)) {
+      if (opsHittingTime[key].length < 2) {
+        opsHittingTime[key] = '0' + opsHittingTime[key]
+      }
+    }
+    state.opsHittingTime = opsHittingTime
+  },
   setTargets (state, targets) {
     state.targets = targets
   },

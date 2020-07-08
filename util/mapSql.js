@@ -55,14 +55,14 @@ const update = async () => {
     if (villages.length === mapData.length - 1) {
       // All lines OK, last one is empty
       // Replace old data
-      const dropped = await Village.collection.drop();
-      if (dropped) {
-        const insertRes = await Village.collection
-          .insertMany(villages, { ordered: false });
-        console.log('Saved ' + insertRes.insertedCount + ' villages');
-      } else {
-        console.log('Could not delete old data.');
+      try {
+        await Village.collection.drop();
+      } catch (err) {
+        console.log(err);
       }
+      const insertRes = await Village.collection
+        .insertMany(villages, { ordered: false });
+      console.log('Saved ' + insertRes.insertedCount + ' villages');
     }
   } catch (e) {
     console.log(e);

@@ -1,3 +1,5 @@
+import SettingsService from '@/services/settings'
+import OperationMetaService from '@/services/operationMeta'
 import TargetService from '@/services/target'
 import AttackerService from '@/services/attacker'
 import ScoutService from '@/services/scout'
@@ -13,11 +15,21 @@ export default {
     }
   },
   async getInfo (context) {
+    context.dispatch('getSettings')
+    context.dispatch('getOperationMeta')
     context.dispatch('getTargets')
     context.dispatch('getFilter')
     context.dispatch('getAttackers')
     context.dispatch('getScouts')
     context.dispatch('getGhosts')
+  },
+  async getSettings (context) {
+    const settings = await SettingsService.get()
+    context.commit('setConfig', settings)
+  },
+  async getOperationMeta (context) {
+    const data = await OperationMetaService.load()
+    context.commit('setOpsTime', data.hittingTime)
   },
   async getTargets (context) {
     const res = await TargetService.getAll()

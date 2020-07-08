@@ -41,12 +41,16 @@ if (process.env.NODE_ENV === 'development') {
 // Vue frontend
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
+const settingsRouter = require('./routes/settings');
+const operationMetaRouter = require('./routes/operationMeta');
 const targetsRouter = require('./routes/targets');
 const attackersRouter = require('./routes/attackers');
 const scoutsRouter = require('./routes/scouts');
 const ghostsRouter = require('./routes/ghosts');
 const mapSqlRouter = require('./routes/mapSql');
 
+app.use('/settings', settingsRouter);
+app.use('/operationMeta', operationMetaRouter);
 app.use('/targets', targetsRouter);
 app.use('/attackers', attackersRouter);
 app.use('/scouts', scoutsRouter);

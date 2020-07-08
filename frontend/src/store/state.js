@@ -1,10 +1,6 @@
 export default {
-  opsHittingDay: 'Fri May 15 2020 21:23:00 GMT+0200 (Central European Summer Time)',
-  opsHittingTime: {
-    HH: '06',
-    mm: '30',
-    ss: '00'
-  },
+  opsHittingDay: null,
+  opsHittingTime: {},
   attackers: [],
   targets: [],
   filter: {},
