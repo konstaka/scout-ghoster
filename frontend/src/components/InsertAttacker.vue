@@ -122,7 +122,7 @@ export default {
 }
 
 .explain_text {
-  width: 15%;
+  width: 18%;
   text-align: left;
 }
 

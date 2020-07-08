@@ -142,7 +142,7 @@ export default {
 }
 
 .village_name {
-  width: 11%;
+  width: 14%;
   padding-right: 5px;
 }
 
