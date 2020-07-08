@@ -15,6 +15,12 @@ export default {
         || msg.attacker.y !== attacker.y
     })
   },
+  signIn (state) {
+    state.isSignIn = true
+  },
+  signOut (state) {
+    state.isSignIn = false
+  },
   setConfig (state, settings) {
     state.serverConfig.speed = settings.speed
     state.serverConfig.size = settings.size

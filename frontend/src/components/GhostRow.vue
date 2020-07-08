@@ -66,10 +66,6 @@ export default {
   components: {
     DropDown
   },
-  data: () => ({
-    mutableGhost: {},
-    loaded: false
-  }),
   props: [
     'ghost',
     'unitSpeeds',
@@ -77,6 +73,10 @@ export default {
     'tsLevels',
     'heroBoots'
   ],
+  data: () => ({
+    mutableGhost: {},
+    loaded: false
+  }),
   watch: {
     mutableGhost: {
       deep: true,

@@ -66,10 +66,6 @@ export default {
   components: {
     DropDown
   },
-  data: () => ({
-    mutableAttacker: {},
-    loaded: false
-  }),
   props: [
     'attacker',
     'unitSpeeds',
@@ -78,6 +74,10 @@ export default {
     'heroBoots',
     'maps'
   ],
+  data: () => ({
+    mutableAttacker: {},
+    loaded: false
+  }),
   watch: {
     mutableAttacker: {
       deep: true,

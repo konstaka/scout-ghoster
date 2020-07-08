@@ -1,4 +1,5 @@
 export default {
+  isSignIn: false,
   opsHittingDay: null,
   opsHittingTime: {},
   attackers: [],
