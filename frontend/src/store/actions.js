@@ -1,5 +1,7 @@
 import TargetService from '@/services/target'
 import AttackerService from '@/services/attacker'
+import ScoutService from '@/services/scout'
+import GhostService from '@/services/ghost'
 import { groupBy } from 'underscore'
 
 export default {
@@ -14,6 +16,8 @@ export default {
     context.dispatch('getTargets')
     context.dispatch('getFilter')
     context.dispatch('getAttackers')
+    context.dispatch('getScouts')
+    context.dispatch('getGhosts')
   },
   async getTargets (context) {
     const res = await TargetService.getAll()
@@ -37,5 +41,13 @@ export default {
   async getAttackers (context) {
     const res = await AttackerService.getAll()
     context.commit('setAttackers', res)
+  },
+  async getScouts (context) {
+    const res = await ScoutService.getAll()
+    context.commit('setScouts', res)
+  },
+  async getGhosts (context) {
+    const res = await GhostService.getAll()
+    context.commit('setGhosts', res)
   }
 }
