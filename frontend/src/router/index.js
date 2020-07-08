@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home'
-import Attackers from '../views/Attackers'
-import Ghosts from '../views/Ghosts'
-import Messages from '../views/Messages'
-import Scouts from '../views/Scouts'
-import store from '../store'
+import Home from '@/views/Home'
+import Targets from '@/views/Targets'
+import Attackers from '@/views/Attackers'
+import Ghosts from '@/views/Ghosts'
+import Messages from '@/views/Messages'
+import Scouts from '@/views/Scouts'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/targets',
+    name: 'Targets',
+    component: Targets
   },
   {
     path: '/attackers',

@@ -36,7 +36,7 @@ router.put('/:attackerId', async (req, res) => {
     }
     const toUpdate = req.body;
     toUpdate._id = req.params.attackerId;
-    const attacker = await attackers.saveAttacker(req.body);
+    await attackers.saveAttacker(req.body);
     res.status(HttpStatus.NO_CONTENT).end();
   } catch (e) {
     console.log(e);
