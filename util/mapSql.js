@@ -3,7 +3,10 @@ const axios = require('axios');
 
 const updatedAt = async () => {
   const randomVillage = await Village.find().limit(1);
-  return randomVillage.updatedAt;
+  if (!randomVillage || !randomVillage[0]) {
+    return null;
+  }
+  return randomVillage[0].updatedAt;
 }
 
 const update = async () => {
