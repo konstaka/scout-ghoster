@@ -35,13 +35,15 @@ export default {
     async signIn () {
       const GoogleUser = await this.$gAuth.signIn()
       this.$cookies.set('id_token', GoogleUser.getAuthResponse().id_token)
-      this.$store.commit('signIn')
+      this.$store.commit('SIGN_IN')
       router.push('/')
     },
     async signOut () {
       this.$cookies.remove('id_token')
-      this.$store.commit('signOut')
-      router.push('/login')
+      this.$store.commit('SIGN_OUT')
+      if (router.history.current.path !== '/login') {
+        router.push('/login')
+      }
     }
   }
 }

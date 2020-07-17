@@ -1,4 +1,4 @@
-export default {
+const initialState = {
   isSignIn: false,
   opsHittingDay: null,
   opsHittingTime: {},
@@ -19,3 +19,5 @@ export default {
   maps: [0, 30, 40, 50],
   scoutArtes: [1, 3, 5, 10]
 }
+
+export default initialState

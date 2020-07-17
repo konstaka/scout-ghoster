@@ -8,7 +8,6 @@ import Ghosts from '@/views/Ghosts'
 import Messages from '@/views/Messages'
 import Scouts from '@/views/Scouts'
 import store from '@/store'
-import jwtDecode from 'jwt-decode'
 
 Vue.use(VueRouter)
 
@@ -55,15 +54,23 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  // Always allow navigating to login page
   if (to.path === '/login') {
     next()
     return
   }
+
+  // For other pages, check user auth status
+  // Jut see if token exists
   const idToken = Vue.$cookies.get('id_token')
-  if (!idToken || jwtDecode(idToken).exp * 1000 < new Date()) {
+  if (!idToken) {
+    store.commit('SIGN_OUT')
     next('/login')
     return
   }
+
+  // User is signed in
+  store.commit('SIGN_IN')
   if (store.state.attackers.length === 0) {
     store.dispatch('getInfo')
   }
