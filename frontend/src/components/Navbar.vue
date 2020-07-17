@@ -14,13 +14,6 @@
     >
       Sign out
     </div>
-    <div
-      v-else
-      class="sign_in"
-      @click="signIn"
-    >
-      Sign in
-    </div>
   </div>
 </template>
 
@@ -32,12 +25,6 @@ export default {
     routes: router.options.routes
   }),
   methods: {
-    async signIn () {
-      const GoogleUser = await this.$gAuth.signIn()
-      this.$cookies.set('id_token', GoogleUser.getAuthResponse().id_token)
-      this.$store.commit('SIGN_IN')
-      router.push('/')
-    },
     async signOut () {
       this.$cookies.remove('id_token')
       this.$store.commit('SIGN_OUT')
