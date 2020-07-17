@@ -59,10 +59,6 @@ export default {
   components: {
     DropDown
   },
-  data: () => ({
-    mutableScout: {},
-    loaded: false
-  }),
   props: [
     'scout',
     'unitSpeeds',
@@ -71,6 +67,10 @@ export default {
     'heroBoots',
     'scoutArtes'
   ],
+  data: () => ({
+    mutableScout: {},
+    loaded: false
+  }),
   watch: {
     mutableScout: {
       deep: true,

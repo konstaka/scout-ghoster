@@ -9,9 +9,9 @@ import { groupBy } from 'underscore'
 export default {
   updateSelections (context, { target, attacker, selected }) {
     if (selected) {
-      context.commit('addSelection', { target, attacker })
+      context.commit('ADD_SELECTION', { target, attacker })
     } else {
-      context.commit('removeSelection', { target, attacker })
+      context.commit('REMOVE_SELECTION', { target, attacker })
     }
   },
   async getInfo (context) {
@@ -25,11 +25,11 @@ export default {
   },
   async getSettings (context) {
     const settings = await SettingsService.get()
-    context.commit('setConfig', settings)
+    context.commit('SET_CONFIG', settings)
   },
   async getOperationMeta (context) {
     const data = await OperationMetaService.load()
-    context.commit('setOpsTime', data.hittingTime)
+    context.commit('SET_OPS_TIME', data.hittingTime)
   },
   async getTargets (context) {
     const res = await TargetService.getAll()
@@ -44,22 +44,22 @@ export default {
           return a.villageName.localeCompare(b.villageName)
         }))
       })
-    context.commit('setTargets', players)
+    context.commit('SET_TARGETS', players)
   },
   async getFilter (context) {
     const res = await TargetService.getFilter()
-    context.commit('setFilter', res)
+    context.commit('SET_FILTER', res)
   },
   async getAttackers (context) {
     const res = await AttackerService.getAll()
-    context.commit('setAttackers', res)
+    context.commit('SET_ATTACKERS', res)
   },
   async getScouts (context) {
     const res = await ScoutService.getAll()
-    context.commit('setScouts', res)
+    context.commit('SET_SCOUTS', res)
   },
   async getGhosts (context) {
     const res = await GhostService.getAll()
-    context.commit('setGhosts', res)
+    context.commit('SET_GHOSTS', res)
   }
 }

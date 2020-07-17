@@ -24,12 +24,12 @@ import DropDown from '@/components/DropDown'
 import AttackerService from '@/services/attacker'
 export default {
   name: 'AttackerUpdates',
-  props: [
-    'attacker'
-  ],
   components: {
     DropDown
   },
+  props: [
+    'attacker'
+  ],
   data: () => ({
     mutableAttacker: {},
     loaded: false

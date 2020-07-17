@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "deploy": "cd frontend && rm -rf dist && npm run build",
     "start": "cross-env NODE_ENV=production node ./bin/www",
     "dev": "concurrently \"cross-env NODE_ENV=development nodemon ./bin/www\" \" cd frontend && npm run serve\"",
     "check": "cd frontend && npm run lint",
@@ -18,6 +19,7 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "http-status-codes": "^1.4.0",
+    "jwt-decode": "^2.2.0",
     "mongoose": "^5.9.20",
     "morgan": "~1.9.1",
     "pug": "^2.0.4",

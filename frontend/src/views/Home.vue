@@ -16,7 +16,10 @@
         />
       </div>
       <!-- Attackers -->
-      <div name="scrollingAttackers" class="attacker_cols names syncscroll">
+      <div
+        name="scrollingAttackers"
+        class="attacker_cols names syncscroll"
+      >
         <div
           v-for="attacker of $store.state.attackers"
           :key="`attackerName${attacker.x}${attacker.y}`"
@@ -50,7 +53,10 @@
       </div>
     </div>
     <!-- Sending times -->
-    <div name="scrollingAttackers" class="attacker_cols syncscroll">
+    <div
+      name="scrollingAttackers"
+      class="attacker_cols syncscroll"
+    >
       <AttackerCol
         v-for="attacker of $store.state.attackers"
         :key="`attacker${attacker.x}${attacker.y}`"

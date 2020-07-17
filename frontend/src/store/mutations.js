@@ -1,13 +1,15 @@
 import { updateField } from 'vuex-map-fields'
+import initialState from './state'
+import Vue from 'vue'
 export default {
   updateField,
-  addSelection (state, { target, attacker }) {
+  ADD_SELECTION (state, { target, attacker }) {
     state.selections.push({
       target,
       attacker
     })
   },
-  removeSelection (state, { target, attacker }) {
+  REMOVE_SELECTION (state, { target, attacker }) {
     state.selections = state.selections.filter((msg) => {
       return msg.target.x !== target.x
         || msg.target.y !== target.y
@@ -15,11 +17,20 @@ export default {
         || msg.attacker.y !== attacker.y
     })
   },
-  setConfig (state, settings) {
+  SIGN_IN (state) {
+    state.isSignIn = true
+  },
+  SIGN_OUT (state) {
+    for (const prop in state) {
+      state[prop] = initialState[prop]
+    }
+    Vue.$cookies.remove('id_token')
+  },
+  SET_CONFIG (state, settings) {
     state.serverConfig.speed = settings.speed
     state.serverConfig.size = settings.size
   },
-  setOpsTime (state, hittingTime) {
+  SET_OPS_TIME (state, hittingTime) {
     const opsHittingDay = new Date(hittingTime)
     state.opsHittingDay = opsHittingDay
     const opsHittingTime = {
@@ -34,19 +45,19 @@ export default {
     }
     state.opsHittingTime = opsHittingTime
   },
-  setTargets (state, targets) {
+  SET_TARGETS (state, targets) {
     state.targets = targets
   },
-  setFilter (state, filter) {
+  SET_FILTER (state, filter) {
     state.filter = filter
   },
-  setAttackers (state, attackers) {
+  SET_ATTACKERS (state, attackers) {
     state.attackers = attackers
   },
-  setScouts (state, scouts) {
+  SET_SCOUTS (state, scouts) {
     state.scouts = scouts
   },
-  setGhosts (state, ghosts) {
+  SET_GHOSTS (state, ghosts) {
     state.ghosts = ghosts
   }
 }

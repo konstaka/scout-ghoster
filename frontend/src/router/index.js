@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Login from '@/views/Login'
 import Home from '@/views/Home'
 import Targets from '@/views/Targets'
 import Attackers from '@/views/Attackers'
@@ -11,6 +12,11 @@ import store from '@/store'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/login',
+    name: '',
+    component: Login
+  },
   {
     path: '/',
     name: 'Home',
@@ -48,6 +54,23 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  // Always allow navigating to login page
+  if (to.path === '/login') {
+    next()
+    return
+  }
+
+  // For other pages, check user auth status
+  // Jut see if token exists
+  const idToken = Vue.$cookies.get('id_token')
+  if (!idToken) {
+    store.commit('SIGN_OUT')
+    next('/login')
+    return
+  }
+
+  // User is signed in
+  store.commit('SIGN_IN')
   if (store.state.attackers.length === 0) {
     store.dispatch('getInfo')
   }

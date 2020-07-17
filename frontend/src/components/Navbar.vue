@@ -7,6 +7,13 @@
     >
       {{ route.name }}
     </router-link>
+    <div
+      v-if="$store.state.isSignIn"
+      class="sign_in"
+      @click="signOut"
+    >
+      Sign out
+    </div>
   </div>
 </template>
 
@@ -16,7 +23,16 @@ export default {
   name: 'Navbar',
   data: () => ({
     routes: router.options.routes
-  })
+  }),
+  methods: {
+    async signOut () {
+      this.$cookies.remove('id_token')
+      this.$store.commit('SIGN_OUT')
+      if (router.history.current.path !== '/login') {
+        router.push('/login')
+      }
+    }
+  }
 }
 </script>
 
@@ -33,7 +49,19 @@ export default {
   text-decoration: none;
 }
 
+#nav a:first-of-type {
+  display: none;
+}
+
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.sign_in {
+  color: #dbe3eb;
+  position: absolute;
+  top: 20px;
+  right: 48px;
+  cursor: pointer;
 }
 </style>
