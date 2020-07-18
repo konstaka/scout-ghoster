@@ -29,6 +29,9 @@ export default {
   SET_USER_ROLES (state, roles) {
     state.roles = roles.filter((r) => r.length > 0)
   },
+  LOADED (state) {
+    state.loaded = true
+  },
   SET_CONFIG (state, settings) {
     state.serverConfig.speed = settings.speed
     state.serverConfig.size = settings.size

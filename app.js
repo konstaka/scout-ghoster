@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const checkToken = require('./util/auth');
+const { checkToken, checkAccess } = require('./util/auth');
 
 // database
 mongoose.connect(process.env.DB_LINK, {
@@ -42,8 +42,9 @@ if (process.env.NODE_ENV === 'development') {
 // Vue frontend
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
-// authentication middleware before accessing other routes
+// auth middlewares before accessing other routes
 app.use(checkToken);
+app.use(checkAccess);
 
 // routes
 const settingsRouter = require('./routes/settings');

@@ -24,12 +24,8 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const result = await scouts.getScouts();
-    res.status(HttpStatus.OK).json(result.filter((scout) => {
-      return req.authorizedUser.roles.includes('admin')
-        || req.authorizedUser.roles.includes('defcoord')
-        || req.authorizedUser.accounts.includes(scout.player)
-    }));
+    const result = await scouts.getScouts(req.authorizedUser);
+    res.status(HttpStatus.OK).json(result);
   } catch (e) {
     console.log(e);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
@@ -44,7 +40,7 @@ router.put('/:scoutId', async (req, res) => {
     }
     const toUpdate = req.body;
     toUpdate._id = req.params.scoutId;
-    const scout = await scouts.saveScout(req.body);
+    const scout = await scouts.saveScout(req.authorizedUser, req.body);
     if (scout._id) {
       res.status(HttpStatus.NO_CONTENT).end();
     } else {

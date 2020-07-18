@@ -41,4 +41,63 @@ const checkToken = async (req, res, next) => {
   next();
 };
 
-module.exports = checkToken
+const checkAccess = (req, res, next) => {
+
+  // list user groups
+  // const adminGroup = [
+  //   'admin'
+  // ];
+  const managerGroup = [
+    'admin',
+    'defcoord'
+  ];
+  const scoutGroup = [
+    'admin',
+    'defcoord',
+    'scout'
+  ];
+  const ghostGroup = [
+    'admin',
+    'defcoord',
+    'ghost'
+  ];
+
+  // match on request url
+  switch (req.url) {
+    case (req.url.match(/mapSql/) || {}).input:
+    case (req.url.match(/operationMeta/) || {}).input:
+    case (req.url.match(/targets/) || {}).input:
+    case (req.url.match(/attackers/) || {}).input:
+      if (!req.authorizedUser.roles.some((r) => managerGroup.includes(r))) {
+        res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
+        return;
+      }
+      break;
+    case (req.url.match(/scouts/) || {}).input:
+      if (!req.authorizedUser.roles.some((r) => scoutGroup.includes(r))) {
+        res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
+        return;
+      }
+      break;
+    case (req.url.match(/ghosts/) || {}).input:
+      if (!req.authorizedUser.roles.some((r) => ghostGroup.includes(r))) {
+        res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
+        return;
+      }
+      break;
+    case (req.url.match(/settings/) || {}).input:
+    case (req.url.match(/user/) || {}).input:
+      break;
+    default:
+      res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
+      return;
+  }
+
+  // forward to route
+  next();
+}
+
+module.exports = {
+  checkToken,
+  checkAccess
+}

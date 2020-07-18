@@ -1,5 +1,6 @@
 const initialState = {
   isSignIn: false,
+  loaded: false,
   roles: [],
   opsHittingDay: null,
   opsHittingTime: {},

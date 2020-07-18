@@ -22,6 +22,7 @@ export default {
     context.dispatch('getAttackers')
     context.dispatch('getScouts')
     context.dispatch('getGhosts')
+    context.commit('LOADED')
   },
   async getSettings (context) {
     const settings = await SettingsService.get()

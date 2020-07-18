@@ -24,12 +24,8 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const result = await ghosts.getGhosts();
-    res.status(HttpStatus.OK).json(result.filter((ghost) => {
-      return req.authorizedUser.roles.includes('admin')
-        || req.authorizedUser.roles.includes('defcoord')
-        || req.authorizedUser.accounts.includes(ghost.player)
-    }));
+    const result = await ghosts.getGhosts(req.authorizedUser);
+    res.status(HttpStatus.OK).json(result);
   } catch (e) {
     console.log(e);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
@@ -44,7 +40,7 @@ router.put('/:ghostId', async (req, res) => {
     }
     const toUpdate = req.body;
     toUpdate._id = req.params.ghostId;
-    const ghost = await ghosts.saveGhost(req.body);
+    const ghost = await ghosts.saveGhost(req.authorizedUser, req.body);
     if (ghost._id) {
       res.status(HttpStatus.NO_CONTENT).end();
     } else {

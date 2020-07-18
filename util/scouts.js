@@ -22,6 +22,30 @@ const saveScout = async (user, candidate) => {
     && !user.roles.includes('scout')) {
     return 'Not enough permissions';
   }
+  // Attach info
+  if (matchingVillage) {
+    candidate.player = matchingVillage.playerName;
+    candidate.villageName = matchingVillage.villageName;
+    candidate.unitSpeed = ((tribe) => {
+      switch (tribe) {
+        // Roman
+        case 1:
+          return 16;
+          break;
+        // Teuton
+        case 2:
+          return 9;
+          break;
+        // Gaul
+        case 3:
+          return 17;
+          break;
+        default:
+          return undefined;
+          break;
+      }
+    })(matchingVillage.tribe);
+  }
   // Find possibly existing scout
   let scout = await Scout.findById(candidate._id);
   if (scout) {
@@ -29,39 +53,19 @@ const saveScout = async (user, candidate) => {
     scout = await Scout.findByIdAndUpdate(candidate._id, candidate);
   } else {
     // Adding new scout
-    // Attach info
-    if (matchingVillage) {
-      candidate.player = matchingVillage.playerName;
-      candidate.villageName = matchingVillage.villageName;
-      candidate.unitSpeed = ((tribe) => {
-        switch (tribe) {
-          // Roman
-          case 1:
-            return 16;
-            break;
-          // Teuton
-          case 2:
-            return 9;
-            break;
-          // Gaul
-          case 3:
-            return 17;
-            break;
-          default:
-            return undefined;
-            break;
-        }
-      })(matchingVillage.tribe);
-    }
     scout = new Scout(candidate);
     scout = await scout.save();
   }
   return scout;
 };
 
-const getScouts = async () => {
+const getScouts = async (user) => {
   const scouts = await Scout.find();
-  return scouts;
+  return scouts.filter((scout) => {
+    return user.roles.includes('admin')
+      || user.roles.includes('defcoord')
+      || user.accounts.includes(scout.player)
+  });
 };
 
 const deleteScout = async (user, scoutId) => {

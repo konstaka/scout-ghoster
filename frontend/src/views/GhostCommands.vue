@@ -1,12 +1,12 @@
 <template>
   <div>
-    Display commands with scout role
+    Display commands with ghost role
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ScoutCommands'
+  name: 'GhostCommands'
 }
 </script>
 
