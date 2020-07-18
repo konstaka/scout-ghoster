@@ -1,5 +1,8 @@
 <template>
-  <div v-if="!filtered || isVisible" class="target">
+  <div
+    v-if="!filtered || isVisible"
+    class="target"
+  >
     {{ target.villageName }} ({{ target.xCoord }}|{{ target.yCoord }})
   </div>
 </template>

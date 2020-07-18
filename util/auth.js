@@ -34,6 +34,9 @@ const checkToken = async (req, res, next) => {
     return;
   }
 
+  // attach auth info to request
+  req.authorizedUser = user;
+
   // forward to routes
   next();
 };

@@ -22,7 +22,7 @@ const update = async () => {
     const now = new Date();
     for (const village of mapData) {
       // Example line:
-      // INSERT INTO `x_world` VALUES (1471,67,197,1,22611,'08',246,'Raven',0,'',127);
+      // INSERT INTO `x_world` VALUES (1471,67,197,1,22611,'08',246,'Raven',0,'',127,NULL);
       // Strings may contain commas!
       const firstNumbers = village
         .substr(0, village.indexOf('\'') - 1)
@@ -44,7 +44,7 @@ const update = async () => {
           playerName: rest[3],
           allyId: parseInt(rest[4].substr(1, rest[3].length - 1), 10),
           allyName: rest[5],
-          population: parseInt(rest[6].substr(1, rest[5] - 2), 10),
+          population: parseInt(rest[6].split(',')[0], 10),
           updatedAt: now
         }));
       } else {

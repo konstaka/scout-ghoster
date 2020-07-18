@@ -4,17 +4,17 @@
       v-for="attacker of $store.state.attackers"
       :key="`attacker${attacker.x}${attacker.y}`"
       :attacker="attacker"
-      :unitSpeeds="$store.state.unitSpeeds"
-      :arteSpeeds="$store.state.arteSpeeds"
-      :tsLevels="$store.state.tsLevels"
-      :heroBoots="$store.state.heroBoots"
+      :unit-speeds="$store.state.unitSpeeds"
+      :arte-speeds="$store.state.arteSpeeds"
+      :ts-levels="$store.state.tsLevels"
+      :hero-boots="$store.state.heroBoots"
       :maps="$store.state.maps"
     />
     <InsertAttacker
-      :unitSpeeds="$store.state.unitSpeeds"
-      :arteSpeeds="$store.state.arteSpeeds"
-      :tsLevels="$store.state.tsLevels"
-      :heroBoots="$store.state.heroBoots"
+      :unit-speeds="$store.state.unitSpeeds"
+      :arte-speeds="$store.state.arteSpeeds"
+      :ts-levels="$store.state.tsLevels"
+      :hero-boots="$store.state.heroBoots"
       :maps="$store.state.maps"
     />
   </div>

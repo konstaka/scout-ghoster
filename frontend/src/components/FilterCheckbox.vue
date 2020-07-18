@@ -2,7 +2,7 @@
   <input
     v-model="isVisible"
     type="checkbox"
-  />
+  >
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
     async isVisible (newV, oldV) {
       if (this.loaded) {
         await TargetService.updateFilter(this.coordId, newV)
-        this.$store.dispatch('getInfo')
+        this.$store.dispatch('getFilter')
       }
     }
   },

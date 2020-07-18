@@ -13,11 +13,16 @@
         class="login_button"
       >
     </div>
+    <div class="small_print">
+      Signing in will only work with whitelisted accounts.
+      Contact your administrator for more information.
+    </div>
   </div>
 </template>
 
 <script>
 import router from '@/router/index'
+import UserService from '@/services/user'
 export default {
   name: 'Login',
   methods: {
@@ -25,7 +30,22 @@ export default {
       const GoogleUser = await this.$gAuth.signIn()
       this.$cookies.set('id_token', GoogleUser.getAuthResponse().id_token)
       this.$store.commit('SIGN_IN')
-      router.push('/')
+      const user = await UserService.getUser()
+      let roles = ''
+      for (const role of user.roles) {
+        roles += role + ','
+      }
+      this.$cookies.set('roles', roles)
+      this.$store.commit('SET_USER_ROLES', user.roles)
+      let nextPath = '/404'
+      if (user.roles.includes('admin') || user.roles.includes('defcoord')) {
+        nextPath = '/'
+      } else if (user.roles.includes('scout')) {
+        nextPath = '/scoutcommands'
+      } else if (user.roles.includes('ghost')) {
+        nextPath = '/ghostcommands'
+      }
+      router.push(nextPath)
     }
   }
 }
@@ -44,5 +64,10 @@ export default {
 .login_button {
   width: 200px;
   cursor: pointer;
+}
+
+.small_print {
+  margin-top: 40px;
+  font-size: 0.6em;
 }
 </style>

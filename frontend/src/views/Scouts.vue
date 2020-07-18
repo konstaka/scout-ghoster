@@ -4,14 +4,14 @@
       v-for="scout of $store.state.scouts"
       :key="`scout${scout.x}${scout.y}`"
       :scout="scout"
-      :arteSpeeds="$store.state.arteSpeeds"
-      :tsLevels="$store.state.tsLevels"
-      :scoutArtes="$store.state.scoutArtes"
+      :arte-speeds="$store.state.arteSpeeds"
+      :ts-levels="$store.state.tsLevels"
+      :scout-artes="$store.state.scoutArtes"
     />
     <InsertScout
-      :arteSpeeds="$store.state.arteSpeeds"
-      :tsLevels="$store.state.tsLevels"
-      :scoutArtes="$store.state.scoutArtes"
+      :arte-speeds="$store.state.arteSpeeds"
+      :ts-levels="$store.state.tsLevels"
+      :scout-artes="$store.state.scoutArtes"
     />
   </div>
 </template>

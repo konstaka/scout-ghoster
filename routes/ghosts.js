@@ -9,9 +9,13 @@ router.post('/', async (req, res) => {
       res.status(HttpStatus.BAD_REQUEST).end();
       return;
     }
-    const ghost = await ghosts.saveGhost(req.body);
-    res.location('/ghosts/' + ghost._id);
-    res.status(HttpStatus.CREATED).end();
+    const ghost = await ghosts.saveGhost(req.authorizedUser, req.body);
+    if (ghost._id) {
+      res.location('/ghosts/' + ghost._id);
+      res.status(HttpStatus.CREATED).end();
+    } else {
+      res.status(HttpStatus.FORBIDDEN).json({ message: ghost });
+    }
   } catch (e) {
     console.log(e);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
@@ -21,7 +25,11 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const result = await ghosts.getGhosts();
-    res.status(HttpStatus.OK).json(result);
+    res.status(HttpStatus.OK).json(result.filter((ghost) => {
+      return req.authorizedUser.roles.includes('admin')
+        || req.authorizedUser.roles.includes('defcoord')
+        || req.authorizedUser.accounts.includes(ghost.player)
+    }));
   } catch (e) {
     console.log(e);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
@@ -36,8 +44,12 @@ router.put('/:ghostId', async (req, res) => {
     }
     const toUpdate = req.body;
     toUpdate._id = req.params.ghostId;
-    await ghosts.saveGhost(req.body);
-    res.status(HttpStatus.NO_CONTENT).end();
+    const ghost = await ghosts.saveGhost(req.body);
+    if (ghost._id) {
+      res.status(HttpStatus.NO_CONTENT).end();
+    } else {
+      res.status(HttpStatus.FORBIDDEN).json({ message: ghost });
+    }
   } catch (e) {
     console.log(e);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).end();
@@ -46,10 +58,16 @@ router.put('/:ghostId', async (req, res) => {
 
 router.delete('/:ghostId', async (req, res) => {
   try {
-    const deleted = await ghosts.deleteGhost(req.params.ghostId);
+    const deleted = await ghosts.deleteGhost(
+      req.authorizedUser,
+      req.params.ghostId
+    );
     if (!deleted) {
       res.status(HttpStatus.NOT_FOUND).end();
       return;
+    }
+    if (!deleted._id) {
+      res.status(HttpStatus.FORBIDDEN).json({ message: deleted });
     }
     res.status(HttpStatus.NO_CONTENT).end();
   } catch (e) {

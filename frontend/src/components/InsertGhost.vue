@@ -21,7 +21,7 @@
       <DropDown
         v-model.number="unitSpeed"
         :options="unitSpeeds"
-        :initialValue="unitSpeed"
+        :initial-value="unitSpeed"
       />
       sq/h
     </div>
@@ -30,7 +30,7 @@
       <DropDown
         v-model.number="arteSpeed"
         :options="arteSpeeds"
-        :initialValue="arteSpeed"
+        :initial-value="arteSpeed"
       />
     </div>
     <div class="data_item tournament_square">
@@ -38,7 +38,7 @@
       <DropDown
         v-model.number="tsLevel"
         :options="tsLevels"
-        :initialValue="tsLevel"
+        :initial-value="tsLevel"
       />
     </div>
     <div class="data_item hero_boots">
@@ -46,7 +46,7 @@
       <DropDown
         v-model.number="hero"
         :options="heroBoots"
-        :initialValue="hero"
+        :initial-value="hero"
       />
     </div>
     <div class="data_item ghost_amount">
@@ -100,7 +100,7 @@ export default {
         heroBoots: this.hero,
         ghostAmount: this.ghostAmount
       })
-      this.$store.dispatch('getInfo')
+      this.$store.dispatch('getGhosts')
     }
   }
 }

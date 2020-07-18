@@ -13,7 +13,7 @@
       <DropDown
         v-model.number="mutableGhost.unitSpeed"
         :options="unitSpeeds"
-        :initialValue="ghost.unitSpeed"
+        :initial-value="ghost.unitSpeed"
       />
       sq/h
     </div>
@@ -22,7 +22,7 @@
       <DropDown
         v-model.number="mutableGhost.arteSpeed"
         :options="arteSpeeds"
-        :initialValue="ghost.arteSpeed"
+        :initial-value="ghost.arteSpeed"
       />
     </div>
     <div class="data_item tournament_square">
@@ -30,7 +30,7 @@
       <DropDown
         v-model.number="mutableGhost.tournamentSquare"
         :options="tsLevels"
-        :initialValue="ghost.tournamentSquare"
+        :initial-value="ghost.tournamentSquare"
       />
     </div>
     <div class="data_item hero_boots">
@@ -38,7 +38,7 @@
       <DropDown
         v-model.number="mutableGhost.heroBoots"
         :options="heroBoots"
-        :initialValue="ghost.heroBoots"
+        :initial-value="ghost.heroBoots"
       />
     </div>
     <div class="data_item ghost_amount">
@@ -98,7 +98,7 @@ export default {
   methods: {
     async updateGhost () {
       await GhostService.update(this.ghost._id, this.mutableGhost)
-      this.$store.dispatch('getInfo')
+      this.$store.dispatch('getGhosts')
     },
     async deleteGhost () {
       window.VoerroModal.show({
@@ -112,7 +112,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await GhostService.delete(this.ghost)
-              this.$store.dispatch('getInfo')
+              this.$store.dispatch('getGhosts')
             }
           }
         ]

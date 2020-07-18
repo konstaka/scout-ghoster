@@ -12,8 +12,11 @@
         v-for="village of target"
         :key="`target${village.xCoord}${village.yCoord}`"
       >
-        <FilterCheckbox :coordId="village.coordId" />
-        <TargetVillage :target="village" :filtered="false" />
+        <FilterCheckbox :coord-id="village.coordId" />
+        <TargetVillage
+          :target="village"
+          :filtered="false"
+        />
       </div>
     </div>
   </div>

@@ -4,9 +4,10 @@ import Login from '@/views/Login'
 import Home from '@/views/Home'
 import Targets from '@/views/Targets'
 import Attackers from '@/views/Attackers'
-import Ghosts from '@/views/Ghosts'
-import Messages from '@/views/Messages'
 import Scouts from '@/views/Scouts'
+import Ghosts from '@/views/Ghosts'
+import Selections from '@/views/Selections'
+import ScoutCommands from '@/views/ScoutCommands'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -14,38 +15,51 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/login',
-    name: '',
-    component: Login
+    name: 'Login',
+    component: Login,
+    roles: ['admin']
   },
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    roles: ['admin', 'defcoord']
   },
   {
     path: '/targets',
     name: 'Targets',
-    component: Targets
+    component: Targets,
+    roles: ['admin', 'defcoord']
   },
   {
     path: '/attackers',
     name: 'Attackers',
-    component: Attackers
+    component: Attackers,
+    roles: ['admin', 'defcoord']
   },
   {
     path: '/scouts',
     name: 'Scouts',
-    component: Scouts
+    component: Scouts,
+    roles: ['admin', 'defcoord', 'scout']
   },
   {
     path: '/ghosts',
     name: 'Ghosts',
-    component: Ghosts
+    component: Ghosts,
+    roles: ['admin', 'defcoord', 'ghost']
   },
   {
-    path: '/messages',
-    name: 'Messages',
-    component: Messages
+    path: '/selections',
+    name: 'Selections',
+    component: Selections,
+    roles: ['admin', 'defcoord']
+  },
+  {
+    path: '/scoutcommands',
+    name: 'Scout Commands',
+    component: ScoutCommands,
+    roles: ['admin', 'scout']
   }
 ]
 
@@ -71,6 +85,7 @@ router.beforeEach((to, from, next) => {
 
   // User is signed in
   store.commit('SIGN_IN')
+  store.commit('SET_USER_ROLES', Vue.$cookies.get('roles').split(','))
   if (store.state.attackers.length === 0) {
     store.dispatch('getInfo')
   }

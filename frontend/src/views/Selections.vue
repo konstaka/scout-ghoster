@@ -1,12 +1,12 @@
 <template>
   <div>
-    Generate messages for scouts/ghosts
+    Arrange targets to scouts/ghosts with defcoord role
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Messages'
+  name: 'Selections'
 }
 </script>
 

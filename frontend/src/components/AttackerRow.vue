@@ -13,7 +13,7 @@
       <DropDown
         v-model.number="mutableAttacker.unitSpeed"
         :options="unitSpeeds"
-        :initialValue="attacker.unitSpeed"
+        :initial-value="attacker.unitSpeed"
       />
       sq/h
     </div>
@@ -22,7 +22,7 @@
       <DropDown
         v-model.number="mutableAttacker.arteSpeed"
         :options="arteSpeeds"
-        :initialValue="attacker.arteSpeed"
+        :initial-value="attacker.arteSpeed"
       />
     </div>
     <div class="data_item tournament_square">
@@ -30,7 +30,7 @@
       <DropDown
         v-model.number="mutableAttacker.tournamentSquare"
         :options="tsLevels"
-        :initialValue="attacker.tournamentSquare"
+        :initial-value="attacker.tournamentSquare"
       />
     </div>
     <div class="data_item hero_boots">
@@ -38,7 +38,7 @@
       <DropDown
         v-model.number="mutableAttacker.heroBoots"
         :options="heroBoots"
-        :initialValue="attacker.heroBoots"
+        :initial-value="attacker.heroBoots"
       />
     </div>
     <div class="data_item map">
@@ -46,7 +46,7 @@
       <DropDown
         v-model.number="mutableAttacker.map"
         :options="maps"
-        :initialValue="attacker.map"
+        :initial-value="attacker.map"
       />
     </div>
     <div
@@ -99,7 +99,7 @@ export default {
   methods: {
     async updateAttacker () {
       await AttackerService.update(this.attacker._id, this.mutableAttacker)
-      this.$store.dispatch('getInfo')
+      this.$store.dispatch('getAttackers')
     },
     async deleteAttacker () {
       window.VoerroModal.show({
@@ -113,7 +113,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await AttackerService.delete(this.attacker)
-              this.$store.dispatch('getInfo')
+              this.$store.dispatch('getAttackers')
             }
           }
         ]

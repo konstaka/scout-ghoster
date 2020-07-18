@@ -17,7 +17,7 @@
       <DropDown
         v-model.number="mutableScout.arteSpeed"
         :options="arteSpeeds"
-        :initialValue="scout.arteSpeed"
+        :initial-value="scout.arteSpeed"
       />
     </div>
     <div class="data_item tournament_square">
@@ -25,14 +25,14 @@
       <DropDown
         v-model.number="mutableScout.tournamentSquare"
         :options="tsLevels"
-        :initialValue="scout.tournamentSquare"
+        :initial-value="scout.tournamentSquare"
       />
     </div>
     <div class="data_item scout_amount">
       <DropDown
         v-model.number="mutableScout.scoutArte"
         :options="scoutArtes"
-        :initialValue="scout.scoutArte"
+        :initial-value="scout.scoutArte"
       />
       x
       <input
@@ -92,7 +92,7 @@ export default {
   methods: {
     async updateScout () {
       await ScoutService.update(this.scout._id, this.mutableScout)
-      this.$store.dispatch('getInfo')
+      this.$store.dispatch('getScouts')
     },
     async deleteScout () {
       window.VoerroModal.show({
@@ -106,7 +106,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await ScoutService.delete(this.scout)
-              this.$store.dispatch('getInfo')
+              this.$store.dispatch('getScouts')
             }
           }
         ]

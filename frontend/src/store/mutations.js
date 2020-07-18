@@ -26,6 +26,9 @@ export default {
     }
     Vue.$cookies.remove('id_token')
   },
+  SET_USER_ROLES (state, roles) {
+    state.roles = roles.filter((r) => r.length > 0)
+  },
   SET_CONFIG (state, settings) {
     state.serverConfig.speed = settings.speed
     state.serverConfig.size = settings.size
