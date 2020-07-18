@@ -22,7 +22,7 @@
       <DropDown
         v-model.number="arteSpeed"
         :options="arteSpeeds"
-        :initialValue="arteSpeed"
+        :initial-value="arteSpeed"
       />
     </div>
     <div class="data_item tournament_square">
@@ -30,14 +30,14 @@
       <DropDown
         v-model.number="tsLevel"
         :options="tsLevels"
-        :initialValue="tsLevel"
+        :initial-value="tsLevel"
       />
     </div>
     <div class="data_item scout_amount">
       <DropDown
         v-model.number="scoutArte"
         :options="scoutArtes"
-        :initialValue="scoutArte"
+        :initial-value="scoutArte"
       />
       x
       <input
@@ -87,7 +87,7 @@ export default {
         scoutAmount: this.scoutAmount,
         scoutArte: this.scoutArte
       })
-      this.$store.dispatch('getInfo')
+      this.$store.dispatch('getScouts')
     }
   }
 }

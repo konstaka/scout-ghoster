@@ -103,7 +103,7 @@ export default {
     async hittingTime (newV, oldV) {
       if (oldV) {
         await OperationMetaService.save(newV)
-        this.$store.dispatch('getInfo')
+        this.$store.dispatch('getOperationMeta')
       }
     }
   },

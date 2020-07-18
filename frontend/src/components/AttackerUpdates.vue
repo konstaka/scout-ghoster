@@ -4,7 +4,7 @@
       <DropDown
         v-model.number="mutableAttacker.unitSpeed"
         :options="$store.state.unitSpeeds"
-        :initialValue="attacker.unitSpeed"
+        :initial-value="attacker.unitSpeed"
       />
       sq/h
     </div>
@@ -12,7 +12,7 @@
       <DropDown
         v-model.number="mutableAttacker.tournamentSquare"
         :options="$store.state.tsLevels"
-        :initialValue="attacker.tournamentSquare"
+        :initial-value="attacker.tournamentSquare"
       />
       TS
     </div>
@@ -55,7 +55,7 @@ export default {
   methods: {
     async updateAttacker () {
       await AttackerService.update(this.attacker._id, this.mutableAttacker)
-      this.$store.dispatch('getInfo')
+      this.$store.dispatch('getAttackers')
     }
   }
 }

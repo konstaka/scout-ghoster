@@ -1,12 +1,12 @@
 <template>
   <div>
-    Generate messages for scouts/ghosts
+    Display commands with scout role
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Messages'
+  name: 'ScoutCommands'
 }
 </script>
 

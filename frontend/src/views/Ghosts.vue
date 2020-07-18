@@ -4,16 +4,16 @@
       v-for="ghost of $store.state.ghosts"
       :key="`ghost${ghost.x}${ghost.y}`"
       :ghost="ghost"
-      :unitSpeeds="$store.state.unitSpeeds"
-      :arteSpeeds="$store.state.arteSpeeds"
-      :tsLevels="$store.state.tsLevels"
-      :heroBoots="$store.state.heroBoots"
+      :unit-speeds="$store.state.unitSpeeds"
+      :arte-speeds="$store.state.arteSpeeds"
+      :ts-levels="$store.state.tsLevels"
+      :hero-boots="$store.state.heroBoots"
     />
     <InsertGhost
-      :unitSpeeds="$store.state.unitSpeeds"
-      :arteSpeeds="$store.state.arteSpeeds"
-      :tsLevels="$store.state.tsLevels"
-      :heroBoots="$store.state.heroBoots"
+      :unit-speeds="$store.state.unitSpeeds"
+      :arte-speeds="$store.state.arteSpeeds"
+      :ts-levels="$store.state.tsLevels"
+      :hero-boots="$store.state.heroBoots"
     />
   </div>
 </template>
