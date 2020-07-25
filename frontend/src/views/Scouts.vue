@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import ScoutRow from '@/components/ScoutRow'
-import InsertScout from '@/components/InsertScout'
+import ScoutRow from '@/components/Scouts/ScoutRow'
+import InsertScout from '@/components/Scouts/InsertScout'
 export default {
   name: 'Scouts',
   components: {

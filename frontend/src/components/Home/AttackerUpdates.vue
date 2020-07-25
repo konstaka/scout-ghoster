@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
+import DropDown from '@/components/common/DropDown'
 import AttackerService from '@/services/attacker'
 export default {
   name: 'AttackerUpdates',

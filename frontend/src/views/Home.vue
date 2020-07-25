@@ -90,9 +90,9 @@ import { mapFields } from 'vuex-map-fields'
 import OperationMetaService from '@/services/operationMeta'
 import SelectionsService from '@/services/selections'
 import MapSqlService from '@/services/mapSql'
-import TargetVillage from '@/components/TargetVillage'
-import AttackerCol from '@/components/AttackerCol'
-import AttackerUpdates from '@/components/AttackerUpdates'
+import TargetVillage from '@/components/common/TargetVillage'
+import AttackerCol from '@/components/Home/AttackerCol'
+import AttackerUpdates from '@/components/Home/AttackerUpdates'
 import syncscroll from '@/util/syncscroll-0.0.3/syncscroll'
 export default {
   name: 'Home',

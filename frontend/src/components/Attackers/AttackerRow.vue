@@ -1,57 +1,57 @@
 <template>
   <div class="attacker_row">
     <div class="data_item player_name">
-      {{ ghost.player }}
+      {{ attacker.player }}
     </div>
     <div class="data_item village_name">
-      {{ ghost.villageName }}
+      {{ attacker.villageName }}
     </div>
     <div class="data_item coords">
-      ({{ ghost.xCoord }}|{{ ghost.yCoord }})
+      ({{ attacker.xCoord }}|{{ attacker.yCoord }})
     </div>
     <div class="data_item unit_speed">
       <DropDown
-        v-model.number="mutableGhost.unitSpeed"
+        v-model.number="mutableAttacker.unitSpeed"
         :options="unitSpeeds"
-        :initial-value="ghost.unitSpeed"
+        :initial-value="attacker.unitSpeed"
       />
       sq/h
     </div>
     <div class="data_item arte_speed">
       artefact
       <DropDown
-        v-model.number="mutableGhost.arteSpeed"
+        v-model.number="mutableAttacker.arteSpeed"
         :options="arteSpeeds"
-        :initial-value="ghost.arteSpeed"
+        :initial-value="attacker.arteSpeed"
       />
     </div>
     <div class="data_item tournament_square">
       TS
       <DropDown
-        v-model.number="mutableGhost.tournamentSquare"
+        v-model.number="mutableAttacker.tournamentSquare"
         :options="tsLevels"
-        :initial-value="ghost.tournamentSquare"
+        :initial-value="attacker.tournamentSquare"
       />
     </div>
     <div class="data_item hero_boots">
       hero boots
       <DropDown
-        v-model.number="mutableGhost.heroBoots"
+        v-model.number="mutableAttacker.heroBoots"
         :options="heroBoots"
-        :initial-value="ghost.heroBoots"
+        :initial-value="attacker.heroBoots"
       />
     </div>
-    <div class="data_item ghost_amount">
-      <input
-        v-model.number="mutableGhost.ghostAmount"
-        type="number"
-        class="amount_box"
-      >
-      units ({{ ghost.unitName }})
+    <div class="data_item map">
+      map
+      <DropDown
+        v-model.number="mutableAttacker.map"
+        :options="maps"
+        :initial-value="attacker.map"
+      />
     </div>
     <div
       class="data_item delete_button"
-      @click="deleteGhost"
+      @click="deleteAttacker"
     >
       Delete
     </div>
@@ -59,51 +59,52 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
-import GhostService from '@/services/ghost'
+import DropDown from '@/components/common/DropDown'
+import AttackerService from '@/services/attacker'
 export default {
   name: 'AttackerRow',
   components: {
     DropDown
   },
   props: [
-    'ghost',
+    'attacker',
     'unitSpeeds',
     'arteSpeeds',
     'tsLevels',
-    'heroBoots'
+    'heroBoots',
+    'maps'
   ],
   data: () => ({
-    mutableGhost: {},
+    mutableAttacker: {},
     loaded: false
   }),
   watch: {
-    mutableGhost: {
+    mutableAttacker: {
       deep: true,
       handler () {
         if (this.loaded) {
-          this.updateGhost()
+          this.updateAttacker()
         }
       }
     }
   },
   mounted () {
-    this.mutableGhost = {
-      ...this.ghost
+    this.mutableAttacker = {
+      ...this.attacker
     }
     this.$nextTick(() => {
       this.loaded = true
     })
   },
   methods: {
-    async updateGhost () {
-      await GhostService.update(this.ghost._id, this.mutableGhost)
-      this.$store.dispatch('getGhosts')
+    async updateAttacker () {
+      await AttackerService.update(this.attacker._id, this.mutableAttacker)
+      this.$store.dispatch('getAttackers')
     },
-    async deleteGhost () {
+    async deleteAttacker () {
       window.VoerroModal.show({
         title: 'Confirm:',
-        body: `Delete (${this.ghost.xCoord}|${this.ghost.yCoord})?`,
+        body: `Delete (${this.attacker.xCoord}|${this.attacker.yCoord})?`,
         buttons: [
           {
             text: 'Cancel'
@@ -111,8 +112,8 @@ export default {
           {
             text: 'Delete',
             handler: async () => {
-              await GhostService.delete(this.ghost)
-              this.$store.dispatch('getGhosts')
+              await AttackerService.delete(this.attacker)
+              this.$store.dispatch('getAttackers')
             }
           }
         ]
@@ -161,18 +162,6 @@ export default {
 
 .hero_boots {
   width: 12%;
-}
-
-.ghost_amount {
-  width: 18%;
-}
-
-.amount_box {
-  width: 100px;
-}
-
-input {
-  background: #ebf0f4;
 }
 
 .delete_button {

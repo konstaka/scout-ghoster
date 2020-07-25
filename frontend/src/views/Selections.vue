@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import SelectionRow from '@/components/SelectionRow'
+import SelectionRow from '@/components/Selections/SelectionRow'
 export default {
   name: 'Selections',
   components: {

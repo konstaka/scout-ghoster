@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import TargetVillage from '@/components/TargetVillage'
-import FilterCheckbox from '@/components/FilterCheckbox'
+import TargetVillage from '@/components/common/TargetVillage'
+import FilterCheckbox from '@/components/Targets/FilterCheckbox'
 export default {
   name: 'Targets',
   components: {

@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
+import DropDown from '@/components/common/DropDown'
 import ScoutService from '@/services/scout'
 export default {
   name: 'ScoutRow',

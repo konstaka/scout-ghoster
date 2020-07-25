@@ -1,7 +1,7 @@
 <template>
   <div class="attacker_row">
     <div class="data_item explain_text">
-      Add new scout:
+      Add new ghost:
     </div>
     <div class="data_item inputs">
       x
@@ -16,6 +16,14 @@
         type="number"
         class="coord_box"
       >
+    </div>
+    <div class="data_item unit_speed">
+      <DropDown
+        v-model.number="unitSpeed"
+        :options="unitSpeeds"
+        :initial-value="unitSpeed"
+      />
+      sq/h
     </div>
     <div class="data_item arte_speed">
       artefact
@@ -33,23 +41,25 @@
         :initial-value="tsLevel"
       />
     </div>
-    <div class="data_item scout_amount">
+    <div class="data_item hero_boots">
+      hero boots
       <DropDown
-        v-model.number="scoutArte"
-        :options="scoutArtes"
-        :initial-value="scoutArte"
+        v-model.number="hero"
+        :options="heroBoots"
+        :initial-value="hero"
       />
-      x
+    </div>
+    <div class="data_item ghost_amount">
       <input
-        v-model.number="scoutAmount"
+        v-model.number="ghostAmount"
         type="number"
         class="amount_box"
       >
-      scouts
+      units
     </div>
     <div
       class="data_item add_button"
-      @click="addScout"
+      @click="addGhost"
     >
       Add
     </div>
@@ -57,37 +67,40 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
-import ScoutService from '@/services/scout'
+import DropDown from '@/components/common/DropDown'
+import GhostService from '@/services/ghost'
 export default {
-  name: 'InsertScout',
+  name: 'InsertGhost',
   components: {
     DropDown
   },
   props: [
+    'unitSpeeds',
     'arteSpeeds',
     'tsLevels',
-    'scoutArtes'
+    'heroBoots'
   ],
   data: () => ({
     xCoord: null,
     yCoord: null,
+    unitSpeed: 3,
     arteSpeed: 1,
     tsLevel: 0,
-    scoutAmount: null,
-    scoutArte: 1
+    hero: 0,
+    ghostAmount: null
   }),
   methods: {
-    async addScout () {
-      await ScoutService.save({
+    async addGhost () {
+      await GhostService.save({
         xCoord: this.xCoord,
         yCoord: this.yCoord,
+        unitSpeed: this.unitSpeed,
         arteSpeed: this.arteSpeed,
         tournamentSquare: this.tsLevel,
-        scoutAmount: this.scoutAmount,
-        scoutArte: this.scoutArte
+        heroBoots: this.hero,
+        ghostAmount: this.ghostAmount
       })
-      this.$store.dispatch('getScouts')
+      this.$store.dispatch('getGhosts')
     }
   }
 }
@@ -109,13 +122,13 @@ export default {
 }
 
 .explain_text {
-  width: 24%;
+  width: 18%;
   text-align: left;
 }
 
 .inputs {
-  width: 18%;
-  text-align: center;
+  width: 16%;
+  text-align: right;
   padding-right: 5px;
 }
 
@@ -140,8 +153,8 @@ input {
   width: 12%;
 }
 
-.scout_amount {
-  width: 21%;
+.ghost_amount {
+  width: 18%;
 }
 
 .amount_box {
