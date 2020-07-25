@@ -1,18 +1,20 @@
 <template>
   <div>
-    <div
+    <SelectionRow
       v-for="selection of $store.state.selections"
       :key="`${selection.attackerId}${selection.targetId}`"
-    >
-      {{ selection.attackerId }}
-      {{ selection.targetId }}
-    </div>
+      :selection="selection"
+    />
   </div>
 </template>
 
 <script>
+import SelectionRow from '@/components/SelectionRow'
 export default {
-  name: 'Selections'
+  name: 'Selections',
+  components: {
+    SelectionRow
+  }
 }
 </script>
 

@@ -2,7 +2,7 @@
   <div class="attackers_container">
     <AttackerRow
       v-for="attacker of $store.state.attackers"
-      :key="`attacker${attacker.x}${attacker.y}`"
+      :key="`attacker${attacker.xCoord}${attacker.yCoord}`"
       :attacker="attacker"
       :unit-speeds="$store.state.unitSpeeds"
       :arte-speeds="$store.state.arteSpeeds"

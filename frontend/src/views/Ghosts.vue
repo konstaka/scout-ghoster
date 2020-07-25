@@ -2,7 +2,7 @@
   <div class="ghosts_container">
     <GhostRow
       v-for="ghost of $store.state.ghosts"
-      :key="`ghost${ghost.x}${ghost.y}`"
+      :key="`ghost${ghost.xCoord}${ghost.yCoord}`"
       :ghost="ghost"
       :unit-speeds="$store.state.unitSpeeds"
       :arte-speeds="$store.state.arteSpeeds"

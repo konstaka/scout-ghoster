@@ -60,6 +60,10 @@ export default {
   },
   async getSelections (context) {
     const res = await SelectionsService.get()
-    context.commit('SET_SELECTIONS', res)
+    context.commit('SET_SELECTIONS', res.sort((a, b) => {
+      return a.attackerId === b.attackerId
+        ? a.targetId.localeCompare(b.targetId)
+        : a.attackerId.localeCompare(b.attackerId)
+    }))
   }
 }

@@ -4,7 +4,6 @@ const HttpStatus = require('http-status-codes');
 const Selection = require('../models/Selection');
 
 router.get('/', async (req, res) => {
-  const selections = await Selection.find();
   try {
     const selections = await Selection.find();
     res.status(HttpStatus.OK).json(selections);

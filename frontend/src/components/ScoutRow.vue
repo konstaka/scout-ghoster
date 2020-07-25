@@ -7,7 +7,7 @@
       {{ scout.villageName }}
     </div>
     <div class="data_item coords">
-      ({{ scout.x }}|{{ scout.y }})
+      ({{ scout.xCoord }}|{{ scout.yCoord }})
     </div>
     <div class="data_item unit_speed">
       {{ scout.unitSpeed }} sq/h
@@ -97,7 +97,7 @@ export default {
     async deleteScout () {
       window.VoerroModal.show({
         title: 'Confirm:',
-        body: `Delete (${this.scout.x}|${this.scout.y})?`,
+        body: `Delete (${this.scout.xCoord}|${this.scout.yCoord})?`,
         buttons: [
           {
             text: 'Cancel'

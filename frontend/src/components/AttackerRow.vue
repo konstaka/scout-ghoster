@@ -7,7 +7,7 @@
       {{ attacker.villageName }}
     </div>
     <div class="data_item coords">
-      ({{ attacker.x }}|{{ attacker.y }})
+      ({{ attacker.xCoord }}|{{ attacker.yCoord }})
     </div>
     <div class="data_item unit_speed">
       <DropDown
@@ -104,7 +104,7 @@ export default {
     async deleteAttacker () {
       window.VoerroModal.show({
         title: 'Confirm:',
-        body: `Delete (${this.attacker.x}|${this.attacker.y})?`,
+        body: `Delete (${this.attacker.xCoord}|${this.attacker.yCoord})?`,
         buttons: [
           {
             text: 'Cancel'

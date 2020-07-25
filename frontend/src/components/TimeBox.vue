@@ -2,7 +2,7 @@
   <div
     v-if="!filtered || isVisible"
     class="timebox"
-    :class="{ pressed: selected }"
+    :class="{ pressed: isSelected }"
     @click="toggleSelected"
   >
     {{ sendingTime }}
@@ -19,9 +19,6 @@ export default {
     'attacker',
     'filtered'
   ],
-  data: () => ({
-    selected: false
-  }),
   computed: {
     sendingTime () {
       const options = {
@@ -34,24 +31,25 @@ export default {
     },
     isVisible () {
       return this.$store.state.filter[this.target.coordId]
-    }
-  },
-  mounted () {
-    for (const selection of this.$store.state.selections) {
-      if (selection.targetId === this.target._id
-        && selection.attackerId === this.attacker._id) {
-        this.selected = true
-        break
-      }
+    },
+    isSelected () {
+      return this.$store.state.selections.some(
+        (selection) => {
+          return selection.targetId === this.target._id
+            && selection.attackerId === this.attacker._id
+        }
+      )
     }
   },
   methods: {
     async toggleSelected () {
-      this.selected = !this.selected
       this.$store.commit('UPDATE_SELECTION', {
-        target: this.target._id,
-        attacker: this.attacker._id,
-        selected: this.selected
+        target: this.target,
+        attacker: this.attacker,
+        scout: undefined,
+        ghost: undefined,
+        updated: false,
+        selected: !this.isSelected
       })
       await SelectionsService.put(this.$store.state.selections)
       this.$store.dispatch('getSelections')

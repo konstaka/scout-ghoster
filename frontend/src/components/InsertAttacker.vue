@@ -93,8 +93,8 @@ export default {
   methods: {
     async addAttacker () {
       await AttackerService.save({
-        x: this.xCoord,
-        y: this.yCoord,
+        xCoord: this.xCoord,
+        yCoord: this.yCoord,
         unitSpeed: this.unitSpeed,
         arteSpeed: this.arteSpeed,
         tournamentSquare: this.tsLevel,

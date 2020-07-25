@@ -22,11 +22,11 @@
       >
         <div
           v-for="attacker of $store.state.attackers"
-          :key="`attackerName${attacker.x}${attacker.y}`"
+          :key="`attackerName${attacker.xCoord}${attacker.yCoord}`"
           class="attacker_col"
         >
           <div class="attacker">
-            {{ attacker.villageName }} ({{ attacker.x }}|{{ attacker.y }})
+            {{ attacker.villageName }} ({{ attacker.xCoord }}|{{ attacker.yCoord }})
           </div>
           <AttackerUpdates
             :attacker="attacker"
@@ -59,7 +59,7 @@
     >
       <AttackerCol
         v-for="attacker of $store.state.attackers"
-        :key="`attacker${attacker.x}${attacker.y}`"
+        :key="`attacker${attacker.xCoord}${attacker.yCoord}`"
         :attacker="attacker"
         class="attacker_col"
       />

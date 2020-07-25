@@ -2,7 +2,7 @@
   <div class="scouts_container">
     <ScoutRow
       v-for="scout of $store.state.scouts"
-      :key="`scout${scout.x}${scout.y}`"
+      :key="`scout${scout.xCoord}${scout.yCoord}`"
       :scout="scout"
       :arte-speeds="$store.state.arteSpeeds"
       :ts-levels="$store.state.tsLevels"

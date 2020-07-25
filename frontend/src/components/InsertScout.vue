@@ -80,8 +80,8 @@ export default {
   methods: {
     async addScout () {
       await ScoutService.save({
-        x: this.xCoord,
-        y: this.yCoord,
+        xCoord: this.xCoord,
+        yCoord: this.yCoord,
         arteSpeed: this.arteSpeed,
         tournamentSquare: this.tsLevel,
         scoutAmount: this.scoutAmount,

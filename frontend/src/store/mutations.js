@@ -3,18 +3,48 @@ import initialState from './state'
 import Vue from 'vue'
 export default {
   updateField,
-  UPDATE_SELECTION (state, { target, attacker, selected }) {
-    if (selected) {
+  UPDATE_SELECTION (state, { target, attacker, scout, ghost, updated, selected }) {
+    if (updated) {
+      state.selections = state.selections.filter(
+        (sel) => {
+          return sel.targetId !== target._id
+            || sel.attackerId !== attacker._id
+        }
+      )
       state.selections.push({
-        targetId: target,
-        attackerId: attacker
+        attackerId: attacker._id,
+        attacker,
+        targetId: target._id,
+        target,
+        scoutId: scout ? scout._id : 0,
+        scout,
+        ghostId: ghost ? ghost._id : 0,
+        ghost
+      })
+    } else if (selected) {
+      state.selections.push({
+        attackerId: attacker._id,
+        attacker,
+        targetId: target._id,
+        target,
+        scoutId: scout ? scout._id : 0,
+        scout,
+        ghostId: ghost ? ghost._id : 0,
+        ghost
       })
     } else {
-      state.selections = state.selections.filter((sel) => {
-        return sel.targetId !== target
-          || sel.attackerId !== attacker
-      })
+      state.selections = state.selections.filter(
+        (sel) => {
+          return sel.targetId !== target._id
+            || sel.attackerId !== attacker._id
+        }
+      )
     }
+    state.selections.sort((a, b) => {
+      return a.attackerId === b.attackerId
+        ? a.targetId.localeCompare(b.targetId)
+        : a.attackerId.localeCompare(b.attackerId)
+    })
   },
   SET_SELECTIONS (state, selections) {
     state.selections = selections

@@ -8,21 +8,24 @@ export const getTravelTime = (target, attacker) => {
   let distance = Math.sqrt(
     Math.pow(
       Math.min(
-        Math.abs(attacker.x - target.xCoord),
-        store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.x - target.xCoord)),
+        Math.abs(attacker.xCoord - target.xCoord),
+        store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.xCoord - target.xCoord)),
       2)
     + Math.pow(
       Math.min(
-        Math.abs(attacker.y - target.yCoord),
-        store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.y - target.yCoord)),
+        Math.abs(attacker.yCoord - target.yCoord),
+        store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.yCoord - target.yCoord)),
       2)
   )
+  // console.log(attacker.xCoord + '|' + attacker.yCoord + ' to ' + target.xCoord + '|' + target.yCoord)
+  // console.log(distance)
   // Baseline speed
   let squaresPerSecond = attacker.unitSpeed
     * store.state.serverConfig.speed
     * attacker.arteSpeed
     / 60
     / 60
+  // console.log(squaresPerSecond)
   // Return if no TS
   if (distance <= 20 || attacker.tournamentSquare === 0) {
     return Math.round(distance / squaresPerSecond)
@@ -34,7 +37,7 @@ export const getTravelTime = (target, attacker) => {
   // Calculate TS factor
   const tsFactor = 1.0 + attacker.tournamentSquare * 0.2
   // Adjust speed
-  squaresPerSecond *= 1 + attacker.heroBoots / 100
+  squaresPerSecond *= 1 + (attacker.heroBoots ? attacker.heroBoots : 0) / 100
   squaresPerSecond *= tsFactor
   // Compute remaining time
   travelTime += distance / squaresPerSecond

@@ -7,7 +7,7 @@
       {{ ghost.villageName }}
     </div>
     <div class="data_item coords">
-      ({{ ghost.x }}|{{ ghost.y }})
+      ({{ ghost.xCoord }}|{{ ghost.yCoord }})
     </div>
     <div class="data_item unit_speed">
       <DropDown
@@ -103,7 +103,7 @@ export default {
     async deleteGhost () {
       window.VoerroModal.show({
         title: 'Confirm:',
-        body: `Delete (${this.ghost.x}|${this.ghost.y})?`,
+        body: `Delete (${this.ghost.xCoord}|${this.ghost.yCoord})?`,
         buttons: [
           {
             text: 'Cancel'

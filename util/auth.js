@@ -53,12 +53,10 @@ const checkAccess = (req, res, next) => {
   ];
   const SCOUTS = [
     'admin',
-    'defcoord',
     'scout'
   ];
   const GHOSTS = [
     'admin',
-    'defcoord',
     'ghost'
   ];
 
@@ -75,13 +73,13 @@ const checkAccess = (req, res, next) => {
       }
       break;
     case (req.url.match(/scouts/) || {}).input:
-      if (!req.authorizedUser.roles.some((r) => SCOUTS.includes(r))) {
+      if (!req.authorizedUser.roles.some((r) => SCOUTS.includes(r) || MANAGERS.includes(r))) {
         res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
         return;
       }
       break;
     case (req.url.match(/ghosts/) || {}).input:
-      if (!req.authorizedUser.roles.some((r) => GHOSTS.includes(r))) {
+      if (!req.authorizedUser.roles.some((r) => GHOSTS.includes(r) || MANAGERS.includes(r))) {
         res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
         return;
       }

@@ -7,7 +7,7 @@
       <div class="player_padding" />
       <TimeBox
         v-for="village of target"
-        :key="`time${attacker.x}${attacker.y}${village.xCoord}${village.yCoord}`"
+        :key="`time${attacker.xCoord}${attacker.yCoord}${village.xCoord}${village.yCoord}`"
         :attacker="attacker"
         :target="village"
         :filtered="true"

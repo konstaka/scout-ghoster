@@ -9,9 +9,9 @@ const GhostSchema = new Schema({
   // Name of attacking village
   villageName: String,
   // x-coordinate: NUM(-400 ... 400)
-  x: Number,
+  xCoord: Number,
   // y-coordinate: NUM(-400 ... 400)
-  y: Number,
+  yCoord: Number,
   // Unit speed: NUM(>3)
   unitSpeed: Number,
   // Artefact speed factor: NUM(0.33 ... 2)
