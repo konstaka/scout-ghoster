@@ -1,6 +1,12 @@
 <template>
   <div>
-    Arrange targets to scouts/ghosts with defcoord role
+    <div
+      v-for="selection of $store.state.selections"
+      :key="`${selection.attackerId}${selection.targetId}`"
+    >
+      {{ selection.attackerId }}
+      {{ selection.targetId }}
+    </div>
   </div>
 </template>
 

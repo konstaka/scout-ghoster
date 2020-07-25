@@ -4,16 +4,10 @@ import TargetService from '@/services/target'
 import AttackerService from '@/services/attacker'
 import ScoutService from '@/services/scout'
 import GhostService from '@/services/ghost'
+import SelectionsService from '@/services/selections'
 import { groupBy } from 'underscore'
 
 export default {
-  updateSelections (context, { target, attacker, selected }) {
-    if (selected) {
-      context.commit('ADD_SELECTION', { target, attacker })
-    } else {
-      context.commit('REMOVE_SELECTION', { target, attacker })
-    }
-  },
   async getInfo (context) {
     context.dispatch('getSettings')
     context.dispatch('getOperationMeta')
@@ -22,6 +16,7 @@ export default {
     context.dispatch('getAttackers')
     context.dispatch('getScouts')
     context.dispatch('getGhosts')
+    context.dispatch('getSelections')
     context.commit('LOADED')
   },
   async getSettings (context) {
@@ -62,5 +57,9 @@ export default {
   async getGhosts (context) {
     const res = await GhostService.getAll()
     context.commit('SET_GHOSTS', res)
+  },
+  async getSelections (context) {
+    const res = await SelectionsService.get()
+    context.commit('SET_SELECTIONS', res)
   }
 }

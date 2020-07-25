@@ -11,6 +11,7 @@
 
 <script>
 import { getSendingTime } from '@/util/travelTime'
+import SelectionsService from '@/services/selections'
 export default {
   name: 'TimeBox',
   props: [
@@ -37,21 +38,23 @@ export default {
   },
   mounted () {
     for (const selection of this.$store.state.selections) {
-      if (selection.target._id === this.target._id
-        && selection.attacker._id === this.attacker._id) {
+      if (selection.targetId === this.target._id
+        && selection.attackerId === this.attacker._id) {
         this.selected = true
         break
       }
     }
   },
   methods: {
-    toggleSelected () {
+    async toggleSelected () {
       this.selected = !this.selected
-      this.$store.dispatch('updateSelections', {
-        target: this.target,
-        attacker: this.attacker,
+      this.$store.commit('UPDATE_SELECTION', {
+        target: this.target._id,
+        attacker: this.attacker._id,
         selected: this.selected
       })
+      await SelectionsService.put(this.$store.state.selections)
+      this.$store.dispatch('getSelections')
     }
   }
 }

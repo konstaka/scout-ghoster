@@ -14,7 +14,7 @@
       >
     </div>
     <div class="small_print">
-      Signing in will only work with whitelisted accounts.
+      ScoutGhoster will only work with whitelisted accounts.
       Contact your administrator for more information.
     </div>
   </div>

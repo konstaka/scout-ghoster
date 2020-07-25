@@ -3,19 +3,21 @@ import initialState from './state'
 import Vue from 'vue'
 export default {
   updateField,
-  ADD_SELECTION (state, { target, attacker }) {
-    state.selections.push({
-      target,
-      attacker
-    })
+  UPDATE_SELECTION (state, { target, attacker, selected }) {
+    if (selected) {
+      state.selections.push({
+        targetId: target,
+        attackerId: attacker
+      })
+    } else {
+      state.selections = state.selections.filter((sel) => {
+        return sel.targetId !== target
+          || sel.attackerId !== attacker
+      })
+    }
   },
-  REMOVE_SELECTION (state, { target, attacker }) {
-    state.selections = state.selections.filter((msg) => {
-      return msg.target.x !== target.x
-        || msg.target.y !== target.y
-        || msg.attacker.x !== attacker.x
-        || msg.attacker.y !== attacker.y
-    })
+  SET_SELECTIONS (state, selections) {
+    state.selections = selections
   },
   SIGN_IN (state) {
     state.isSignIn = true

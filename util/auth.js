@@ -44,19 +44,19 @@ const checkToken = async (req, res, next) => {
 const checkAccess = (req, res, next) => {
 
   // list user groups
-  // const adminGroup = [
+  // const ADMINS = [
   //   'admin'
   // ];
-  const managerGroup = [
+  const MANAGERS = [
     'admin',
     'defcoord'
   ];
-  const scoutGroup = [
+  const SCOUTS = [
     'admin',
     'defcoord',
     'scout'
   ];
-  const ghostGroup = [
+  const GHOSTS = [
     'admin',
     'defcoord',
     'ghost'
@@ -68,19 +68,20 @@ const checkAccess = (req, res, next) => {
     case (req.url.match(/operationMeta/) || {}).input:
     case (req.url.match(/targets/) || {}).input:
     case (req.url.match(/attackers/) || {}).input:
-      if (!req.authorizedUser.roles.some((r) => managerGroup.includes(r))) {
+    case (req.url.match(/selections/) || {}).input:
+      if (!req.authorizedUser.roles.some((r) => MANAGERS.includes(r))) {
         res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
         return;
       }
       break;
     case (req.url.match(/scouts/) || {}).input:
-      if (!req.authorizedUser.roles.some((r) => scoutGroup.includes(r))) {
+      if (!req.authorizedUser.roles.some((r) => SCOUTS.includes(r))) {
         res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
         return;
       }
       break;
     case (req.url.match(/ghosts/) || {}).input:
-      if (!req.authorizedUser.roles.some((r) => ghostGroup.includes(r))) {
+      if (!req.authorizedUser.roles.some((r) => GHOSTS.includes(r))) {
         res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
         return;
       }
