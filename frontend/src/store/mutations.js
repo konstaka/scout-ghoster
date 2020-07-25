@@ -16,9 +16,9 @@ export default {
         attacker,
         targetId: target._id,
         target,
-        scoutId: scout ? scout._id : 0,
+        scoutName: scout ? scout.player : undefined,
         scout,
-        ghostId: ghost ? ghost._id : 0,
+        ghostName: ghost ? ghost.player : undefined,
         ghost
       })
     } else if (selected) {
@@ -27,9 +27,9 @@ export default {
         attacker,
         targetId: target._id,
         target,
-        scoutId: scout ? scout._id : 0,
+        scoutName: scout ? scout.player : undefined,
         scout,
-        ghostId: ghost ? ghost._id : 0,
+        ghostName: ghost ? ghost.player : undefined,
         ghost
       })
     } else {

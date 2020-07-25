@@ -32,5 +32,6 @@ export default {
 .scouts_container {
   padding: 0 10%;
   margin-bottom: 300px;
+  overflow-x: scroll;
 }
 </style>

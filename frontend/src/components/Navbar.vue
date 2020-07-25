@@ -56,8 +56,19 @@ export default {
   text-decoration: none;
 }
 
+#nav a:first-of-type {
+  display: none;
+}
+
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+@media screen and (max-width: 768px) {
+  #nav a {
+    margin: 2px;
+    display: flex;
+  }
 }
 
 .sign_in {
@@ -69,6 +80,6 @@ export default {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 </style>

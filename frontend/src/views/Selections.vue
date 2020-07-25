@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="selections_container">
     <SelectionRow
       v-for="selection of $store.state.selections"
       :key="`${selection.attackerId}${selection.targetId}`"
@@ -19,4 +19,9 @@ export default {
 </script>
 
 <style scoped>
+.selections_container {
+  padding: 0 10%;
+  margin-bottom: 300px;
+  overflow-x: scroll;
+}
 </style>

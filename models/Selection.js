@@ -18,22 +18,15 @@ const SelectionSchema = new Schema({
     playerName: String,
     villageName: String
   },
-  scoutId: String,
+  scoutName: String,
   scout: {
-    player: String,
     xCoord: Number,
-    yCoord: Number,
-    scoutArte: Number,
-    scoutAmount: Number,
-    arteSpeed: Number,
-    tournamentSquare: Number,
-    heroBoots: Number
+    yCoord: Number
   },
-  ghostId: String,
+  ghostName: String,
   ghost: {
     xCoord: Number,
-    yCoord: Number,
-    ghostAmount: Number
+    yCoord: Number
   }
 });
 

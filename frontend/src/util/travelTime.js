@@ -17,15 +17,12 @@ export const getTravelTime = (target, attacker) => {
         store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.yCoord - target.yCoord)),
       2)
   )
-  // console.log(attacker.xCoord + '|' + attacker.yCoord + ' to ' + target.xCoord + '|' + target.yCoord)
-  // console.log(distance)
   // Baseline speed
   let squaresPerSecond = attacker.unitSpeed
     * store.state.serverConfig.speed
     * attacker.arteSpeed
     / 60
     / 60
-  // console.log(squaresPerSecond)
   // Return if no TS
   if (distance <= 20 || attacker.tournamentSquare === 0) {
     return Math.round(distance / squaresPerSecond)

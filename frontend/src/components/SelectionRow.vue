@@ -13,7 +13,7 @@
       Scout:
       <select
         v-model="mutableSelection.scout"
-        class="dropdown"
+        class="scout_dropdown"
       >
         <option :value="null" />
         <option
@@ -22,15 +22,10 @@
           :value="{
             player: scout.player,
             xCoord: scout.xCoord,
-            yCoord: scout.yCoord,
-            scoutArte: scout.scoutArte,
-            scoutAmount: scout.scoutAmount,
-            arteSpeed: scout.arteSpeed,
-            tournamentSquare: scout.tournamentSquare,
-            heroBoots: 0
+            yCoord: scout.yCoord
           }"
         >
-          {{ scout.player }} ({{ scout.xCoord }}|{{ scout.yCoord }}) {{ scout.scoutArte }}x {{ scout.scoutAmount }} [{{ getSend(selection.attacker, scout) }}]
+          {{ scout.player }} ({{ scout.xCoord }}|{{ scout.yCoord }}) {{ scout.scoutArte }}x {{ scout.scoutAmount }} [{{ getScoutSend(selection.attacker, scout) }}]
         </option>
       </select>
     </div>
@@ -38,7 +33,7 @@
       Ghost:
       <select
         v-model="mutableSelection.ghost"
-        class="dropdown"
+        class="ghost_dropdown"
       >
         <option :value="null" />
         <option
@@ -47,11 +42,10 @@
           :value="{
             player: ghost.player,
             xCoord: ghost.xCoord,
-            yCoord: ghost.yCoord,
-            ghostAmount: ghost.ghostAmount
+            yCoord: ghost.yCoord
           }"
         >
-          {{ ghost.player }} ({{ ghost.xCoord }}|{{ ghost.yCoord }}) {{ ghost.ghostAmount }}
+          {{ ghost.player }} ({{ ghost.xCoord }}|{{ ghost.yCoord }}) {{ ghost.ghostAmount }}{{ ghost.unitName }}@2h40 [{{ getGhostSend(selection.attacker, ghost) }}]
         </option>
       </select>
     </div>
@@ -106,9 +100,12 @@ export default {
     })
   },
   methods: {
-    getSend (target, sender) {
+    getScoutSend (target, sender) {
       return new Date(getSendingTime(this.selection.target, this.selection.attacker) - getTravelTime(target, sender) * 1000)
         .toLocaleTimeString('en-GB', this.options)
+    },
+    getGhostSend (target, sender) {
+      return '00:00:00'
     },
     async updateSelection () {
       this.$store.commit('UPDATE_SELECTION', {
@@ -153,6 +150,7 @@ export default {
 <style scoped>
 .selection_row {
   width: 100%;
+  min-width: 1330px;
   margin: 18px auto;
 }
 
@@ -165,7 +163,7 @@ export default {
 }
 
 .player_name {
-  width: 11%;
+  width: 12%;
 }
 
 .sending_time {
@@ -173,11 +171,11 @@ export default {
 }
 
 .scout {
-  width: 22%;
+  width: 25%;
 }
 
 .ghost {
-  width: 22%;
+  width: 28%;
 }
 
 .delete_button {
@@ -191,8 +189,14 @@ export default {
   cursor: pointer;
 }
 
-.dropdown {
-  width: 250px;
+.scout_dropdown {
+  width: 280;
+  background: #ebf0f4;
+  cursor: pointer;
+}
+
+.ghost_dropdown {
+  width: 320px;
   background: #ebf0f4;
   cursor: pointer;
 }

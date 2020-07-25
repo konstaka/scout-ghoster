@@ -96,6 +96,7 @@ export default {
 <style scoped>
 .attacker_row {
   width: 100%;
+  min-width: 1330px;
   margin: 18px auto;
 }
 
