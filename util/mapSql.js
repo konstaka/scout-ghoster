@@ -63,6 +63,7 @@ const update = async () => {
       const insertRes = await Village.collection
         .insertMany(villages, { ordered: false });
       console.log('Saved ' + insertRes.insertedCount + ' villages');
+      return insertRes.insertedCount;
     }
   } catch (e) {
     console.log(e);

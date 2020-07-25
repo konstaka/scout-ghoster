@@ -1,7 +1,7 @@
 <template>
   <div class="home_wrapper">
     <div class="sticky">
-      <!-- Ops hitting time -->
+      <!-- Ops hitting time and tools-->
       <div class="hitting_time left">
         Ops hits at:
         <VueTimepicker
@@ -14,6 +14,18 @@
           monday-first
           class="datepicker"
         />
+        <div
+          class="ui_button"
+          @click="fetchMapSql"
+        >
+          Fetch map.sql
+        </div>
+        <div
+          class="ui_button"
+          @click="clearSelections"
+        >
+          Clear selections
+        </div>
       </div>
       <!-- Attackers -->
       <div
@@ -25,6 +37,9 @@
           :key="`attackerName${attacker.xCoord}${attacker.yCoord}`"
           class="attacker_col"
         >
+          <div class="attacker">
+            {{ attacker.player }}
+          </div>
           <div class="attacker">
             {{ attacker.villageName }} ({{ attacker.xCoord }}|{{ attacker.yCoord }})
           </div>
@@ -73,6 +88,8 @@ import VueTimepicker from 'vue2-timepicker'
 import 'vue2-timepicker/dist/VueTimepicker.css'
 import { mapFields } from 'vuex-map-fields'
 import OperationMetaService from '@/services/operationMeta'
+import SelectionsService from '@/services/selections'
+import MapSqlService from '@/services/mapSql'
 import TargetVillage from '@/components/TargetVillage'
 import AttackerCol from '@/components/AttackerCol'
 import AttackerUpdates from '@/components/AttackerUpdates'
@@ -111,6 +128,60 @@ export default {
     if (syncscroll) {
       syncscroll.reset()
     }
+  },
+  methods: {
+    async fetchMapSql () {
+      window.VoerroModal.show({
+        title: 'Confirm:',
+        body: 'Fetch a new map.sql?',
+        buttons: [
+          {
+            text: 'Cancel'
+          },
+          {
+            text: 'Fetch',
+            handler: async () => {
+              const res = await MapSqlService.fetch()
+              if (res) {
+                this.mapSqlFetched()
+              }
+            }
+          }
+        ]
+      })
+    },
+    mapSqlFetched () {
+      window.VoerroModal.show({
+        title: 'Success',
+        body: 'Map.sql fetched successfully.',
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              window.location.href = '/'
+            }
+          }
+        ]
+      })
+    },
+    async clearSelections () {
+      window.VoerroModal.show({
+        title: 'Confirm:',
+        body: 'Remove all selections?',
+        buttons: [
+          {
+            text: 'Cancel'
+          },
+          {
+            text: 'Remove',
+            handler: async () => {
+              await SelectionsService.put([])
+              this.$store.dispatch('getSelections')
+            }
+          }
+        ]
+      })
+    }
   }
 }
 </script>
@@ -131,7 +202,7 @@ export default {
 }
 
 .sticky {
-  height: 100px;
+  height: 140px;
   position: sticky;
   top: 0;
   background: #dbe3eb;
@@ -152,6 +223,7 @@ export default {
 .player_name_listing {
   margin-left: 10px;
   font-style: italic;
+  height: 22px;
 }
 
 .left {
@@ -160,7 +232,7 @@ export default {
 
 .hitting_time {
   width: 245px;
-  height: 100px;
+  height: 140px;
   padding-left: 5px;
   float: left;
 }
@@ -173,7 +245,7 @@ export default {
 }
 
 .names {
-  height: 100px;
+  height: 140px;
 }
 
 .attacker {
@@ -183,5 +255,16 @@ export default {
 .attacker_col {
   width: 245px;
   display: inline-block;
+}
+
+.ui_button {
+  width: 158px;
+  height: 17px;
+  margin: 4px 0;
+  font-size: 0.9em;
+  text-align: center;
+  border: 1px solid #666666;
+  background: #ebf0f4;
+  cursor: pointer;
 }
 </style>

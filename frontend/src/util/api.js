@@ -13,16 +13,16 @@ export default () => {
   })
   api.interceptors.response.use(undefined, (err) => {
     let title = 'Error'
-    let message = 'N/A'
+    let body = 'N/A'
     if (err.response.data && err.response.data.message) {
-      message = err.response.data.message
+      body = err.response.data.message
     }
     // Logout if auth is invalid
     if (err.response && err.response.status === HttpStatus.UNAUTHORIZED) {
       title = 'Authentication error'
-      if (message === 'Session expired') {
+      if (body === 'Session expired') {
         title = 'Session expired'
-        message = 'Please log in again.'
+        body = 'Please log in again.'
       }
       store.commit('SIGN_OUT')
       if (router.history.current.path !== '/login') {
@@ -30,18 +30,18 @@ export default () => {
       }
     }
     if (err.response && err.response.status === HttpStatus.FORBIDDEN) {
-      title = '403 error'
+      title = 'Forbidden'
     }
     window.VoerroModal.show({
       title,
-      body: `Error message: ${message}`,
+      body,
       buttons: [
         {
           text: 'Ok'
         }
       ]
     })
-    return Promise.reject(err)
+    return Promise.resolve(err)
   })
   return api
 }

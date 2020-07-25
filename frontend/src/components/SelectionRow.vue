@@ -172,16 +172,20 @@ export default {
 }
 
 .player_name {
-  width: 12%;
+  width: auto;
+  margin-right: 10px;
+  max-width: 12%;
   font-style: italic;
 }
 
 .sending_time {
-  width: 12%;
+  width: auto;
+  margin-right: 10px;
 }
 
 .scout {
   width: 25%;
+  margin-left: 20px;
 }
 
 .ghost {

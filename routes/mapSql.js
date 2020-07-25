@@ -9,10 +9,12 @@ router.get('/', async (req, res) => {
   threshold.setHours(threshold.getHours() - 1);
   const updatedAt = await mapSql.updatedAt();
   if (updatedAt < threshold) {
-    mapSql.update();
-    res.status(HttpStatus.ACCEPTED).end();
+    const amount = await mapSql.update();
+    res.status(HttpStatus.OK).json({ villages: amount });
   } else {
-    res.status(HttpStatus.FORBIDDEN).end();
+    res.status(HttpStatus.FORBIDDEN).json({
+      message: 'Last updated less than one hour ago'
+    });
   }
 });
 
