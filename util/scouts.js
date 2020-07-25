@@ -4,8 +4,8 @@ const Village = require('../models/Village');
 const saveScout = async (user, candidate) => {
   // Retrieve player and village names
   const matchingVillage = await Village.findOne({
-    xCoord: candidate.x,
-    yCoord: candidate.y
+    xCoord: candidate.xCoord,
+    yCoord: candidate.yCoord
   });
   // Check permissions
   if (!matchingVillage && !user.roles.includes('admin')) {

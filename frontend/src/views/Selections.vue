@@ -20,8 +20,12 @@ export default {
 
 <style scoped>
 .selections_container {
-  padding: 0 10%;
   margin-bottom: 300px;
-  overflow-x: scroll;
+}
+
+@media screen and (max-width: 1330px) {
+  .selections_container {
+    overflow-x: scroll;
+  }
 }
 </style>

@@ -3,7 +3,7 @@ import store from '@/store/index'
 /**
  * Calculates travel time in seconds on a Travian T4 (2019) map
  */
-export const getTravelTime = (target, attacker) => {
+export const getTravelTime = (target, attacker, map) => {
   // Distance on a torus surface
   let distance = Math.sqrt(
     Math.pow(
@@ -25,7 +25,8 @@ export const getTravelTime = (target, attacker) => {
     / 60
   // Return if no TS
   if (distance <= 20 || attacker.tournamentSquare === 0) {
-    return Math.round(distance / squaresPerSecond)
+    const time = distance / squaresPerSecond
+    return Math.round(map ? time * (100 - map) / 100 : time)
   }
   // No-TS part of travel
   let travelTime = 20 / squaresPerSecond
@@ -38,14 +39,46 @@ export const getTravelTime = (target, attacker) => {
   squaresPerSecond *= tsFactor
   // Compute remaining time
   travelTime += distance / squaresPerSecond
-  return Math.round(travelTime)
+  return Math.round(map ? travelTime * (100 - map) / 100 : travelTime)
+}
+
+const landingTime = () => {
+  const time = new Date(store.state.opsHittingDay)
+  time.setHours(store.state.opsHittingTime.HH)
+  time.setMinutes(store.state.opsHittingTime.mm)
+  time.setSeconds(store.state.opsHittingTime.ss)
+  time.setMilliseconds(0)
+  return time
 }
 
 export const getSendingTime = (target, attacker) => {
-  const landingTime = new Date(store.state.opsHittingDay)
-  landingTime.setHours(store.state.opsHittingTime.HH)
-  landingTime.setMinutes(store.state.opsHittingTime.mm)
-  landingTime.setSeconds(store.state.opsHittingTime.ss)
-  landingTime.setMilliseconds(0)
-  return new Date(landingTime.getTime() - getTravelTime(target, attacker) * 1000)
+  return new Date(
+    landingTime().getTime()
+    - getTravelTime(target, attacker) * 1000
+  )
+}
+
+export const getScoutSend = (target, attacker, scout) => {
+  return new Date(
+    getSendingTime(target, attacker).getTime()
+    - getTravelTime(attacker, scout) * 1000
+  )
+}
+
+export const getGhostTravelString = (attacker, ghost) => {
+  const travelTime = getTravelTime(attacker, ghost)
+  const hours = Math.floor(travelTime / 60 / 60)
+  let minutes = Math.floor((travelTime - hours * 60 * 60) / 60)
+  if (minutes < 10) {
+    minutes = `0${minutes}`
+  }
+  return `${hours}h${minutes}`
+}
+
+export const getGhostSend = (target, attacker, ghost) => {
+  return new Date(
+    landingTime().getTime()
+    + getTravelTime(target, attacker, attacker.map) * 1000
+    - getTravelTime(attacker, ghost) * 1000
+  )
 }

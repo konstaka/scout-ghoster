@@ -32,8 +32,12 @@ export default {
 
 <style scoped>
 .ghosts_container {
-  padding: 0 10%;
   margin-bottom: 300px;
-  overflow-x: scroll;
+}
+
+@media screen and (max-width: 1330px) {
+  .ghosts_container {
+    overflow-x: scroll;
+  }
 }
 </style>

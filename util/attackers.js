@@ -6,8 +6,8 @@ const saveAttacker = async (candidate) => {
   if (!attacker) {
     // Retrieve player and village names
     const matchingVillage = await Village.findOne({
-      xCoord: candidate.x,
-      yCoord: candidate.y
+      xCoord: candidate.xCoord,
+      yCoord: candidate.yCoord
     });
     if (matchingVillage) {
       candidate.player = matchingVillage.playerName;

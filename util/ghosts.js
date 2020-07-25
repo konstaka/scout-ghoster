@@ -2,10 +2,11 @@ const Ghost = require('../models/Ghost');
 const Village = require('../models/Village');
 
 const saveGhost = async (user, candidate) => {
+  console.log('saving ghost');
   // Retrieve player and village names
   const matchingVillage = await Village.findOne({
-    xCoord: candidate.x,
-    yCoord: candidate.y
+    xCoord: candidate.xCoord,
+    yCoord: candidate.yCoord
   });
   // Check permissions
   if (!matchingVillage && !user.roles.includes('admin')) {

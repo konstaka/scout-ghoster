@@ -64,6 +64,18 @@ export default {
   color: #42b983;
 }
 
+@media screen and (max-width: 1330px) {
+  #nav a {
+    margin: 10px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  #nav a {
+    margin: 4px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   #nav a {
     margin: 2px;

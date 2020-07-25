@@ -10,7 +10,7 @@
       {{ selection.target.playerName }} ({{ selection.target.xCoord }}|{{ selection.target.yCoord }})
     </div>
     <div class="data_item scout">
-      Scout:
+      scout:
       <select
         v-model="mutableSelection.scout"
         class="scout_dropdown"
@@ -25,12 +25,12 @@
             yCoord: scout.yCoord
           }"
         >
-          {{ scout.player }} ({{ scout.xCoord }}|{{ scout.yCoord }}) {{ scout.scoutArte }}x {{ scout.scoutAmount }} [{{ getScoutSend(selection.attacker, scout) }}]
+          {{ scout.player }} ({{ scout.xCoord }}|{{ scout.yCoord }}) {{ scout.scoutArte }}x {{ scout.scoutAmount }} [{{ scoutSendingTime(scout) }}]
         </option>
       </select>
     </div>
     <div class="data_item ghost">
-      Ghost:
+      ghost:
       <select
         v-model="mutableSelection.ghost"
         class="ghost_dropdown"
@@ -45,7 +45,7 @@
             yCoord: ghost.yCoord
           }"
         >
-          {{ ghost.player }} ({{ ghost.xCoord }}|{{ ghost.yCoord }}) {{ ghost.ghostAmount }}{{ ghost.unitName }}@2h40 [{{ getGhostSend(selection.attacker, ghost) }}]
+          {{ ghost.player }} ({{ ghost.xCoord }}|{{ ghost.yCoord }}) {{ ghost.ghostAmount }}{{ ghost.unitName }}@{{ ghostTravelString(ghost) }} [{{ ghostSendingTime(ghost) }}]
         </option>
       </select>
     </div>
@@ -59,7 +59,12 @@
 </template>
 
 <script>
-import { getTravelTime, getSendingTime } from '@/util/travelTime'
+import {
+  getSendingTime,
+  getScoutSend,
+  getGhostTravelString,
+  getGhostSend
+} from '@/util/travelTime'
 import SelectionsService from '@/services/selections'
 export default {
   name: 'SelectionRow',
@@ -100,12 +105,16 @@ export default {
     })
   },
   methods: {
-    getScoutSend (target, sender) {
-      return new Date(getSendingTime(this.selection.target, this.selection.attacker) - getTravelTime(target, sender) * 1000)
+    scoutSendingTime (scout) {
+      return getScoutSend(this.selection.target, this.selection.attacker, scout)
         .toLocaleTimeString('en-GB', this.options)
     },
-    getGhostSend (target, sender) {
-      return '00:00:00'
+    ghostSendingTime (ghost) {
+      return getGhostSend(this.selection.target, this.selection.attacker, ghost)
+        .toLocaleTimeString('en-GB', this.options)
+    },
+    ghostTravelString (ghost) {
+      return getGhostTravelString(this.selection.attacker, ghost)
     },
     async updateSelection () {
       this.$store.commit('UPDATE_SELECTION', {
@@ -122,7 +131,7 @@ export default {
     async deleteSelection () {
       window.VoerroModal.show({
         title: 'Confirm:',
-        body: `Delete (${this.selection.attacker.x}|${this.selection.attacker.y})
+        body: `Delete (${this.selection.attacker.xCoord}|${this.selection.attacker.yCoord})
           to (${this.selection.target.xCoord}|${this.selection.target.yCoord})?`,
         buttons: [
           {
@@ -164,6 +173,7 @@ export default {
 
 .player_name {
   width: 12%;
+  font-style: italic;
 }
 
 .sending_time {
@@ -190,7 +200,7 @@ export default {
 }
 
 .scout_dropdown {
-  width: 280;
+  width: 280px;
   background: #ebf0f4;
   cursor: pointer;
 }
