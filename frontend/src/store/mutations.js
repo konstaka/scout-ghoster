@@ -16,8 +16,10 @@ export default {
         attacker,
         targetId: target._id,
         target,
+        scoutId: scout ? scout._id : undefined,
         scoutName: scout ? scout.player : undefined,
         scout,
+        ghostId: ghost ? ghost._id : undefined,
         ghostName: ghost ? ghost.player : undefined,
         ghost
       })
@@ -27,8 +29,10 @@ export default {
         attacker,
         targetId: target._id,
         target,
+        scoutId: scout ? scout._id : undefined,
         scoutName: scout ? scout.player : undefined,
         scout,
+        ghostId: ghost ? ghost._id : undefined,
         ghostName: ghost ? ghost.player : undefined,
         ghost
       })
@@ -65,8 +69,7 @@ export default {
     state.loaded = true
   },
   SET_CONFIG (state, settings) {
-    state.serverConfig.speed = settings.speed
-    state.serverConfig.size = settings.size
+    state.serverConfig = settings
   },
   SET_OPS_TIME (state, hittingTime) {
     const opsHittingDay = new Date(hittingTime)
@@ -97,5 +100,11 @@ export default {
   },
   SET_GHOSTS (state, ghosts) {
     state.ghosts = ghosts
+  },
+  SET_SCOUT_COMMANDS (state, commands) {
+    state.scoutCommands = commands
+  },
+  SET_GHOST_COMMANDS (state, commands) {
+    state.ghostCommands = commands
   }
 }

@@ -84,6 +84,18 @@ const checkAccess = (req, res, next) => {
         return;
       }
       break;
+    case (req.url.match(/commands\/scout/) || {}).input:
+      if (!req.authorizedUser.roles.some((r) => SCOUTS.includes(r))) {
+        res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
+        return;
+      }
+      break;
+    case (req.url.match(/commands\/ghost/) || {}).input:
+      if (!req.authorizedUser.roles.some((r) => GHOSTS.includes(r))) {
+        res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
+        return;
+      }
+      break;
     case (req.url.match(/settings/) || {}).input:
     case (req.url.match(/user/) || {}).input:
       break;

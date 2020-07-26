@@ -42,17 +42,42 @@ export default {
     }
   },
   methods: {
+    selectionId () {
+      for (const selection of this.$store.state.selections) {
+        if (selection.targetId === this.target._id
+          && selection.attackerId === this.attacker._id) {
+          return selection._id
+        }
+      }
+      return null
+    },
     async toggleSelected () {
+      const selectionId = this.selectionId()
       this.$store.commit('UPDATE_SELECTION', {
-        target: this.target,
-        attacker: this.attacker,
+        target: {
+          _id: this.target._id,
+          xCoord: this.target.xCoord,
+          yCoord: this.target.yCoord
+        },
+        attacker: {
+          _id: this.attacker._id,
+          xCoord: this.attacker.xCoord,
+          yCoord: this.attacker.yCoord
+        },
         scout: undefined,
         ghost: undefined,
         updated: false,
         selected: !this.isSelected
       })
-      await SelectionsService.put(this.$store.state.selections)
-      this.$store.dispatch('getSelections')
+      if (this.isSelected) {
+        await SelectionsService.post({
+          targetId: this.target._id,
+          attackerId: this.attacker._id
+        })
+      } else {
+        await SelectionsService.delete(selectionId)
+      }
+      this.$store.dispatch('updateCycle')
     }
   }
 }

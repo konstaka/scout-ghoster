@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
+import DropDown from '@/components/common/DropDown'
 import AttackerService from '@/services/attacker'
 export default {
   name: 'AttackerUpdates',
@@ -55,7 +55,7 @@ export default {
   methods: {
     async updateAttacker () {
       await AttackerService.update(this.attacker._id, this.mutableAttacker)
-      this.$store.dispatch('getAttackers')
+      this.$store.dispatch('updateCycle')
     }
   }
 }

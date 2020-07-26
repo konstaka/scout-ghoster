@@ -56,6 +56,7 @@ const ghostsRouter = require('./routes/ghosts');
 const mapSqlRouter = require('./routes/mapSql');
 const userRouter = require('./routes/user');
 const selectionsRouter = require('./routes/selections');
+const commandsRouter = require('./routes/commands');
 app.use('/settings', settingsRouter);
 app.use('/operationMeta', operationMetaRouter);
 app.use('/targets', targetsRouter);
@@ -65,6 +66,7 @@ app.use('/ghosts', ghostsRouter);
 app.use('/mapSql', mapSqlRouter);
 app.use('/user', userRouter);
 app.use('/selections', selectionsRouter);
+app.use('/commands', commandsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

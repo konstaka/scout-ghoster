@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import TimeBox from '@/components/TimeBox'
+import TimeBox from '@/components/Home/AttackerCol/TimeBox'
 export default {
   name: 'AttackerCol',
   components: {

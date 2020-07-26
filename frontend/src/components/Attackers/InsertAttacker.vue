@@ -1,7 +1,7 @@
 <template>
   <div class="attacker_row">
     <div class="data_item explain_text">
-      Add new ghost:
+      Add new attacker:
     </div>
     <div class="data_item inputs">
       x
@@ -49,17 +49,17 @@
         :initial-value="hero"
       />
     </div>
-    <div class="data_item ghost_amount">
-      <input
-        v-model.number="ghostAmount"
-        type="number"
-        class="amount_box"
-      >
-      units
+    <div class="data_item map">
+      map
+      <DropDown
+        v-model.number="map"
+        :options="maps"
+        :initial-value="map"
+      />
     </div>
     <div
       class="data_item add_button"
-      @click="addGhost"
+      @click="addAttacker"
     >
       Add
     </div>
@@ -67,10 +67,10 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
-import GhostService from '@/services/ghost'
+import DropDown from '@/components/common/DropDown'
+import AttackerService from '@/services/attacker'
 export default {
-  name: 'InsertGhost',
+  name: 'InsertAttacker',
   components: {
     DropDown
   },
@@ -78,7 +78,8 @@ export default {
     'unitSpeeds',
     'arteSpeeds',
     'tsLevels',
-    'heroBoots'
+    'heroBoots',
+    'maps'
   ],
   data: () => ({
     xCoord: null,
@@ -87,20 +88,20 @@ export default {
     arteSpeed: 1,
     tsLevel: 0,
     hero: 0,
-    ghostAmount: null
+    map: 0
   }),
   methods: {
-    async addGhost () {
-      await GhostService.save({
+    async addAttacker () {
+      await AttackerService.save({
         xCoord: this.xCoord,
         yCoord: this.yCoord,
         unitSpeed: this.unitSpeed,
         arteSpeed: this.arteSpeed,
         tournamentSquare: this.tsLevel,
         heroBoots: this.hero,
-        ghostAmount: this.ghostAmount
+        map: this.map
       })
-      this.$store.dispatch('getGhosts')
+      this.$store.dispatch('updateCycle')
     }
   }
 }
@@ -151,14 +152,6 @@ input {
 
 .hero_boots {
   width: 12%;
-}
-
-.ghost_amount {
-  width: 18%;
-}
-
-.amount_box {
-  width: 100px;
 }
 
 .add_button {

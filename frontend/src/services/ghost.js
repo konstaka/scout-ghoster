@@ -17,5 +17,10 @@ export default {
 
   async delete (ghost) {
     await api().delete(`/ghosts/${ghost._id}`)
+  },
+
+  async getCommands () {
+    const res = await api().get('/commands/ghost')
+    return res.data
   }
 }

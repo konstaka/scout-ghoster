@@ -1,50 +1,57 @@
 <template>
   <div class="attacker_row">
     <div class="data_item player_name">
-      {{ scout.player }}
+      {{ attacker.player }}
     </div>
     <div class="data_item village_name">
-      {{ scout.villageName }}
+      {{ attacker.villageName }}
     </div>
     <div class="data_item coords">
-      ({{ scout.xCoord }}|{{ scout.yCoord }})
+      ({{ attacker.xCoord }}|{{ attacker.yCoord }})
     </div>
     <div class="data_item unit_speed">
-      {{ scout.unitSpeed }} sq/h
+      <DropDown
+        v-model.number="mutableAttacker.unitSpeed"
+        :options="unitSpeeds"
+        :initial-value="attacker.unitSpeed"
+      />
+      sq/h
     </div>
     <div class="data_item arte_speed">
       artefact
       <DropDown
-        v-model.number="mutableScout.arteSpeed"
+        v-model.number="mutableAttacker.arteSpeed"
         :options="arteSpeeds"
-        :initial-value="scout.arteSpeed"
+        :initial-value="attacker.arteSpeed"
       />
     </div>
     <div class="data_item tournament_square">
       TS
       <DropDown
-        v-model.number="mutableScout.tournamentSquare"
+        v-model.number="mutableAttacker.tournamentSquare"
         :options="tsLevels"
-        :initial-value="scout.tournamentSquare"
+        :initial-value="attacker.tournamentSquare"
       />
     </div>
-    <div class="data_item scout_amount">
+    <div class="data_item hero_boots">
+      hero boots
       <DropDown
-        v-model.number="mutableScout.scoutArte"
-        :options="scoutArtes"
-        :initial-value="scout.scoutArte"
+        v-model.number="mutableAttacker.heroBoots"
+        :options="heroBoots"
+        :initial-value="attacker.heroBoots"
       />
-      x
-      <input
-        v-model.number="mutableScout.scoutAmount"
-        type="number"
-        class="amount_box"
-      >
-      scouts
+    </div>
+    <div class="data_item map">
+      map
+      <DropDown
+        v-model.number="mutableAttacker.map"
+        :options="maps"
+        :initial-value="attacker.map"
+      />
     </div>
     <div
       class="data_item delete_button"
-      @click="deleteScout"
+      @click="deleteAttacker"
     >
       Delete
     </div>
@@ -52,52 +59,52 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
-import ScoutService from '@/services/scout'
+import DropDown from '@/components/common/DropDown'
+import AttackerService from '@/services/attacker'
 export default {
-  name: 'ScoutRow',
+  name: 'AttackerRow',
   components: {
     DropDown
   },
   props: [
-    'scout',
+    'attacker',
     'unitSpeeds',
     'arteSpeeds',
     'tsLevels',
     'heroBoots',
-    'scoutArtes'
+    'maps'
   ],
   data: () => ({
-    mutableScout: {},
+    mutableAttacker: {},
     loaded: false
   }),
   watch: {
-    mutableScout: {
+    mutableAttacker: {
       deep: true,
       handler () {
         if (this.loaded) {
-          this.updateScout()
+          this.updateAttacker()
         }
       }
     }
   },
   mounted () {
-    this.mutableScout = {
-      ...this.scout
+    this.mutableAttacker = {
+      ...this.attacker
     }
     this.$nextTick(() => {
       this.loaded = true
     })
   },
   methods: {
-    async updateScout () {
-      await ScoutService.update(this.scout._id, this.mutableScout)
-      this.$store.dispatch('getScouts')
+    async updateAttacker () {
+      await AttackerService.update(this.attacker._id, this.mutableAttacker)
+      this.$store.dispatch('updateCycle')
     },
-    async deleteScout () {
+    async deleteAttacker () {
       window.VoerroModal.show({
         title: 'Confirm:',
-        body: `Delete (${this.scout.xCoord}|${this.scout.yCoord})?`,
+        body: `Delete (${this.attacker.xCoord}|${this.attacker.yCoord})?`,
         buttons: [
           {
             text: 'Cancel'
@@ -105,8 +112,8 @@ export default {
           {
             text: 'Delete',
             handler: async () => {
-              await ScoutService.delete(this.scout)
-              this.$store.dispatch('getScouts')
+              await AttackerService.delete(this.attacker)
+              this.$store.dispatch('updateCycle')
             }
           }
         ]
@@ -155,18 +162,6 @@ export default {
 
 .hero_boots {
   width: 12%;
-}
-
-.scout_amount {
-  width: 21%;
-}
-
-.amount_box {
-  width: 100px;
-}
-
-input {
-  background: #ebf0f4;
 }
 
 .delete_button {

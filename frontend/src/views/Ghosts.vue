@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import GhostRow from '@/components/GhostRow'
-import InsertGhost from '@/components/InsertGhost'
+import GhostRow from '@/components/Ghosts/GhostRow'
+import InsertGhost from '@/components/Ghosts/InsertGhost'
 export default {
   name: 'Ghosts',
   components: {

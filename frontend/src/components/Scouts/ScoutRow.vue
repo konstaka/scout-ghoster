@@ -1,57 +1,50 @@
 <template>
   <div class="attacker_row">
     <div class="data_item player_name">
-      {{ ghost.player }}
+      {{ scout.player }}
     </div>
     <div class="data_item village_name">
-      {{ ghost.villageName }}
+      {{ scout.villageName }}
     </div>
     <div class="data_item coords">
-      ({{ ghost.xCoord }}|{{ ghost.yCoord }})
+      ({{ scout.xCoord }}|{{ scout.yCoord }})
     </div>
     <div class="data_item unit_speed">
-      <DropDown
-        v-model.number="mutableGhost.unitSpeed"
-        :options="unitSpeeds"
-        :initial-value="ghost.unitSpeed"
-      />
-      sq/h
+      {{ scout.unitSpeed }} sq/h
     </div>
     <div class="data_item arte_speed">
       artefact
       <DropDown
-        v-model.number="mutableGhost.arteSpeed"
+        v-model.number="mutableScout.arteSpeed"
         :options="arteSpeeds"
-        :initial-value="ghost.arteSpeed"
+        :initial-value="scout.arteSpeed"
       />
     </div>
     <div class="data_item tournament_square">
       TS
       <DropDown
-        v-model.number="mutableGhost.tournamentSquare"
+        v-model.number="mutableScout.tournamentSquare"
         :options="tsLevels"
-        :initial-value="ghost.tournamentSquare"
+        :initial-value="scout.tournamentSquare"
       />
     </div>
-    <div class="data_item hero_boots">
-      hero boots
+    <div class="data_item scout_amount">
       <DropDown
-        v-model.number="mutableGhost.heroBoots"
-        :options="heroBoots"
-        :initial-value="ghost.heroBoots"
+        v-model.number="mutableScout.scoutArte"
+        :options="scoutArtes"
+        :initial-value="scout.scoutArte"
       />
-    </div>
-    <div class="data_item ghost_amount">
+      x
       <input
-        v-model.number="mutableGhost.ghostAmount"
+        v-model.number="mutableScout.scoutAmount"
         type="number"
         class="amount_box"
       >
-      units ({{ ghost.unitName }})
+      scouts
     </div>
     <div
       class="data_item delete_button"
-      @click="deleteGhost"
+      @click="deleteScout"
     >
       Delete
     </div>
@@ -59,51 +52,52 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
-import GhostService from '@/services/ghost'
+import DropDown from '@/components/common/DropDown'
+import ScoutService from '@/services/scout'
 export default {
-  name: 'AttackerRow',
+  name: 'ScoutRow',
   components: {
     DropDown
   },
   props: [
-    'ghost',
+    'scout',
     'unitSpeeds',
     'arteSpeeds',
     'tsLevels',
-    'heroBoots'
+    'heroBoots',
+    'scoutArtes'
   ],
   data: () => ({
-    mutableGhost: {},
+    mutableScout: {},
     loaded: false
   }),
   watch: {
-    mutableGhost: {
+    mutableScout: {
       deep: true,
       handler () {
         if (this.loaded) {
-          this.updateGhost()
+          this.updateScout()
         }
       }
     }
   },
   mounted () {
-    this.mutableGhost = {
-      ...this.ghost
+    this.mutableScout = {
+      ...this.scout
     }
     this.$nextTick(() => {
       this.loaded = true
     })
   },
   methods: {
-    async updateGhost () {
-      await GhostService.update(this.ghost._id, this.mutableGhost)
-      this.$store.dispatch('getGhosts')
+    async updateScout () {
+      await ScoutService.update(this.scout._id, this.mutableScout)
+      this.$store.dispatch('updateCycle')
     },
-    async deleteGhost () {
+    async deleteScout () {
       window.VoerroModal.show({
         title: 'Confirm:',
-        body: `Delete (${this.ghost.xCoord}|${this.ghost.yCoord})?`,
+        body: `Delete (${this.scout.xCoord}|${this.scout.yCoord})?`,
         buttons: [
           {
             text: 'Cancel'
@@ -111,8 +105,8 @@ export default {
           {
             text: 'Delete',
             handler: async () => {
-              await GhostService.delete(this.ghost)
-              this.$store.dispatch('getGhosts')
+              await ScoutService.delete(this.scout)
+              this.$store.dispatch('updateCycle')
             }
           }
         ]
@@ -163,8 +157,8 @@ export default {
   width: 12%;
 }
 
-.ghost_amount {
-  width: 18%;
+.scout_amount {
+  width: 21%;
 }
 
 .amount_box {

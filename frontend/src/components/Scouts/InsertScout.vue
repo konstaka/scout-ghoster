@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import DropDown from '@/components/DropDown'
+import DropDown from '@/components/common/DropDown'
 import ScoutService from '@/services/scout'
 export default {
   name: 'InsertScout',
@@ -87,7 +87,7 @@ export default {
         scoutAmount: this.scoutAmount,
         scoutArte: this.scoutArte
       })
-      this.$store.dispatch('getScouts')
+      this.$store.dispatch('updateCycle')
     }
   }
 }

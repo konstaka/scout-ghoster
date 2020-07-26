@@ -1,13 +1,13 @@
 <template>
   <div class="selection_row">
     <div class="data_item player_name">
-      {{ selection.attacker.player }} ({{ selection.attacker.xCoord }}|{{ selection.attacker.yCoord }})
+      {{ selection.attacker.villageName }} ({{ selection.attacker.xCoord }}|{{ selection.attacker.yCoord }})
     </div>
     <div class="data_item sending_time">
       sends at {{ sendingTime }} to
     </div>
     <div class="data_item player_name">
-      {{ selection.target.playerName }} ({{ selection.target.xCoord }}|{{ selection.target.yCoord }})
+      {{ selection.target.villageName }} ({{ selection.target.xCoord }}|{{ selection.target.yCoord }})
     </div>
     <div class="data_item scout">
       scout:
@@ -21,8 +21,16 @@
           :key="`scout${scout.xCoord}${scout.yCoord}`"
           :value="{
             player: scout.player,
+            _id: scout._id,
+            __v: scout.__v,
             xCoord: scout.xCoord,
-            yCoord: scout.yCoord
+            yCoord: scout.yCoord,
+            arteSpeed: scout.arteSpeed,
+            scoutAmount: scout.scoutAmount,
+            scoutArte: scout.scoutArte,
+            tournamentSquare: scout.tournamentSquare,
+            unitSpeed: scout.unitSpeed,
+            villageName: scout.villageName
           }"
         >
           {{ scout.player }} ({{ scout.xCoord }}|{{ scout.yCoord }}) {{ scout.scoutArte }}x {{ scout.scoutAmount }} [{{ scoutSendingTime(scout) }}]
@@ -41,8 +49,17 @@
           :key="`ghost${ghost.xCoord}${ghost.yCoord}`"
           :value="{
             player: ghost.player,
+            _id: ghost._id,
+            __v: ghost.__v,
             xCoord: ghost.xCoord,
-            yCoord: ghost.yCoord
+            yCoord: ghost.yCoord,
+            arteSpeed: ghost.arteSpeed,
+            scoutAmount: ghost.scoutAmount,
+            scoutArte: ghost.scoutArte,
+            tournamentSquare: ghost.tournamentSquare,
+            unitSpeed: ghost.unitSpeed,
+            villageName: ghost.villageName,
+            heroBoots: ghost.heroBoots
           }"
         >
           {{ ghost.player }} ({{ ghost.xCoord }}|{{ ghost.yCoord }}) {{ ghost.ghostAmount }}{{ ghost.unitName }}@{{ ghostTravelString(ghost) }} [{{ ghostSendingTime(ghost) }}]
@@ -100,6 +117,18 @@ export default {
     this.mutableSelection = {
       ...this.selection
     }
+    for (const storedScout of this.$store.state.scouts) {
+      if (this.mutableSelection.scout
+        && storedScout._id === this.mutableSelection.scout._id) {
+        this.mutableSelection.scout = storedScout
+      }
+    }
+    for (const storedGhost of this.$store.state.ghosts) {
+      if (this.mutableSelection.ghost
+        && storedGhost._id === this.mutableSelection.ghost._id) {
+        this.mutableSelection.ghost = storedGhost
+      }
+    }
     this.$nextTick(() => {
       this.loaded = true
     })
@@ -117,16 +146,8 @@ export default {
       return getGhostTravelString(this.selection.attacker, ghost)
     },
     async updateSelection () {
-      this.$store.commit('UPDATE_SELECTION', {
-        target: this.mutableSelection.target,
-        attacker: this.mutableSelection.attacker,
-        scout: this.mutableSelection.scout,
-        ghost: this.mutableSelection.ghost,
-        updated: true,
-        selected: true
-      })
-      await SelectionsService.put(this.$store.state.selections)
-      this.$store.dispatch('getSelections')
+      await SelectionsService.updateSelection(this.mutableSelection)
+      this.$store.dispatch('updateCycle')
     },
     async deleteSelection () {
       window.VoerroModal.show({
@@ -140,13 +161,14 @@ export default {
           {
             text: 'Delete',
             handler: async () => {
+              const selectionId = this.selection._id
               this.$store.commit('UPDATE_SELECTION', {
                 target: this.selection.target,
                 attacker: this.selection.attacker,
                 selected: false
               })
-              await SelectionsService.put(this.$store.state.selections)
-              this.$store.dispatch('getSelections')
+              await SelectionsService.delete(selectionId)
+              this.$store.dispatch('updateCycle')
             }
           }
         ]
@@ -172,9 +194,8 @@ export default {
 }
 
 .player_name {
-  width: auto;
-  margin-right: 10px;
-  max-width: 12%;
+  margin-right: 5px;
+  width: 220px;
   font-style: italic;
 }
 
@@ -184,12 +205,13 @@ export default {
 }
 
 .scout {
-  width: 25%;
-  margin-left: 20px;
+  width: 266px;
+  margin-left: 15px;
 }
 
 .ghost {
-  width: 28%;
+  width: 306px;
+  margin-left: 15px;
 }
 
 .delete_button {
@@ -204,13 +226,13 @@ export default {
 }
 
 .scout_dropdown {
-  width: 280px;
+  width: 215px;
   background: #ebf0f4;
   cursor: pointer;
 }
 
 .ghost_dropdown {
-  width: 320px;
+  width: 255px;
   background: #ebf0f4;
   cursor: pointer;
 }

@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import AttackerRow from '@/components/AttackerRow'
-import InsertAttacker from '@/components/InsertAttacker'
+import AttackerRow from '@/components/Attackers/AttackerRow'
+import InsertAttacker from '@/components/Attackers/InsertAttacker'
 export default {
   name: 'Attackers',
   components: {
