@@ -132,15 +132,15 @@ export default {
 }
 
 .scout_send {
-  width: 15%;
+  width: 215px;
 }
 
 .return_time {
-  width: 13%;
+  width: 185px;
 }
 
 .ghost_send {
-  width: 15%;
+  width: 215px;
   margin-left: 30px;
 }
 </style>
