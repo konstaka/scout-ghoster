@@ -6,7 +6,8 @@ router.get('/', (req, res) => {
   try {
     res.status(HttpStatus.OK).json({
       size: process.env.SERVER_SIZE,
-      speed: process.env.SERVER_SPEED
+      speed: process.env.SERVER_SPEED,
+      url: process.env.TRAVIAN_URL
     });
   } catch (e) {
     console.log(e);

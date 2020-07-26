@@ -55,7 +55,7 @@ export default {
   methods: {
     async updateAttacker () {
       await AttackerService.update(this.attacker._id, this.mutableAttacker)
-      this.$store.dispatch('getAttackers')
+      this.$store.dispatch('updateCycle')
     }
   }
 }

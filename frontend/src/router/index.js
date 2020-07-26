@@ -74,7 +74,7 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // Always allow navigating to login page
   if (to.path === '/login') {
     next()
@@ -93,16 +93,8 @@ router.beforeEach((to, from, next) => {
   // User is signed in
   store.commit('SIGN_IN')
   store.commit('SET_USER_ROLES', Vue.$cookies.get('roles').split(','))
-  if ((store.state.roles.includes('admin') || store.state.roles.includes('defcoord'))
-    && store.state.attackers.length === 0) {
-    store.dispatch('getInfo')
-  } else {
-    if (store.state.roles.includes('scout') && store.state.scouts.length === 0) {
-      store.dispatch('getScouts')
-    }
-    if (store.state.roles.includes('ghost') && store.state.ghosts.length === 0) {
-      store.dispatch('getGhosts')
-    }
+  if (!store.state.loaded) {
+    await store.dispatch('updateCycle')
   }
   next()
 })

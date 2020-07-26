@@ -101,7 +101,7 @@ export default {
         heroBoots: this.hero,
         map: this.map
       })
-      this.$store.dispatch('getAttackers')
+      this.$store.dispatch('updateCycle')
     }
   }
 }

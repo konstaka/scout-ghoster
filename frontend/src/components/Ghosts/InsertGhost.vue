@@ -100,7 +100,7 @@ export default {
         heroBoots: this.hero,
         ghostAmount: this.ghostAmount
       })
-      this.$store.dispatch('getGhosts')
+      this.$store.dispatch('updateCycle')
     }
   }
 }

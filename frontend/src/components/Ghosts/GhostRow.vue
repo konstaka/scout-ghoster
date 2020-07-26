@@ -98,7 +98,7 @@ export default {
   methods: {
     async updateGhost () {
       await GhostService.update(this.ghost._id, this.mutableGhost)
-      this.$store.dispatch('getGhosts')
+      this.$store.dispatch('updateCycle')
     },
     async deleteGhost () {
       window.VoerroModal.show({
@@ -112,7 +112,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await GhostService.delete(this.ghost)
-              this.$store.dispatch('getGhosts')
+              this.$store.dispatch('updateCycle')
             }
           }
         ]

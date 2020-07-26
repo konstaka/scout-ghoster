@@ -99,7 +99,7 @@ export default {
   methods: {
     async updateAttacker () {
       await AttackerService.update(this.attacker._id, this.mutableAttacker)
-      this.$store.dispatch('getAttackers')
+      this.$store.dispatch('updateCycle')
     },
     async deleteAttacker () {
       window.VoerroModal.show({
@@ -113,7 +113,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await AttackerService.delete(this.attacker)
-              this.$store.dispatch('getAttackers')
+              this.$store.dispatch('updateCycle')
             }
           }
         ]

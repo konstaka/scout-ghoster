@@ -75,10 +75,16 @@ export const getGhostTravelString = (attacker, ghost) => {
   return `${hours}h${minutes}`
 }
 
-export const getGhostSend = (target, attacker, ghost) => {
+export const getReturnTime = (target, attacker) => {
   return new Date(
     landingTime().getTime()
     + getTravelTime(target, attacker, attacker.map) * 1000
+  )
+}
+
+export const getGhostSend = (target, attacker, ghost) => {
+  return new Date(
+    getReturnTime(target, attacker).getTime()
     - getTravelTime(attacker, ghost) * 1000
   )
 }

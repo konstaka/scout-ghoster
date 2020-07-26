@@ -87,7 +87,7 @@ export default {
         scoutAmount: this.scoutAmount,
         scoutArte: this.scoutArte
       })
-      this.$store.dispatch('getScouts')
+      this.$store.dispatch('updateCycle')
     }
   }
 }

@@ -92,7 +92,7 @@ export default {
   methods: {
     async updateScout () {
       await ScoutService.update(this.scout._id, this.mutableScout)
-      this.$store.dispatch('getScouts')
+      this.$store.dispatch('updateCycle')
     },
     async deleteScout () {
       window.VoerroModal.show({
@@ -106,7 +106,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await ScoutService.delete(this.scout)
-              this.$store.dispatch('getScouts')
+              this.$store.dispatch('updateCycle')
             }
           }
         ]
