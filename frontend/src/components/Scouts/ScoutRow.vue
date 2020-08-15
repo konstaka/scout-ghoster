@@ -106,6 +106,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await ScoutService.delete(this.scout)
+              await this.$store.dispatch('forgetScout', this.scout)
               this.$store.dispatch('updateCycle')
             }
           }

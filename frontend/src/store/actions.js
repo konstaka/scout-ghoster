@@ -125,6 +125,26 @@ export default {
       return !matches
     })
   },
+  async forgetScout (context, scout) {
+    const selectionsWithScout = context.state.selections.filter(
+      (sel) => sel.scoutId === scout._id
+    )
+    for (const selection of selectionsWithScout) {
+      selection.scout = null
+      await SelectionsService.updateSelection(selection)
+    }
+    context.dispatch('updateCycle')
+  },
+  async forgetGhost (context, ghost) {
+    const selectionsWithGhost = context.state.selections.filter(
+      (sel) => sel.ghostId === ghost._id
+    )
+    for (const selection of selectionsWithGhost) {
+      selection.ghost = null
+      await SelectionsService.updateSelection(selection)
+    }
+    context.dispatch('updateCycle')
+  },
   async getScoutCommands (context) {
     const compiledCommands = []
     const commands = await ScoutService.getCommands()

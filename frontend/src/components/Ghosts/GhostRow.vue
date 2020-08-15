@@ -112,6 +112,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await GhostService.delete(this.ghost)
+              await this.$store.dispatch('forgetGhost', this.ghost)
               this.$store.dispatch('updateCycle')
             }
           }
