@@ -56,6 +56,18 @@
     >
       {{ command.ghost.villageName }} ({{ command.ghost.xCoord }}|{{ command.ghost.yCoord }})
     </div>
+    <div class="data_item send_link">
+      <a
+        :href="`https://${
+          $store.state.serverConfig.url
+        }/build.php?id=39&tt=2&z=${
+          coordId(command.attacker.xCoord, command.attacker.yCoord)
+        }`"
+        target="_blank"
+      >
+        -> Send troops
+      </a>
+    </div>
   </div>
 </template>
 
@@ -66,6 +78,7 @@ import {
   getReturnTime,
   getGhostSend
 } from '@/util/travelTime'
+import { coordinatesToMapId } from '@/util/mapId'
 export default {
   name: 'CommandRow',
   props: [
@@ -97,6 +110,11 @@ export default {
       return getGhostSend(this.command.target, this.command.attacker, this.command.ghost)
         .toLocaleTimeString('en-GB', this.options)
     }
+  },
+  methods: {
+    coordId (x, y) {
+      return coordinatesToMapId(x, y, this.$store.state.serverConfig.size * 2 + 1)
+    }
   }
 }
 </script>
@@ -122,7 +140,7 @@ export default {
   font-style: italic;
 }
 
-.player_name a {
+.player_name a, .send_link a {
   color: #2c3e50;
 }
 
@@ -142,5 +160,9 @@ export default {
 .ghost_send {
   width: 215px;
   margin-left: 30px;
+}
+
+.send_link {
+  width: auto;
 }
 </style>
