@@ -8,6 +8,8 @@ const GhostSchema = new Schema({
   player: String,
   // Name of attacking village
   villageName: String,
+  // Identifier of the player's village
+  villageId: Number,
   // x-coordinate: NUM(-400 ... 400)
   xCoord: Number,
   // y-coordinate: NUM(-400 ... 400)

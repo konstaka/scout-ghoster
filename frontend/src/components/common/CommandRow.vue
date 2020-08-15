@@ -27,22 +27,16 @@
       {{ command.target.villageName }} ({{ command.target.xCoord }}|{{ command.target.yCoord }}):
     </div>
     <div
-      v-if="isScout"
-      class="data_item scout_send"
-    >
-      send scout at {{ scoutSendingTime }} from
-    </div>
-    <div
-      v-if="isScout"
-      class="data_item player_name"
-    >
-      {{ command.scout.villageName }} ({{ command.scout.xCoord }}|{{ command.scout.yCoord }})
-    </div>
-    <div
       v-if="isGhost"
       class="data_item return_time"
     >
       is back home at {{ returnTime }}:
+    </div>
+    <div
+      v-if="isScout"
+      class="data_item scout_send"
+    >
+      send scout at {{ scoutSendingTime }} from
     </div>
     <div
       v-if="isGhost"
@@ -50,17 +44,16 @@
     >
       send ghost at {{ ghostSendingTime }} from
     </div>
-    <div
-      v-if="isGhost"
-      class="data_item player_name"
-    >
-      {{ command.ghost.villageName }} ({{ command.ghost.xCoord }}|{{ command.ghost.yCoord }})
+    <div class="data_item player_name">
+      {{ village.villageName }} ({{ village.xCoord }}|{{ village.yCoord }})
     </div>
     <div class="data_item send_link">
       <a
         :href="`https://${
           $store.state.serverConfig.url
-        }/build.php?id=39&tt=2&z=${
+        }/build.php?newdid=${
+          village.villageId
+        }&id=39&tt=2&z=${
           coordId(command.attacker.xCoord, command.attacker.yCoord)
         }`"
         target="_blank"
@@ -94,9 +87,15 @@ export default {
     }
   }),
   computed: {
+    village () {
+      return this.isScout ? this.command.scout : this.command.ghost
+    },
     sendingTime () {
       return getSendingTime(this.command.target, this.command.attacker)
         .toLocaleTimeString('en-GB', this.options)
+    },
+    ownSendingTime () {
+      return this.isScout ? this.scoutSendingTime : this.ghostSendingTime
     },
     scoutSendingTime () {
       return getScoutSend(this.command.target, this.command.attacker, this.command.scout)

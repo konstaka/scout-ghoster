@@ -26,6 +26,7 @@ const saveScout = async (user, candidate) => {
   if (matchingVillage) {
     candidate.player = matchingVillage.playerName;
     candidate.villageName = matchingVillage.villageName;
+    candidate.villageId = matchingVillage.villageId;
     candidate.unitSpeed = ((tribe) => {
       switch (tribe) {
         // Roman

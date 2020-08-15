@@ -27,6 +27,7 @@ const saveGhost = async (user, candidate) => {
   if (matchingVillage) {
     candidate.player = matchingVillage.playerName;
     candidate.villageName = matchingVillage.villageName;
+    candidate.villageId = matchingVillage.villageId;
     candidate.unitName = ((tribe) => {
       switch (tribe) {
         // Roman
