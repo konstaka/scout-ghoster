@@ -9,6 +9,13 @@ const updatedAt = async () => {
   return randomVillage[0].updatedAt;
 };
 
+const restoreStr = (str) => str
+  .replace('&amp;', '&')
+  .replace('&lt;', '<')
+  .replace('&gt', '>')
+  .replace('&quot;', '"')
+  .replace('&#39;', "'");
+
 const update = async () => {
   try {
     if (!process.env.TRAVIAN_URL || !process.env.TRAVIAN_URL.includes('travian')) {
@@ -41,11 +48,11 @@ const update = async () => {
           yCoord: parseInt(firstNumbers[2], 10),
           tribe: parseInt(firstNumbers[3], 10),
           villageId: parseInt(firstNumbers[4], 10),
-          villageName: rest[1],
+          villageName: restoreStr(rest[1]),
           playerId: parseInt(rest[2].substr(1, rest[1].length - 1), 10),
-          playerName: rest[3],
+          playerName: restoreStr(rest[3]),
           allyId: parseInt(rest[4].substr(1, rest[3].length - 1), 10),
-          allyName: rest[5],
+          allyName: restoreStr(rest[5]),
           population: parseInt(rest[6].split(',')[0], 10),
           updatedAt: now,
         }));
