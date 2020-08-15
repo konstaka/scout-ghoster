@@ -1,22 +1,28 @@
 const Attacker = require('../models/Attacker');
 const Village = require('../models/Village');
 
-const saveAttacker = async (candidate) => {
-  let attacker = await Attacker.findByIdAndUpdate(candidate._id, candidate);
-  if (!attacker) {
-    // Retrieve player and village names
-    const matchingVillage = await Village.findOne({
-      xCoord: candidate.xCoord,
-      yCoord: candidate.yCoord
-    });
-    if (matchingVillage) {
-      candidate.player = matchingVillage.playerName;
-      candidate.villageName = matchingVillage.villageName;
-    }
-    attacker = new Attacker(candidate);
-    attacker = await attacker.save();
+const saveAttacker = async (attacker) => {
+  const candidate = attacker;
+  // Retrieve player and village names
+  const matchingVillage = await Village.findOne({
+    xCoord: candidate.xCoord,
+    yCoord: candidate.yCoord,
+  });
+  // Attach info
+  if (matchingVillage) {
+    candidate.player = matchingVillage.playerName;
+    candidate.villageName = matchingVillage.villageName;
   }
-  return attacker;
+  // Find possibly existing attacker
+  let savedAttacker = await Attacker.findById(candidate._id);
+  if (savedAttacker) {
+    // Update existing attacker
+    savedAttacker = await Attacker.findByIdAndUpdate(candidate._id, candidate);
+  } else {
+    // Adding new attacker
+    savedAttacker = await new Attacker(candidate).save();
+  }
+  return savedAttacker;
 };
 
 const getAttackers = async () => {
@@ -32,5 +38,5 @@ const deleteAttacker = async (attackerId) => {
 module.exports = {
   saveAttacker,
   getAttackers,
-  deleteAttacker
+  deleteAttacker,
 };

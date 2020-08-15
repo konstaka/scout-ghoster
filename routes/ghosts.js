@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const HttpStatus = require('http-status-codes');
 const ghosts = require('../util/ghosts');
@@ -11,7 +12,7 @@ router.post('/', async (req, res) => {
     }
     const ghost = await ghosts.saveGhost(req.authorizedUser, req.body);
     if (ghost._id) {
-      res.location('/ghosts/' + ghost._id);
+      res.location(`/ghosts/${ghost._id}`);
       res.status(HttpStatus.CREATED).end();
     } else {
       res.status(HttpStatus.FORBIDDEN).json({ message: ghost });
@@ -56,7 +57,7 @@ router.delete('/:ghostId', async (req, res) => {
   try {
     const deleted = await ghosts.deleteGhost(
       req.authorizedUser,
-      req.params.ghostId
+      req.params.ghostId,
     );
     if (!deleted) {
       res.status(HttpStatus.NOT_FOUND).end();

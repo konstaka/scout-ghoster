@@ -1,13 +1,14 @@
 const Scout = require('../models/Scout');
 const Village = require('../models/Village');
 
-const saveScout = async (user, candidate) => {
+const saveScout = async (user, scout) => {
+  const candidate = scout;
   // Retrieve player and village names
   const matchingVillage = await Village.findOne({
     xCoord: candidate.xCoord,
-    yCoord: candidate.yCoord
+    yCoord: candidate.yCoord,
   });
-  // Check permissions
+    // Check permissions
   if (!matchingVillage && !user.roles.includes('admin')) {
     return 'Village not found';
   }
@@ -32,41 +33,34 @@ const saveScout = async (user, candidate) => {
         // Roman
         case 1:
           return 16;
-          break;
-        // Teuton
+          // Teuton
         case 2:
           return 9;
-          break;
-        // Gaul
+          // Gaul
         case 3:
           return 17;
-          break;
         default:
           return undefined;
-          break;
       }
     })(matchingVillage.tribe);
   }
   // Find possibly existing scout
-  let scout = await Scout.findById(candidate._id);
-  if (scout) {
+  let savedScout = await Scout.findById(candidate._id);
+  if (savedScout) {
     // Updating existing scout
-    scout = await Scout.findByIdAndUpdate(candidate._id, candidate);
+    savedScout = await Scout.findByIdAndUpdate(candidate._id, candidate);
   } else {
     // Adding new scout
-    scout = new Scout(candidate);
-    scout = await scout.save();
+    savedScout = await new Scout(candidate).save();
   }
-  return scout;
+  return savedScout;
 };
 
 const getScouts = async (user) => {
   const scouts = await Scout.find();
-  return scouts.filter((scout) => {
-    return user.roles.includes('admin')
+  return scouts.filter((scout) => user.roles.includes('admin')
       || user.roles.includes('defcoord')
-      || user.accounts.includes(scout.player)
-  });
+      || user.accounts.includes(scout.player));
 };
 
 const deleteScout = async (user, scoutId) => {
@@ -88,5 +82,5 @@ const deleteScout = async (user, scoutId) => {
 module.exports = {
   saveScout,
   getScouts,
-  deleteScout
+  deleteScout,
 };

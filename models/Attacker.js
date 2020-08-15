@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = mongoose.ObjectId;
+
+const { Schema } = mongoose;
+const { ObjectId } = mongoose;
 
 const AttackerSchema = new Schema({
   id: ObjectId,
@@ -8,9 +9,9 @@ const AttackerSchema = new Schema({
   player: String,
   // Name of attacking village
   villageName: String,
-  // x-coordinate: NUM(-400 ... 400)
+  // X-coordinate: NUM(-400 ... 400)
   xCoord: Number,
-  // y-coordinate: NUM(-400 ... 400)
+  // Y-coordinate: NUM(-400 ... 400)
   yCoord: Number,
   // Unit speed: NUM(>3)
   unitSpeed: Number,
@@ -21,7 +22,7 @@ const AttackerSchema = new Schema({
   // Hero boots: ENUM(25, 50, 75)
   heroBoots: Number,
   // Map: ENUM(30, 40, 50)
-  map: Number
+  map: Number,
 });
 
 module.exports = mongoose.model('Attacker', AttackerSchema);

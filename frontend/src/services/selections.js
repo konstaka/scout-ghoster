@@ -23,14 +23,10 @@ export default {
 
   async updateSelection (selection) {
     if (selection._id) {
-      if (selection.scout) {
-        selection.scoutName = selection.scout.player
-        selection.scoutId = selection.scout._id
-      }
-      if (selection.ghost) {
-        selection.ghostName = selection.ghost.player
-        selection.ghostId = selection.ghost._id
-      }
+      selection.scoutName = selection.scout ? selection.scout.player : null
+      selection.scoutId = selection.scout ? selection.scout._id : null
+      selection.ghostName = selection.ghost ? selection.ghost.player : null
+      selection.ghostId = selection.ghost ? selection.ghost._id : null
       await api().put(`/selections/${selection._id}`, selection)
     }
   }

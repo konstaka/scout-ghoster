@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = mongoose.ObjectId;
+
+const { Schema } = mongoose;
+const { ObjectId } = mongoose;
 
 const GhostSchema = new Schema({
   id: ObjectId,
@@ -10,9 +11,9 @@ const GhostSchema = new Schema({
   villageName: String,
   // Identifier of the player's village
   villageId: Number,
-  // x-coordinate: NUM(-400 ... 400)
+  // X-coordinate: NUM(-400 ... 400)
   xCoord: Number,
-  // y-coordinate: NUM(-400 ... 400)
+  // Y-coordinate: NUM(-400 ... 400)
   yCoord: Number,
   // Unit speed: NUM(>3)
   unitSpeed: Number,
@@ -25,7 +26,7 @@ const GhostSchema = new Schema({
   // Unit amount
   ghostAmount: Number,
   // Unit abbreviation
-  unitName: String
+  unitName: String,
 });
 
 module.exports = mongoose.model('Ghost', GhostSchema);

@@ -1,11 +1,8 @@
 const express = require('express');
+
 const router = express.Router();
 const HttpStatus = require('http-status-codes');
 const Selection = require('../models/Selection');
-const Attacker = require('../models/Attacker');
-const Village = require('../models/Village');
-const Scout = require('../models/Scout');
-const Ghost = require('../models/Ghost');
 
 router.post('/', async (req, res) => {
   try {
@@ -15,13 +12,13 @@ router.post('/', async (req, res) => {
     }
     let selection = await Selection.findOne({
       targetId: req.body.targetId,
-      attackerId: req.body.attackerId
-    })
+      attackerId: req.body.attackerId,
+    });
     if (!selection) {
       selection = new Selection(req.body);
       await selection.save();
     }
-    res.location('/selections/' + selection._id);
+    res.location(`/selections/${selection._id}`);
     res.status(HttpStatus.CREATED).end();
   } catch (e) {
     console.log(e);
@@ -31,7 +28,6 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const compiledSelections = [];
     const selections = await Selection.find();
     res.status(HttpStatus.OK).json(selections);
   } catch (e) {
@@ -54,7 +50,7 @@ router.put('/', async (req, res) => {
     if (req.body.selections.length > 0) {
       await Selection.collection.insertMany(
         req.body.selections,
-        { ordered: false }
+        { ordered: false },
       );
     }
     res.status(HttpStatus.NO_CONTENT).end();

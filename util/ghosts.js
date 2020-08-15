@@ -1,14 +1,15 @@
 const Ghost = require('../models/Ghost');
 const Village = require('../models/Village');
 
-const saveGhost = async (user, candidate) => {
+const saveGhost = async (user, ghost) => {
+  const candidate = ghost;
   console.log('saving ghost');
   // Retrieve player and village names
   const matchingVillage = await Village.findOne({
     xCoord: candidate.xCoord,
-    yCoord: candidate.yCoord
+    yCoord: candidate.yCoord,
   });
-  // Check permissions
+    // Check permissions
   if (!matchingVillage && !user.roles.includes('admin')) {
     return 'Village not found';
   }
@@ -32,44 +33,37 @@ const saveGhost = async (user, candidate) => {
       switch (tribe) {
         // Roman
         case 1:
-          return candidate.unitSpeed === 14 ? 'EI'
-            : (candidate.unitSpeed === 10 ? 'EC' : '?');
-          break;
+          if (candidate.unitSpeed === 14) return 'EI';
+          return candidate.unitSpeed === 10 ? 'EC' : '?';
         // Teuton
         case 2:
-        return candidate.unitSpeed === 9 ? 'TK' : '?';
-          break;
+          return candidate.unitSpeed === 9 ? 'TK' : '?';
         // Gaul
         case 3:
-          return candidate.unitSpeed === 19 ? 'TT'
-            : (candidate.unitSpeed === 13 ? 'H' : '?');
-          break;
+          if (candidate.unitSpeed === 19) return 'TT';
+          return candidate.unitSpeed === 13 ? 'H' : '?';
         default:
           return '?';
-          break;
       }
     })(matchingVillage.tribe);
   }
   // Find possibly existing ghost
-  let ghost = await Ghost.findById(candidate._id);
-  if (ghost) {
+  let savedGhost = await Ghost.findById(candidate._id);
+  if (savedGhost) {
     // Updating existing ghost
-    ghost = await Ghost.findByIdAndUpdate(candidate._id, candidate);
+    savedGhost = await Ghost.findByIdAndUpdate(candidate._id, candidate);
   } else {
     // Adding new ghost
-    ghost = new Ghost(candidate);
-    ghost = await ghost.save();
+    savedGhost = await new Ghost(candidate).save();
   }
-  return ghost;
+  return savedGhost;
 };
 
 const getGhosts = async (user) => {
   const ghosts = await Ghost.find();
-  return ghosts.filter((ghost) => {
-    return user.roles.includes('admin')
+  return ghosts.filter((ghost) => user.roles.includes('admin')
       || user.roles.includes('defcoord')
-      || user.accounts.includes(ghost.player)
-  });
+      || user.accounts.includes(ghost.player));
 };
 
 const deleteGhost = async (user, ghostId) => {
@@ -91,5 +85,5 @@ const deleteGhost = async (user, ghostId) => {
 module.exports = {
   saveGhost,
   getGhosts,
-  deleteGhost
+  deleteGhost,
 };

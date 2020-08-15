@@ -113,6 +113,7 @@ export default {
             text: 'Delete',
             handler: async () => {
               await AttackerService.delete(this.attacker)
+              await this.$store.dispatch('forgetAttacker', this.attacker)
               this.$store.dispatch('updateCycle')
             }
           }

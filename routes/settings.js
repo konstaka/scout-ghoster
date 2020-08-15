@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const HttpStatus = require('http-status-codes');
 
@@ -7,7 +8,7 @@ router.get('/', (req, res) => {
     res.status(HttpStatus.OK).json({
       size: process.env.SERVER_SIZE,
       speed: process.env.SERVER_SPEED,
-      url: process.env.TRAVIAN_URL
+      url: process.env.TRAVIAN_URL,
     });
   } catch (e) {
     console.log(e);

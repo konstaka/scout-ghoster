@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const HttpStatus = require('http-status-codes');
 const attackers = require('../util/attackers');
@@ -10,7 +11,7 @@ router.post('/', async (req, res) => {
       return;
     }
     const attacker = await attackers.saveAttacker(req.body);
-    res.location('/attackers/' + attacker._id);
+    res.location(`/attackers/${attacker._id}`);
     res.status(HttpStatus.CREATED).end();
   } catch (e) {
     console.log(e);
@@ -36,7 +37,7 @@ router.put('/:attackerId', async (req, res) => {
     }
     const toUpdate = req.body;
     toUpdate._id = req.params.attackerId;
-    await attackers.saveAttacker(req.body);
+    await attackers.saveAttacker(toUpdate);
     res.status(HttpStatus.NO_CONTENT).end();
   } catch (e) {
     console.log(e);

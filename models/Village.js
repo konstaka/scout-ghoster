@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = mongoose.ObjectId;
+
+const { Schema } = mongoose;
+const { ObjectId } = mongoose;
 
 const VillageSchema = new Schema({
   id: ObjectId,
@@ -15,7 +16,7 @@ const VillageSchema = new Schema({
   allyId: Number,
   allyName: String,
   population: Number,
-  updatedAt: Date
+  updatedAt: Date,
 });
 
 module.exports = mongoose.model('Village', VillageSchema);

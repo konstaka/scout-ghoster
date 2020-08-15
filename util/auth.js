@@ -3,14 +3,14 @@ const jwtDecode = require('jwt-decode');
 const User = require('../models/User');
 
 const checkToken = async (req, res, next) => {
-  // check if id_token is provided
-  const idToken = req.headers['authorization'];
+  // Check if id_token is provided
+  const idToken = req.headers.authorization;
   if (!idToken) {
     res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Token not found' });
     return;
   }
 
-  // decode it for verifying
+  // Decode it for verifying
   let decodedToken;
   try {
     decodedToken = jwtDecode(idToken);
@@ -27,40 +27,41 @@ const checkToken = async (req, res, next) => {
     return;
   }
 
-  // match email from database
+  // Match email from database
   const user = await User.findOne({ email: decodedToken.email });
   if (!user) {
     res.status(HttpStatus.UNAUTHORIZED).json({ message: 'User not found' });
     return;
   }
 
-  // attach auth info to request
+  // Attach auth info to request
   req.authorizedUser = user;
 
-  // forward to routes
+  // Forward to routes
   next();
 };
 
 const checkAccess = (req, res, next) => {
-
-  // list user groups
-  // const ADMINS = [
-  //   'admin'
-  // ];
+  /*
+     * List user groups
+     * const ADMINS = [
+     *   'admin'
+     * ];
+     */
   const MANAGERS = [
     'admin',
-    'defcoord'
+    'defcoord',
   ];
   const SCOUTS = [
     'admin',
-    'scout'
+    'scout',
   ];
   const GHOSTS = [
     'admin',
-    'ghost'
+    'ghost',
   ];
 
-  // match on request url
+  // Match on request url
   switch (req.url) {
     case (req.url.match(/mapSql/) || {}).input:
     case (req.url.match(/operationMeta/) || {}).input:
@@ -104,11 +105,11 @@ const checkAccess = (req, res, next) => {
       return;
   }
 
-  // forward to route
+  // Forward to route
   next();
-}
+};
 
 module.exports = {
   checkToken,
-  checkAccess
-}
+  checkAccess,
+};

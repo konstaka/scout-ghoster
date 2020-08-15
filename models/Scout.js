@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = mongoose.ObjectId;
+
+const { Schema } = mongoose;
+const { ObjectId } = mongoose;
 
 const ScoutSchema = new Schema({
   id: ObjectId,
@@ -10,9 +11,9 @@ const ScoutSchema = new Schema({
   villageName: String,
   // Identifier of the player's village
   villageId: Number,
-  // x-coordinate: NUM(-400 ... 400)
+  // X-coordinate: NUM(-400 ... 400)
   xCoord: Number,
-  // y-coordinate: NUM(-400 ... 400)
+  // Y-coordinate: NUM(-400 ... 400)
   yCoord: Number,
   // Unit speed: NUM(>3)
   unitSpeed: Number,
@@ -23,7 +24,7 @@ const ScoutSchema = new Schema({
   // Amount of scouts: NUM(>0)
   scoutAmount: Number,
   // Artefact factor: NUM(1, 3, 5, 10)
-  scoutArte: Number
+  scoutArte: Number,
 });
 
 module.exports = mongoose.model('Scout', ScoutSchema);

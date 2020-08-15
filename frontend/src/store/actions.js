@@ -116,6 +116,15 @@ export default {
       }
     ))
   },
+  async forgetAttacker (context, attacker) {
+    context.state.selections.filter(async (sel) => {
+      const matches = sel.attackerId === attacker._id
+      if (matches) {
+        await SelectionsService.delete(sel._id)
+      }
+      return !matches
+    })
+  },
   async getScoutCommands (context) {
     const compiledCommands = []
     const commands = await ScoutService.getCommands()

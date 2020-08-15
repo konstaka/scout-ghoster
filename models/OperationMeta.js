@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = mongoose.ObjectId;
+
+const { Schema } = mongoose;
+const { ObjectId } = mongoose;
 
 const OperationMetaSchema = new Schema({
   id: ObjectId,
-  hittingTime: Date
+  hittingTime: Date,
 });
 
 module.exports = mongoose.model('OperationMeta', OperationMetaSchema);

@@ -1,5 +1,5 @@
-const Village = require('../models/Village');
 const axios = require('axios');
+const Village = require('../models/Village');
 
 const updatedAt = async () => {
   const randomVillage = await Village.find().limit(1);
@@ -7,29 +7,31 @@ const updatedAt = async () => {
     return null;
   }
   return randomVillage[0].updatedAt;
-}
+};
 
 const update = async () => {
   try {
     if (!process.env.TRAVIAN_URL || !process.env.TRAVIAN_URL.includes('travian')) {
-      return;
+      return null;
     }
     const mapRes = await axios.get(`https://${process.env.TRAVIAN_URL}/map.sql`);
     const mapData = mapRes.data.split('\n');
-    console.log('map.sql fetched, length ' + mapData.length);
+    console.log(`map.sql fetched, length ${mapData.length}`);
 
     const villages = [];
     const now = new Date();
-    for (const village of mapData) {
-      // Example line:
-      // INSERT INTO `x_world` VALUES (1471,67,197,1,22611,'08',246,'Raven',0,'',127,NULL);
-      // Strings may contain commas!
-      const firstNumbers = village
-        .substr(0, village.indexOf('\'') - 1)
+    for (let i = 0; i < mapData.length; i++) {
+      /*
+       * Example line:
+       * INSERT INTO `x_world` VALUES (1471,67,197,1,22611,'08',246,'Raven',0,'',127,NULL);
+       * Strings may contain commas!
+       */
+      const firstNumbers = mapData[i]
+        .substr(0, mapData[i].indexOf('\'') - 1)
         .substr(30)
         .split(',');
-      const rest = village
-        .substr(village.indexOf('\''))
+      const rest = mapData[i]
+        .substr(mapData[i].indexOf('\''))
         .split('\'');
 
       if (firstNumbers.length === 5 && rest.length === 7) {
@@ -45,16 +47,18 @@ const update = async () => {
           allyId: parseInt(rest[4].substr(1, rest[3].length - 1), 10),
           allyName: rest[5],
           population: parseInt(rest[6].split(',')[0], 10),
-          updatedAt: now
+          updatedAt: now,
         }));
       } else {
-        console.log(village);
+        console.log(mapData[i]);
       }
     }
 
     if (villages.length === mapData.length - 1) {
-      // All lines OK, last one is empty
-      // Replace old data
+      /*
+       * All lines OK, last one is empty
+       * Replace old data
+       */
       try {
         await Village.collection.drop();
       } catch (err) {
@@ -62,15 +66,16 @@ const update = async () => {
       }
       const insertRes = await Village.collection
         .insertMany(villages, { ordered: false });
-      console.log('Saved ' + insertRes.insertedCount + ' villages');
+      console.log(`Saved ${insertRes.insertedCount} villages`);
       return insertRes.insertedCount;
     }
   } catch (e) {
     console.log(e);
   }
-}
+  return null;
+};
 
 module.exports = {
   updatedAt,
-  update
-}
+  update,
+};

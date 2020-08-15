@@ -30,7 +30,8 @@
             scoutArte: scout.scoutArte,
             tournamentSquare: scout.tournamentSquare,
             unitSpeed: scout.unitSpeed,
-            villageName: scout.villageName
+            villageName: scout.villageName,
+            villageId: scout.villageId
           }"
         >
           {{ scout.player }} ({{ scout.xCoord }}|{{ scout.yCoord }}) {{ scout.scoutArte }}x {{ scout.scoutAmount }} [{{ scoutSendingTime(scout) }}]
@@ -59,6 +60,7 @@
             tournamentSquare: ghost.tournamentSquare,
             unitSpeed: ghost.unitSpeed,
             villageName: ghost.villageName,
+            villageId: ghost.villageId,
             heroBoots: ghost.heroBoots
           }"
         >
