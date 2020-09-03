@@ -4,7 +4,10 @@
       v-for="target of $store.state.targets"
       :key="target[0].playerName"
     >
-      <div class="player_padding" />
+      <div
+        v-if="target.some((village) => $store.state.filter[village.coordId])"
+        class="player_padding"
+      />
       <TimeBox
         v-for="village of target"
         :key="`time${attacker.xCoord}${attacker.yCoord}${village.xCoord}${village.yCoord}`"

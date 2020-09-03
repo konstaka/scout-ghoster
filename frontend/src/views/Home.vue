@@ -56,7 +56,10 @@
         :key="`target${target[0].playerName}`"
         class="player left"
       >
-        <div class="player_name_listing">
+        <div
+          v-if="target.some((village) => $store.state.filter[village.coordId])"
+          class="player_name_listing"
+        >
           {{ target[0].playerName }}
         </div>
         <TargetVillage
