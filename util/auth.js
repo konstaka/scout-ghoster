@@ -68,6 +68,7 @@ const checkAccess = (req, res, next) => {
     case (req.url.match(/targets/) || {}).input:
     case (req.url.match(/attackers/) || {}).input:
     case (req.url.match(/selections/) || {}).input:
+    case (req.url.match(/flexSeconds/) || {}).input:
       if (!req.authorizedUser.roles.some((r) => MANAGERS.includes(r))) {
         res.status(HttpStatus.FORBIDDEN).json({ message: 'Not enough permissions' });
         return;

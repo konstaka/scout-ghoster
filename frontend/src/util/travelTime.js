@@ -42,18 +42,23 @@ export const getTravelTime = (target, attacker, map) => {
   return Math.round(map ? travelTime * (100 - map) / 100 : travelTime)
 }
 
-const landingTime = () => {
+export const getLandingTime = (target, attacker) => {
   const time = new Date(store.state.opsHittingDay)
   time.setHours(store.state.opsHittingTime.HH)
   time.setMinutes(store.state.opsHittingTime.mm)
   time.setSeconds(store.state.opsHittingTime.ss)
   time.setMilliseconds(0)
+  if (target && attacker) {
+    time.setSeconds(
+      time.getSeconds() + (store.state.flexSeconds[target._id][attacker._id] || 0)
+    )
+  }
   return time
 }
 
 export const getSendingTime = (target, attacker) => {
   return new Date(
-    landingTime().getTime()
+    getLandingTime(target, attacker).getTime()
     - getTravelTime(target, attacker) * 1000
   )
 }
@@ -77,7 +82,7 @@ export const getGhostTravelString = (attacker, ghost) => {
 
 export const getReturnTime = (target, attacker) => {
   return new Date(
-    landingTime().getTime()
+    getLandingTime(target, attacker).getTime()
     + getTravelTime(target, attacker, attacker.map) * 1000
   )
 }

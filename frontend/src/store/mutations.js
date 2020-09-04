@@ -89,6 +89,12 @@ export default {
   SET_TARGETS (state, targets) {
     state.targets = targets
   },
+  SET_FLEX_SECONDS (state, flexSeconds) {
+    state.flexSeconds = flexSeconds
+  },
+  CHANGE_FLEX (state, { target, attacker, amount }) {
+    state.flexSeconds[target._id][attacker._id] += amount
+  },
   SET_FILTER (state, filter) {
     state.filter = filter
   },

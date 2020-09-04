@@ -49,6 +49,7 @@ app.use(checkAccess);
 // Routes
 const settingsRouter = require('./routes/settings');
 const operationMetaRouter = require('./routes/operationMeta');
+const flexSecondsRouter = require('./routes/flexSeconds');
 const targetsRouter = require('./routes/targets');
 const attackersRouter = require('./routes/attackers');
 const scoutsRouter = require('./routes/scouts');
@@ -60,6 +61,7 @@ const commandsRouter = require('./routes/commands');
 
 app.use('/settings', settingsRouter);
 app.use('/operationMeta', operationMetaRouter);
+app.use('/flexSeconds', flexSecondsRouter);
 app.use('/targets', targetsRouter);
 app.use('/attackers', attackersRouter);
 app.use('/scouts', scoutsRouter);

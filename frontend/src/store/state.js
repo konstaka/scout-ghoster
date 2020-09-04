@@ -6,6 +6,7 @@ const initialState = {
   opsHittingTime: {},
   attackers: [],
   targets: [],
+  flexSeconds: {},
   filter: {},
   scouts: [],
   ghosts: [],

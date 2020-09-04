@@ -5,6 +5,7 @@ import AttackerService from '@/services/attacker'
 import ScoutService from '@/services/scout'
 import GhostService from '@/services/ghost'
 import SelectionsService from '@/services/selections'
+import FlexSecondsService from '@/services/flexSeconds'
 import { groupBy } from 'underscore'
 
 export default {
@@ -27,9 +28,10 @@ export default {
   async getInfo (context) {
     await context.dispatch('getSettings')
     await context.dispatch('getOperationMeta')
-    await context.dispatch('getTargets')
-    await context.dispatch('getFilter')
     await context.dispatch('getAttackers')
+    await context.dispatch('getTargets')
+    await context.dispatch('getFlexSeconds')
+    await context.dispatch('getFilter')
     await context.dispatch('getScouts')
     await context.dispatch('getGhosts')
     await context.dispatch('getSelections')
@@ -56,6 +58,18 @@ export default {
         }))
       })
     context.commit('SET_TARGETS', players)
+  },
+  async getFlexSeconds (context) {
+    const flexSeconds = await FlexSecondsService.get()
+    for (const player of context.state.targets) {
+      for (const village of player) {
+        flexSeconds[village._id] = flexSeconds[village._id] || {}
+        for (const attacker of context.state.attackers) {
+          flexSeconds[village._id][attacker._id] = flexSeconds[village._id][attacker._id] || 0
+        }
+      }
+    }
+    context.commit('SET_FLEX_SECONDS', flexSeconds)
   },
   async getFilter (context) {
     const res = await TargetService.getFilter()

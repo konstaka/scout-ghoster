@@ -8,7 +8,7 @@ const Filter = require('../models/Filter');
 router.get('/', async (req, res) => {
   try {
     const villages = await Village.find({
-      allyName: { $in: process.env.ALLY_NAMES.split(',') }
+      allyName: { $in: process.env.ALLY_NAMES.split(',') },
     });
     res.status(HttpStatus.OK).json(villages);
   } catch (e) {
