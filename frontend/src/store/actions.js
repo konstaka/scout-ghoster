@@ -108,19 +108,21 @@ export default {
           }
         }
       }
-      for (const scout of context.state.scouts) {
-        if (scout._id === compiledSelection.scoutId) {
-          compiledSelection.scout = scout
-          break
+      if (compiledSelection.attacker && compiledSelection.target) {
+        for (const scout of context.state.scouts) {
+          if (scout._id === compiledSelection.scoutId) {
+            compiledSelection.scout = scout
+            break
+          }
         }
-      }
-      for (const ghost of context.state.ghosts) {
-        if (ghost._id === compiledSelection.ghostId) {
-          compiledSelection.ghost = ghost
-          break
+        for (const ghost of context.state.ghosts) {
+          if (ghost._id === compiledSelection.ghostId) {
+            compiledSelection.ghost = ghost
+            break
+          }
         }
+        compiledSelections.push(compiledSelection)
       }
-      compiledSelections.push(compiledSelection)
     }
     context.commit('SET_SELECTIONS', compiledSelections.sort(
       (a, b) => {
