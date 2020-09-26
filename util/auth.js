@@ -1,29 +1,33 @@
 const HttpStatus = require('http-status-codes');
-const jwtDecode = require('jwt-decode');
+const { OAuth2Client } = require('google-auth-library')
 const User = require('../models/User');
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 const checkToken = async (req, res, next) => {
   // Check if id_token is provided
   const idToken = req.headers.authorization;
-  if (!idToken) {
+  if (!idToken || !idToken.startsWith('Bearer ')) {
     res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Token not found' });
     return;
   }
 
-  // Decode it for verifying
   let decodedToken;
+
+  // Verify with Google
   try {
-    decodedToken = jwtDecode(idToken);
+    const ticket = await client.verifyIdToken({
+      idToken: idToken.split('Bearer ')[1],
+      audience: process.env.GOOGLE_CLIENT_ID
+    })
+    decodedToken = ticket.getPayload()
   } catch (e) {
     res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Invalid token' });
     return;
   }
+
   if (!decodedToken || !decodedToken.email) {
     res.status(HttpStatus.UNAUTHORIZED).json({ message: 'No email in token' });
-    return;
-  }
-  if (decodedToken.exp * 1000 < new Date()) {
-    res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Session expired' });
     return;
   }
 
