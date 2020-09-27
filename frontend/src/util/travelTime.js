@@ -23,23 +23,23 @@ export const getTravelTime = (target, attacker, map) => {
     * attacker.arteSpeed
     / 60
     / 60
-  // Return if no TS
-  if (distance <= 20 || attacker.tournamentSquare === 0) {
+  // Return if distance under 20
+  if (distance <= 20) {
     const time = distance / squaresPerSecond
-    return Math.round(map ? time * (100 - map) / 100 : time)
+    return Math.round(map ? time * 100 / (100 + map) : time)
   }
   // No-TS part of travel
   let travelTime = 20 / squaresPerSecond
   // Reduce distance
   distance -= 20
-  // Calculate TS factor
-  const tsFactor = 1.0 + attacker.tournamentSquare * 0.2
+  // Calculate TS and boots factor
+  let factor = 1.0 + attacker.tournamentSquare * 0.2
+  factor += (attacker.heroBoots || 0) / 100
   // Adjust speed
-  squaresPerSecond *= 1 + (attacker.heroBoots ? attacker.heroBoots : 0) / 100
-  squaresPerSecond *= tsFactor
+  squaresPerSecond *= factor
   // Compute remaining time
   travelTime += distance / squaresPerSecond
-  return Math.round(map ? travelTime * (100 - map) / 100 : travelTime)
+  return Math.round(map ? travelTime * 100 / (100 + map) : travelTime)
 }
 
 export const getLandingTime = (target, attacker) => {
@@ -88,8 +88,14 @@ export const getReturnTime = (target, attacker) => {
 }
 
 export const getGhostSend = (target, attacker, ghost) => {
-  return new Date(
+  const ghostSend = new Date(
     getReturnTime(target, attacker).getTime()
     - getTravelTime(attacker, ghost) * 1000
   )
+  if (getLandingTime(target, attacker).getTime() > ghostSend.getTime()) {
+    ghostSend.setSeconds(
+      ghostSend.getSeconds() + 1
+    )
+  }
+  return ghostSend
 }
