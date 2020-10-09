@@ -17,6 +17,8 @@ export const getTravelTime = (target, attacker, map) => {
         store.state.serverConfig.size * 2 + 1 - Math.abs(attacker.yCoord - target.yCoord)),
       2)
   )
+  // Round as per Travian implementation
+  distance = Math.round(distance * Math.pow(10, 5)) / Math.pow(10, 5)
   // Baseline speed
   let squaresPerSecond = attacker.unitSpeed
     * store.state.serverConfig.speed
