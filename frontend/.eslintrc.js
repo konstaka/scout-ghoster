@@ -12,6 +12,12 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/require-prop-types': 0,
     'operator-linebreak': ['error', 'before'],
-    'semi': 'warn'
+    'semi': 'warn',
+    'no-trailing-spaces': 'warn',
+    'comma-dangle': 'warn',
+    'no-multiple-empty-lines': 'warn',
+    'padded-blocks': 'warn',
+    'quotes': 'warn',
+    'space-infix-ops': 'warn'
   }
 }

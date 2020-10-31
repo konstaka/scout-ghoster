@@ -1,8 +1,8 @@
 const HttpStatus = require('http-status-codes');
-const { OAuth2Client } = require('google-auth-library')
+const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/User');
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const checkToken = async (req, res, next) => {
   // Check if id_token is provided
@@ -18,9 +18,9 @@ const checkToken = async (req, res, next) => {
   try {
     const ticket = await client.verifyIdToken({
       idToken: idToken.split('Bearer ')[1],
-      audience: process.env.GOOGLE_CLIENT_ID
-    })
-    decodedToken = ticket.getPayload()
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    decodedToken = ticket.getPayload();
   } catch (e) {
     res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Invalid token' });
     return;

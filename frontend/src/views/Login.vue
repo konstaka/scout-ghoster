@@ -28,7 +28,7 @@ export default {
   methods: {
     async googleSignIn () {
       const GoogleUser = await this.$gAuth.signIn()
-      console.log(GoogleUser.getAuthResponse());
+      console.log(GoogleUser.getAuthResponse())
       this.$cookies.set('id_token', GoogleUser.getAuthResponse().id_token)
       this.$cookies.set('access_token', GoogleUser.getAuthResponse().access_token)
       this.$store.commit('SIGN_IN')

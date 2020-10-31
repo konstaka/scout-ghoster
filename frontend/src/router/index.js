@@ -9,6 +9,7 @@ import Ghosts from '@/views/Ghosts'
 import Selections from '@/views/Selections'
 import ScoutCommands from '@/views/ScoutCommands'
 import GhostCommands from '@/views/GhostCommands'
+import Incomings from '@/views/Incomings'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -67,6 +68,12 @@ const routes = [
     name: 'Ghost Commands',
     component: GhostCommands,
     roles: ['admin', 'ghost']
+  },
+  {
+    path: '/incomings',
+    name: 'Incomings',
+    component: Incomings,
+    roles: []
   }
 ]
 
@@ -75,8 +82,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  // Always allow navigating to login page
-  if (to.path === '/login') {
+  // Always allow navigating to login and incomings pages
+  if (to.path === '/login' || to.path === '/incomings') {
     next()
     return
   }
