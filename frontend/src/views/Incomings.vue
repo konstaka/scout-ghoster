@@ -142,7 +142,7 @@ export default {
       })
 
       for (const row of this.rows) {
-        row.push(`${uniqueRows[row[0] + row[1] + row[3] + row[4] + row[7] + row[8]]} waves`)
+        row.push(`${uniqueRows[row[0] + row[1] + row[3] + row[4] + row[7] + row[8]]} wave(s)`)
       }
 
       console.log(this.rows)
